@@ -2,6 +2,7 @@
     <string name="app_name">RunnersHigh</string>
     <string name="btn_login">Log In</string>
     <string name="btn_signup">Sign Up</string>
+    <string name="btn_logout">Log Out</string>
     <string name="et_user">Username</string>
     <string name="et_password">Password</string>
 </resources>
