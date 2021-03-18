@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         if(historyFragment==null)
             historyFragment=new HistoryFragment();
 
-
+//comment
 
 
         bottomNavigationView=findViewById(R.id.bottom_navigation);
