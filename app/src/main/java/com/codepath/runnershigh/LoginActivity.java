@@ -16,6 +16,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+//this is a comment by Greg
+
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LOGIN_ACTIVITY";
     ImageView ivLogo;
