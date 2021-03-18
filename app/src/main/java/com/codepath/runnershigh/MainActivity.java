@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context=this;
 
-        //TODO: initialize fragment objects
-
+        //Initializing Fragments
         if(homeFragment==null)
             homeFragment = new HomeFragment();
 
