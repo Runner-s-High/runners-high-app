@@ -43,10 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(historyFragment==null)
             historyFragment=new HistoryFragment();
-
-//comment
-
-
+        //test
         bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
