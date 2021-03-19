@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     //Declaring bottom nav Bar
     BottomNavigationView bottomNavigationView;
 
-
+    //Declaring Fragments
     HomeFragment homeFragment;
     StartRunFragment startRunFragment;
     HistoryFragment historyFragment;
