@@ -27,18 +27,19 @@ Runner's High is a mood-tracking and run-tracking app that allows users to log t
 
 **Required Must-have Stories**
 
-* User will report their mood before and after the run using radiobuttons that quantify various emotions-stress,anxiety etc. 
-* User will be able to track their run live and review it after finishing
+- [x] User will report their mood before and after the run using radiobuttons that quantify various emotions-stress,anxiety etc. 
+- [x] User will be able to track their run live and review it after finishing
+- [x] User will be able to log in/sign up into their account
 
 **Optional Nice-to-have Stories**
 
-* Directions while running
-* Announcements of running stats (text-to-speech)
-* Setting end destination
-* Being able to see graph of emotional progress over time
-* Being able to see relationship between pre-run mood and run performance or mood post-run and run performance.-definitely optional for now
-* Implement map so user can see live position while running
-* Implement links to mental health links/phone numbers
+- [ ] Directions while running
+- [ ] Announcements of running stats (text-to-speech)
+- [ ] Setting end destination
+- [ ] Being able to see graph of emotional progress over time
+- [x] Being able to see relationship between pre-run mood and run performance or mood post-run and run performance.-definitely optional for now
+- [ ] Implement map so user can see live position while running
+- [ ] Implement links to mental health links/phone numbers
 
 ### 2. Screen Archetypes
 
