@@ -2,10 +2,12 @@ package com.codepath.runnershigh;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Theme_RunnersHigh);
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -43,13 +47,17 @@ public class LoginActivity extends AppCompatActivity {
             Log.i(TAG, "User already logged in; starting MainActivity");
             startActivity(new Intent(this, MainActivity.class));
         }
-
-        //TODO: Render logo image
-        //TODO: (optional) Create splash page
     }
 
     //onClick method for btnLogin
     public void attemptLogin(View v) {
+        //Hides keyboard from view on button press
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         String username = etUser.getText().toString();
         String password = etPassword.getText().toString();
 
@@ -76,6 +84,13 @@ public class LoginActivity extends AppCompatActivity {
 
     //onClick method for btnSignUp
     public void attemptSignUp(View v) {
+        //Hides keyboard from view on button press
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         ParseUser user = new ParseUser();
 
         user.setUsername(etUser.getText().toString());

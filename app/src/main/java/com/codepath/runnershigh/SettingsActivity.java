@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import com.parse.ParseUser;
 
+//TODO: Just make this another fragment instead of activity
+
 public class SettingsActivity extends AppCompatActivity {
     Button btnLogout;
 
@@ -23,6 +25,6 @@ public class SettingsActivity extends AppCompatActivity {
     //onClick method for btnLogout
     public void logOut(View v) {
         ParseUser.logOut();
-        //TODO: Figure out way to finish this and MainActivity; just go to LoginActivity
+        finish();
     }
 }
