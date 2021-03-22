@@ -240,3 +240,6 @@ run.saveInBackground(new SaveCallback() {
     }
 });
 ```
+### First App Walkthough GIF
+<img src="https://github.com/Runner-s-High/runners-high-app/blob/main/first%20walkthrough.gif" width=250><br>
+
