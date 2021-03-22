@@ -1,14 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.StartRunFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/RunBackGround"
+        android:layout_width="409dp"
+        android:layout_height="366dp"
+        android:layout_above="@+id/message"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="21dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/runimage" />
+
+    <ImageButton
+        android:id="@+id/IB1"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="167dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/IB2"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        app:srcCompat="@drawable/angriest" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="403dp"
+        android:layout_height="105dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="256dp"
+        android:text="How are you today?"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/IB5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RunBackGround" />
+
+    <ImageButton
+        android:id="@+id/IB2"
+        android:layout_width="73dp"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="169dp"
+        android:layout_toEndOf="@+id/IB1"
+        app:layout_constraintEnd_toStartOf="@+id/IB3"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        app:srcCompat="@drawable/smallorange" />
+
+    <ImageButton
+        android:id="@+id/IB4"
+        android:layout_width="82dp"
+        android:layout_height="66dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="169dp"
+        app:layout_constraintEnd_toStartOf="@+id/IB5"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        app:srcCompat="@drawable/smalllightgreen" />
+
+    <ImageButton
+        android:id="@+id/IB5"
+        android:layout_width="75dp"
+        android:layout_height="66dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-8dp"
+        android:layout_marginBottom="166dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/happiest" />
+
+    <ImageButton
+        android:id="@+id/IB3"
+        android:layout_width="72dp"
+        android:layout_height="69dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="165dp"
+        app:layout_constraintEnd_toStartOf="@+id/IB4"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        app:srcCompat="@drawable/mediumface" />
+
+
+</RelativeLayout>
