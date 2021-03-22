@@ -5,4 +5,9 @@
     <string name="btn_logout">Log Out</string>
     <string name="et_user">Username</string>
     <string name="et_password">Password</string>
+    <string name="settings_icon">Settings</string>
+    <string name="main_name">Runner\'s High</string>
+    <string name="signup_blurb">
+        - Track your run\n- Log your mood\n- Conquer your day
+    </string>
 </resources>
