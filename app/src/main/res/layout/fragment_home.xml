@@ -48,7 +48,7 @@
         android:id="@+id/tvQuote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btStart"
+        android:layout_above="@+id/btnStart"
         android:layout_below="@+id/tvPlaceholder"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
@@ -59,7 +59,7 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/btStart"
+        android:id="@+id/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

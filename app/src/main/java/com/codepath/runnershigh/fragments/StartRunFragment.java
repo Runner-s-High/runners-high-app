@@ -32,7 +32,6 @@ import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 
 public class StartRunFragment extends Fragment {
 
-public class StartRunFragment extends Fragment  {
     Button btnStart;
     StartRunFragmentInterface startRunFragmentInterface;
     PreRunMoodDialogFragment moodSurvey;
@@ -59,6 +58,26 @@ public class StartRunFragment extends Fragment  {
         IB3=view.findViewById(R.id.IB3);
         IB4=view.findViewById(R.id.IB4);
         IB5=view.findViewById(R.id.IB5);
+
+        btnStart=view.findViewById(R.id.btnStart);
+
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (completedMoodSurvey) {
+                    //Todo: pass mood object
+                    //startRunFragmentInterface.openRunningFragment(preRunMood);
+                    startRunFragmentInterface.openRunningFragment();
+                } else {
+                    FragmentManager fm = StartRunFragment.this.getChildFragmentManager();
+                    moodSurvey = new PreRunMoodDialogFragment();
+                    moodSurvey.show(fm, "Survey");
+                }
+
+
+            }
+        });
 
         IB1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,29 +190,6 @@ public class StartRunFragment extends Fragment  {
         return inflater.inflate(R.layout.fragment_start_run, container, false);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        btnStart=view.findViewById(R.id.btnStart);
-
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(completedMoodSurvey){
-                    //Todo: pass mood object
-                    //startRunFragmentInterface.openRunningFragment(preRunMood);
-                    startRunFragmentInterface.openRunningFragment();
-                }else{
-                    FragmentManager fm = StartRunFragment.this.getChildFragmentManager();
-                    moodSurvey = new PreRunMoodDialogFragment();
-                    moodSurvey.show(fm, "Survey");
-                }
-
-
-            }
-        });
-    }
 
 
     //////////////////////////////////////////////////////////////////////

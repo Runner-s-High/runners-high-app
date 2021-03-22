@@ -17,9 +17,7 @@ import android.widget.TextView;
 
 import com.codepath.runnershigh.R;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -61,7 +59,7 @@ public class HomeFragment extends Fragment {
         tcDate = view.findViewById(R.id.tcDate);
         tcTime = view.findViewById(R.id.tcTime);
         tvQuote = view.findViewById(R.id.tvQuote);
-        btStart = view.findViewById(R.id.btStart);
+        btStart = view.findViewById(R.id.btnStart);
 
         //Set format for date and time
         tcDate.setFormat12Hour("EEE, MMM d, ''yy");
