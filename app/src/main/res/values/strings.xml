@@ -11,6 +11,7 @@
     <!-- TODO: Add more Quotes -->
     <array name="Quotes">
         <item>\"Shoot for the moon; if you miss you will die in outerspace,
-            which is cool\"\n -Yekaterina Petrovna Zamolodchikova</item>
+            which is cool\"\n -Yekaterina Petrovna Zamolodchikova
+        </item>
     </array>
 </resources>

@@ -2,6 +2,8 @@ package com.codepath.runnershigh.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,11 +25,7 @@ import com.codepath.runnershigh.R;
 
 
 public class RunningFragment extends Fragment {
-    public static final String
-            KEY_TIME="TIME",
-            KEY_DISTANCE="DISTANCE",
-            KEY_PACE="PACE",
-            KEY_GEOLOGS="GEOLOGS";
+    SensorManager sensorManager;
 
     ImageButton ibPauseResume;
     ImageButton ibStop;
@@ -96,6 +94,7 @@ public class RunningFragment extends Fragment {
         });
 
         play();
+
     }
 
     private void pause() {
@@ -124,19 +123,11 @@ public class RunningFragment extends Fragment {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO: end run, get all the run data and all that jazz, intent back to mainActivity
-                Toast.makeText(getContext(), "YOU CLICKED YES!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "user clicks yes, move to post run screen", Toast.LENGTH_SHORT).show();
+
                 Bundle runStats = new Bundle();
-
-                runStats.putString(KEY_TIME, cmTime.getText().toString());
-                runStats.putString(KEY_DISTANCE, tvDistance.getText().toString());
-                runStats.putString(KEY_PACE, tvPace.getText().toString());
-
-
-
-                //runStats.putParcelable(KEY_GEOLOGS, PLACEHOLDER);
                 //TODO: build a post run class for all post run info
-                //runStats.putParcelable(KEY_RUNITEM, RUNCLASS);
+                //runstats.time = cmTime.gettext.toString etc...
 
                 runningFragmentInterface.runComplete(runStats);
             }
@@ -145,7 +136,7 @@ public class RunningFragment extends Fragment {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), "YOU CLICKED NO!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "if the user clicks no the run continues", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -166,5 +157,7 @@ public class RunningFragment extends Fragment {
 
     public interface RunningFragmentInterface{
         public void runComplete(Bundle runStats);
+        //Todo: implement with RunStats Object
+        //public void runComplete(RunStats runStats);
     }
 }

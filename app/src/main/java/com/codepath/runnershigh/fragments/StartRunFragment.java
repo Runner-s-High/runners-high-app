@@ -7,18 +7,24 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.codepath.runnershigh.R;
+import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 
 
-public class StartRunFragment extends Fragment{
+public class StartRunFragment extends Fragment  {
     Button btnStart;
     StartRunFragmentInterface startRunFragmentInterface;
+    PreRunMoodDialogFragment moodSurvey;
+
+    boolean completedMoodSurvey=false;
 
 
     public StartRunFragment() {
@@ -53,11 +59,27 @@ public class StartRunFragment extends Fragment{
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startRunFragmentInterface.hideNavBar();
-                startRunFragmentInterface.openRunningFragment();
+
+                if(completedMoodSurvey){
+                    //Todo: pass mood object
+                    //startRunFragmentInterface.openRunningFragment(preRunMood);
+                    startRunFragmentInterface.openRunningFragment();
+                }else{
+                    FragmentManager fm = StartRunFragment.this.getChildFragmentManager();
+                    moodSurvey = new PreRunMoodDialogFragment();
+                    moodSurvey.show(fm, "Survey");
+                }
+
+
             }
         });
     }
+
+
+    //////////////////////////////////////////////////////////////////////
+    //                           INTERFACE
+    //                        IMPLEMENTATIONS
+    //////////////////////////////////////////////////////////////////////
 
 
     //Attaching the interface
@@ -74,9 +96,6 @@ public class StartRunFragment extends Fragment{
 
     //Creating Interface for fragment communication
     public interface StartRunFragmentInterface{
-        public void hideNavBar();
-        public void showNavBar();
-
         public void openRunningFragment();
 
     }

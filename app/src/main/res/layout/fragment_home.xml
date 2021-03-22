@@ -35,11 +35,11 @@
 
     <TextView
         android:id="@+id/tvPlaceholder"
-        android:autoSizeTextType="uniform"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@+id/tcTime"
         android:layout_marginTop="16dp"
+        android:autoSizeTextType="uniform"
         android:text="Most Recent run goes here, maybe in a fragment? I don't really know"
         android:textAlignment="center"
         android:textStyle="bold" />
@@ -48,13 +48,23 @@
         android:id="@+id/tvQuote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/btStart"
         android:layout_below="@+id/tvPlaceholder"
-        android:layout_alignParentBottom="true"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:autoSizeTextType="uniform"
+        android:background="#27000000"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="Start Run" />
 
 </RelativeLayout>

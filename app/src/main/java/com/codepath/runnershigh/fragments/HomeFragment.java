@@ -1,5 +1,6 @@
 package com.codepath.runnershigh.fragments;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextClock;
 import android.widget.TextView;
 
@@ -27,6 +29,10 @@ public class HomeFragment extends Fragment {
     TextClock tcTime;
 
     TextView tvQuote;
+
+    Button btStart;
+
+    HomeFragmentInterface homeFragmentInterface;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,6 +61,7 @@ public class HomeFragment extends Fragment {
         tcDate = view.findViewById(R.id.tcDate);
         tcTime = view.findViewById(R.id.tcTime);
         tvQuote = view.findViewById(R.id.tvQuote);
+        btStart = view.findViewById(R.id.btStart);
 
         //Set format for date and time
         tcDate.setFormat12Hour("EEE, MMM d, ''yy");
@@ -68,8 +75,31 @@ public class HomeFragment extends Fragment {
                 random.nextInt(
                         Quotes.size())));
 
+        //TODO: set up navigation to start run
+        btStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeFragmentInterface.startRun();
+            }
+        });
+
         //TODO: set up most recent run
 
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof HomeFragmentInterface){
+            homeFragmentInterface=(HomeFragmentInterface) context;
+        }else{
+            throw new RuntimeException(context.toString()+
+                    "must implement HomeFragmentInterface");
+        }
+    }
+
+    public interface HomeFragmentInterface{
+        public void startRun();
     }
 
 

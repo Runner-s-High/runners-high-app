@@ -3,7 +3,10 @@ package com.codepath.runnershigh;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,10 +14,21 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 import com.codepath.runnershigh.fragments.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements StartRunFragment.StartRunFragmentInterface, RunningFragment.RunningFragmentInterface {
+public class MainActivity extends AppCompatActivity implements
+        StartRunFragment.StartRunFragmentInterface,
+        RunningFragment.RunningFragmentInterface,
+        HomeFragment.HomeFragmentInterface,
+        PreRunMoodDialogFragment.PreRunMoodDialogFragmentInterface,
+        PostRunFragment.PostRunFragmentInterface {
+
+    //Mood mainPreRunMood;
+
+
+
     Context context;
 
     //Declaring bottom nav Bar
@@ -27,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements StartRunFragment.
     StartRunFragment startRunFragment;
     HistoryFragment historyFragment;
     TrackMoodFragment trackMoodFragment;
-    RunningFragment runningFragment;
 
 
     @Override
@@ -51,8 +64,7 @@ public class MainActivity extends AppCompatActivity implements StartRunFragment.
         if(historyFragment==null)
             historyFragment=new HistoryFragment();
 
-        if(runningFragment==null)
-            runningFragment=new RunningFragment();
+
 
 
 
@@ -83,8 +95,11 @@ public class MainActivity extends AppCompatActivity implements StartRunFragment.
                     default:
                         throw new IllegalStateException("Unexpected value: " + item.getItemId());
                 }
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.flContainer,fragment).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.flContainer,fragment)
+                        .commit();
                 return true;
             }
         });
@@ -95,36 +110,88 @@ public class MainActivity extends AppCompatActivity implements StartRunFragment.
 
     }
 
+    public void hideBottomNav(){
+        bottomNavigationView.animate()
+                .translationY(bottomNavigationView.getHeight())
+                .alpha(0.0f)
+                .setDuration(300)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        bottomNavigationView.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    public void showBottomNav(){
+        bottomNavigationView.animate()
+                .translationY(0)
+                .alpha(1.0f)
+                .setDuration(300)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                    }
+                });
+    }
+
     //////////////////////////////////////////////////////////////////////
     //                           INTERFACE
     //                        IMPLEMENTATIONS
     //////////////////////////////////////////////////////////////////////
 
 
-    @Override
-    public void hideNavBar() {
-        bottomNavigationView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showNavBar() {
-        bottomNavigationView.setVisibility(View.VISIBLE);
-
-    }
 
     @Override
     public void openRunningFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.flContainer,runningFragment).commit();
+        hideBottomNav();
+        RunningFragment runningFragment = new RunningFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.flContainer,runningFragment)
+                .commit();
     }
 
     @Override
     public void runComplete(Bundle runStats) {
-        Toast.makeText(context, "Quitter", Toast.LENGTH_SHORT).show();
+        //Todo: runComplete uses RunStats object
+    //public void runComplete(RunStats runStats) {
         //TODO: navigate to post run fragment
-        /*
-        in post run fragment the user will see post run stats, and enter post run vibes
-        the user will have the option to save the run, if they choose to do so then log run and
-        navigate back to home fragment.
-         */
+        //PostRunFragment postRunFragment = PostRunFragment.newInstance(mainPreRunMood, runStats);
+        PostRunFragment postRunFragment = new PostRunFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.flContainer,postRunFragment)
+                .commit();
     }
+
+    @Override
+    public void startRun() {
+        bottomNavigationView.setSelectedItemId(R.id.itRun);
+    }
+
+    @Override
+    public void surveyCompleted(Bundle preRunMood) {
+        //Todo: change param to Mood object
+    //public void surveyCompleted(Mood preRunMood) {
+        //todo: Store prerun mood, access later @ post run screen
+        //ex. mainPreRunMood = preRunMood;
+        //preRunMood could be continually passed between all the stages but I think it would just be
+        //easier to keep it as a class variable in MainActivity and then access it later
+        openRunningFragment();
+    }
+
+
+    //Post Run Fragment Interface
+    @Override
+    public void exitPostRun() {
+        showBottomNav();
+        bottomNavigationView.setSelectedItemId(R.id.itHistory);
+    }
+
 }
