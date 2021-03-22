@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MoreInfoActivity">
+
+    <ImageView
+        android:id="@+id/ivangriest"
+        android:layout_width="27dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginBottom="49dp"
+        app:srcCompat="@drawable/angriest" />
+
+    <ImageView
+        android:id="@+id/ivorange"
+        android:layout_width="27dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginBottom="102dp"
+        app:srcCompat="@drawable/smallorange" />
+
+    <ImageView
+        android:id="@+id/ivmedium"
+        android:layout_width="27dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginBottom="155dp"
+        app:srcCompat="@drawable/mediumface" />
+
+    <ImageView
+        android:id="@+id/ivgreenishyellow"
+        android:layout_width="27dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginBottom="208dp"
+        app:srcCompat="@drawable/smalllightgreen" />
+
+    <ImageView
+        android:id="@+id/ivhappiest"
+        android:layout_width="27dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginBottom="261dp"
+        app:srcCompat="@drawable/happiest" />
+
+    <ImageView
+        android:id="@+id/ivpostmood"
+        android:layout_width="wrap_content"
+        android:layout_height="114dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="272dp"
+        android:layout_marginBottom="388dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:text="Post Run Results"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/message1"
+        android:layout_width="133dp"
+        android:layout_height="109dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="108dp"
+        android:text="Pre-Run Mood"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/message2"
+        android:layout_width="124dp"
+        android:layout_height="118dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="101dp"
+        android:layout_marginEnd="17dp"
+        android:text="Post-Run Mood"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/ivpremood"
+        android:layout_width="wrap_content"
+        android:layout_height="114dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="390dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/mybargraph"
+        android:layout_width="wrap_content"
+        android:layout_height="293dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="198dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="3dp" />
+
+    <TextView
+        android:id="@+id/tvFinish"
+        android:layout_width="131dp"
+        android:layout_height="211dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="5dp"
+        android:textAlignment="viewStart"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/nextbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="319dp"
+        android:text="Back" />
+
+
+
+</RelativeLayout>

@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/launcher_ic_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnersHigh">
-        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".MoreInfoActivity"></activity>
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".LoginActivity"
             android:theme="@style/Theme.RunnersHigh.Launcher">
             <intent-filter>
