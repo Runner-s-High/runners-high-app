@@ -2,13 +2,16 @@ package com.codepath.runnershigh;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
@@ -21,35 +24,45 @@ import com.parse.SignUpCallback;
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LOGIN_ACTIVITY";
     ImageView ivLogo;
+    ImageView ivLogin;
     EditText etUser;
     EditText etPassword;
     Button btnLogin;
     Button btnSignUp;
+    TextView tvBlurb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Theme_RunnersHigh);
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         //Initializing views
         ivLogo = findViewById(R.id.ivLogo);
+        ivLogin = findViewById(R.id.ivLogin);
         etUser = findViewById(R.id.etUser);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignup);
+        tvBlurb = findViewById(R.id.tvBlurb);
 
         //Checking if already logged in
         if(ParseUser.getCurrentUser() != null) {
             Log.i(TAG, "User already logged in; starting MainActivity");
             startActivity(new Intent(this, MainActivity.class));
         }
-
-        //TODO: Render logo image
-        //TODO: (optional) Create splash page
     }
 
     //onClick method for btnLogin
     public void attemptLogin(View v) {
+        //Hides keyboard from view on button press
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         String username = etUser.getText().toString();
         String password = etPassword.getText().toString();
 
@@ -76,6 +89,13 @@ public class LoginActivity extends AppCompatActivity {
 
     //onClick method for btnSignUp
     public void attemptSignUp(View v) {
+        //Hides keyboard from view on button press
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         ParseUser user = new ParseUser();
 
         user.setUsername(etUser.getText().toString());
