@@ -7,4 +7,10 @@
     <string name="et_password">Password</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TODO: Add more Quotes -->
+    <array name="Quotes">
+        <item>\"Shoot for the moon; if you miss you will die in outerspace,
+            which is cool\"\n -Yekaterina Petrovna Zamolodchikova</item>
+    </array>
 </resources>
