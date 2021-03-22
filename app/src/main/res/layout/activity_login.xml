@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:id="@+id/ivLogin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
+        android:scaleY="1.4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/loginimage" />
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etUser"
         android:layout_width="0dp"
@@ -13,7 +25,9 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="80dp"
+        android:backgroundTint="#FFFFFF"
         android:hint="@string/et_user"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAppName" />
@@ -25,8 +39,10 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
+        android:backgroundTint="#FFFFFF"
         android:hint="@string/et_password"
-        android:password="true"
+        android:inputType="textPassword"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +94,9 @@
         android:layout_marginStart="80dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="25dp"
+        android:fontFamily="sans-serif"
         android:text="@string/signup_blurb"
+        android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -93,6 +111,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="80dp"
         android:text="@string/main_name"
+        android:textColor="#FFFFFF"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
