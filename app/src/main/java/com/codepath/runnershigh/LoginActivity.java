@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
@@ -21,10 +22,12 @@ import com.parse.SignUpCallback;
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LOGIN_ACTIVITY";
     ImageView ivLogo;
+    ImageView ivLogin;
     EditText etUser;
     EditText etPassword;
     Button btnLogin;
     Button btnSignUp;
+    TextView tvBlurb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +38,12 @@ public class LoginActivity extends AppCompatActivity {
 
         //Initializing views
         ivLogo = findViewById(R.id.ivLogo);
+        ivLogin = findViewById(R.id.ivLogin);
         etUser = findViewById(R.id.etUser);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignup);
+        tvBlurb = findViewById(R.id.tvBlurb);
 
         //Checking if already logged in
         if(ParseUser.getCurrentUser() != null) {
