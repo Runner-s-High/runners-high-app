@@ -35,6 +35,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_RunnersHigh);
         getSupportActionBar().hide();
+        View decorView = getWindow().getDecorView();
+        // TODO: Figure out non-deprecated way to do this
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
