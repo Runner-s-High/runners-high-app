@@ -96,6 +96,9 @@ public class MoreInfoActivity extends AppCompatActivity {
         mybarchart.animateY(2000);      //makes bargraphs grow
         mybarchart.invalidate();
 
+        //set to non scrollable
+        mybarchart.setScrollContainer(false);
+
         GoBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

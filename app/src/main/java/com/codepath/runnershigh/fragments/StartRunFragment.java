@@ -1,7 +1,6 @@
 package com.codepath.runnershigh.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.codepath.runnershigh.R;
 import com.codepath.runnershigh.RunData;
@@ -59,7 +57,7 @@ public class StartRunFragment extends Fragment {
         IB4=view.findViewById(R.id.IB4);
         IB5=view.findViewById(R.id.IB5);
 
-        btnStart=view.findViewById(R.id.btnStart);
+        btnStart=view.findViewById(R.id.btSubmit);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +157,8 @@ public class StartRunFragment extends Fragment {
             }
         });
     }
+
+    //Todo: Move PutOnCloud to postRunFragment and upload on save.
                                                                 //saving data to back4app
     public void PutOnCloud(int pre, int post, ParseUser user){
         RunData RD=new RunData();

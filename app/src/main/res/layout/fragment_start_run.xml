@@ -104,7 +104,7 @@
         app:srcCompat="@drawable/mediumface" />
 
     <Button
-        android:id="@+id/btnStart"
+        android:id="@+id/btSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

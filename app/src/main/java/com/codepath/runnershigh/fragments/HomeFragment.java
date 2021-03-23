@@ -7,15 +7,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.codepath.runnershigh.R;
+import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +33,13 @@ public class HomeFragment extends Fragment {
 
     Button btStart;
 
+    ImageView ivBackground;
+
     HomeFragmentInterface homeFragmentInterface;
+
+    boolean completedMoodSurvey=false;
+    PreRunMoodDialogFragment moodSurvey;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,7 +68,8 @@ public class HomeFragment extends Fragment {
         tcDate = view.findViewById(R.id.tcDate);
         tcTime = view.findViewById(R.id.tcTime);
         tvQuote = view.findViewById(R.id.tvQuote);
-        btStart = view.findViewById(R.id.btnStart);
+        btStart = view.findViewById(R.id.btSubmit);
+        ivBackground = view.findViewById(R.id.ivBackground);
 
         //Set format for date and time
         tcDate.setFormat12Hour("EEE, MMM d, ''yy");
@@ -73,11 +83,22 @@ public class HomeFragment extends Fragment {
                 random.nextInt(
                         Quotes.size())));
 
+        //Todo: set random background
+
         //TODO: set up navigation to start run
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                homeFragmentInterface.startRun();
+                if (completedMoodSurvey) {
+                    completedMoodSurvey=false;
+                    //Todo: pass mood object
+                    //startRunFragmentInterface.openRunningFragment(preRunMood);
+                    homeFragmentInterface.openRunningFragment();
+                } else {
+                    FragmentManager fm = HomeFragment.this.getChildFragmentManager();
+                    moodSurvey = new PreRunMoodDialogFragment();
+                    moodSurvey.show(fm, "Survey");
+                }
             }
         });
 
@@ -98,6 +119,8 @@ public class HomeFragment extends Fragment {
 
     public interface HomeFragmentInterface{
         public void startRun();
+        public void openRunningFragment();
+
     }
 
 

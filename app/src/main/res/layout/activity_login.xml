@@ -20,48 +20,62 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/loginimage3" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etUser"
+    <FrameLayout
+        android:id="@+id/flUser"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="80dp"
-        android:backgroundTint="#FFFFFF"
-        android:hint="@string/et_user"
-        android:textColorHint="@color/white"
+        android:background="#80000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppName" />
+        app:layout_constraintStart_toStartOf="@+id/ivLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvAppName">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etPassword"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#80FFFFFF"
+            android:hint="@string/et_user"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flPass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
-        android:backgroundTint="#FFFFFF"
-        android:hint="@string/et_password"
-        android:inputType="textPassword"
-        android:textColorHint="@color/white"
+        android:background="#80000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUser" />
+        app:layout_constraintStart_toStartOf="@+id/ivLogin"
+        app:layout_constraintTop_toBottomOf="@+id/flUser">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#80FFFFFF"
+            android:hint="@string/et_password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </FrameLayout>
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
         android:onClick="attemptLogin"
         android:text="@string/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/flPass" />
 
     <Button
         android:id="@+id/btnSignup"
