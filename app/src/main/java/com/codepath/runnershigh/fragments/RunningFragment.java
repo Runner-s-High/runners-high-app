@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.runnershigh.R;
+import com.codepath.runnershigh.RunData;
 
 
 public class RunningFragment extends Fragment {
@@ -39,6 +40,8 @@ public class RunningFragment extends Fragment {
 
     TextView tvDistance;
     TextView tvPace;
+
+
 
 
     public RunningFragment() {
