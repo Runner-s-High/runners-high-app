@@ -128,11 +128,10 @@ public class RunningFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), "user clicks yes, move to post run screen", Toast.LENGTH_SHORT).show();
 
-                Bundle runStats = new Bundle();
                 //TODO: build a post run class for all post run info
-                //runstats.time = cmTime.gettext.toString etc...
 
-                runningFragmentInterface.runComplete(runStats);
+
+                runningFragmentInterface.runComplete(cmTime.getText().toString());
             }
         });
 
@@ -159,7 +158,7 @@ public class RunningFragment extends Fragment {
     }
 
     public interface RunningFragmentInterface{
-        public void runComplete(Bundle runStats);
+        public void runComplete(String runtime);
         //Todo: implement with RunStats Object
         //public void runComplete(RunStats runStats);
     }

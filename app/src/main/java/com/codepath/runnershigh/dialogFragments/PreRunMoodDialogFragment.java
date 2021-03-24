@@ -30,7 +30,6 @@ public class PreRunMoodDialogFragment extends DialogFragment {
     boolean moodSet=false;
 
 
-    RunData runData;
     int preRunMoodRating;
 
 
@@ -83,7 +82,7 @@ public class PreRunMoodDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 //Todo: collect info from views and create mood object, pass mood object as param
                 if(moodSet) {
-                    preRunMoodDialogFragmentInterface.surveyCompleted(new Bundle());
+                    preRunMoodDialogFragmentInterface.surveyCompleted(preRunMoodRating);
                     //preRunMoodDialogFragmentInterface.surveyCompleted(preRunMood);
                     dismiss();
                 }else{
@@ -95,38 +94,26 @@ public class PreRunMoodDialogFragment extends DialogFragment {
 
 
     }
-/*
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDialog().getWindow().setLayout
-                (ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-    }
 
- */
 
     View.OnClickListener moodBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            runData=new RunData();
             switch (v.getId()) {
                 case R.id.IB1:
-                    runData.setPreRunMood(1);
+                    preRunMoodRating=1;
                     break;
                 case R.id.IB2:
-                    runData.setPreRunMood(2);
+                    preRunMoodRating=2;
                     break;
                 case R.id.IB3:
-                    runData.setPreRunMood(3);
+                    preRunMoodRating=3;
                     break;
                 case R.id.IB4:
-                    runData.setPreRunMood(4);
+                    preRunMoodRating=4;
                     break;
                 case R.id.IB5:
-                    runData.setPreRunMood(5);
-                    break;
+                    preRunMoodRating=5;
             }
             unselectMoodButtons();
             v.setSelected(true);
@@ -163,7 +150,7 @@ public class PreRunMoodDialogFragment extends DialogFragment {
     }
 
     public interface PreRunMoodDialogFragmentInterface{
-        public void surveyCompleted(Bundle mood);
+        public void surveyCompleted(int preMoodScore);
 
         //Todo: change bundle mood to mood class object
         //public void surveyCompleted(Mood preRunMood);

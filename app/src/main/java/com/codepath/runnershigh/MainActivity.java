@@ -18,6 +18,11 @@ import android.widget.Toast;
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 import com.codepath.runnershigh.fragments.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +34,12 @@ public class MainActivity extends AppCompatActivity implements
         PreRunMoodDialogFragment.PreRunMoodDialogFragmentInterface,
         PostRunFragment.PostRunFragmentInterface {
 
-    //Mood mainPreRunMood;
+    //Bundle for storing new run info until submission
+    Bundle newRunBundle;
+    public static final String NEWRUNPREMOOD="newrunpremood",
+            NEWRUNPOSTMOOD="newrunpostmood",
+            NEWRUNTIME="newruntime",
+            NEWRUNNOTE="newrunnote";
 
 
 
@@ -69,8 +79,6 @@ public class MainActivity extends AppCompatActivity implements
         if(startRunFragment==null)
             startRunFragment = new StartRunFragment();
 
-        if(historyFragment==null)
-            historyFragment=new HistoryFragment();
 
 
 
@@ -84,21 +92,20 @@ public class MainActivity extends AppCompatActivity implements
                 Fragment fragment;
                 switch(item.getItemId()){
                     case R.id.itHistory:
-                        fragment = historyFragment;
-                        Toast.makeText(context, "Moving To History Fragment", Toast.LENGTH_SHORT).show();
+                        fragment = new HistoryFragment();
+
                         break;
                     case R.id.itHome:
-                        fragment = homeFragment;
-                        Toast.makeText(context, "Moving to Home Fragment", Toast.LENGTH_SHORT).show();
+                        fragment = new HomeFragment();
+
                         break;
                     case R.id.itRun:
                         fragment = startRunFragment;
-                        Toast.makeText(context, "Moving to Run Fragment", Toast.LENGTH_SHORT).show();
+
 
                         break;
                     case R.id.itTrackMood:
                         fragment = trackMoodFragment;
-                        Toast.makeText(context, "Moving to TackMood Fragment", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + item.getItemId());
@@ -158,6 +165,30 @@ public class MainActivity extends AppCompatActivity implements
                 });
     }
 
+    public RunData runDataFromBundle(Bundle runBundle){
+        RunData runData= new RunData();
+        runData.setPreRunMood(runBundle.getInt(NEWRUNPREMOOD));
+
+        runData.setPostRunMood(runBundle.getInt(NEWRUNPOSTMOOD));
+
+        runData.setRunTime(runBundle.getString(NEWRUNTIME));
+
+        runData.setUser(ParseUser.getCurrentUser());
+        return runData;
+    }
+
+    public void saveRunData(RunData runData){
+        runData.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e!=null)
+                    Toast.makeText(context, "Error Saving Run", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(context, "Run Saved", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     //////////////////////////////////////////////////////////////////////
     //                           INTERFACE
     //                        IMPLEMENTATIONS
@@ -177,12 +208,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void runComplete(Bundle runStats) {
-        //Todo: runComplete uses RunStats object
-    //public void runComplete(RunStats runStats) {
-        //TODO: navigate to post run fragment
-        //PostRunFragment postRunFragment = PostRunFragment.newInstance(mainPreRunMood, runStats);
-        PostRunFragment postRunFragment = new PostRunFragment();
+    public void runComplete(String runtime) {
+        newRunBundle.putString(NEWRUNTIME,runtime);
+        PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -196,20 +224,20 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void surveyCompleted(Bundle preRunMood) {
-        //Todo: change param to Mood object
-    //public void surveyCompleted(Mood preRunMood) {
-        //todo: Store prerun mood, access later @ post run screen
-        //ex. mainPreRunMood = preRunMood;
-        //preRunMood could be continually passed between all the stages but I think it would just be
-        //easier to keep it as a class variable in MainActivity and then access it later
+    public void surveyCompleted(int preRunMood) {
+        newRunBundle = new Bundle();
+        newRunBundle.putInt(NEWRUNPREMOOD,preRunMood);
         openRunningFragment();
     }
 
 
     //Post Run Fragment Interface
     @Override
-    public void exitPostRun() {
+    public void exitPostRun(boolean save, Bundle completeRunInfo) {
+        if(save){
+            saveRunData(runDataFromBundle(completeRunInfo));
+            //Todo: Make a new RunData object with all the info from the complete run and upload it
+        }
         showBottomNav();
         bottomNavigationView.setSelectedItemId(R.id.itHistory);
     }
