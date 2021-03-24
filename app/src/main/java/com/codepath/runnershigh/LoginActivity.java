@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         if(ParseUser.getCurrentUser() != null) {
             Log.i(TAG, "User already logged in; starting MainActivity");
             startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
     }
 
@@ -79,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                     etUser.setText("");
                     etPassword.setText("");
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 }
                 else {
                     //LogIn failed
@@ -110,17 +112,17 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     //User successfully signed up
-                    Log.i(TAG, "User successfully signed up; starting MainActivity");
+                    Log.i(TAG, "User successfully signed up; starting OnboardingActivity");
                     etUser.setText("");
                     etPassword.setText("");
                     startActivity(new Intent(LoginActivity.this, OnboardingActivity.class));
+                    finish();
                 }
                 else {
                     //Error signing up
                     //Display Toast to user
                     Toast.makeText(LoginActivity.this, "SignUp Error", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, e.getMessage());
-                    e.printStackTrace();
                 }
             }
         });
