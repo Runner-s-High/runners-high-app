@@ -20,62 +20,60 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/loginimage3" />
 
-    <FrameLayout
-        android:id="@+id/flUser"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etUser"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="80dp"
-        android:background="#80000000"
+        android:backgroundTint="#FFFFFF"
+        android:hint="@string/et_user"
+        android:textColorHint="@android:color/darker_gray"
+        android:textColor="@color/secondaryTextColor"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_user"
+        android:drawablePadding="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ivLogin"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppName">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAppName" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#80FFFFFF"
-            android:hint="@string/et_user"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/flPass"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPassword"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
-        android:background="#80000000"
+        android:backgroundTint="#FFFFFF"
+        android:hint="@string/et_password"
+        android:inputType="textPassword"
+        android:textColorHint="@android:color/darker_gray"
+        android:background="@drawable/custom_input"
+        android:textColor="@color/secondaryTextColor"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ivLogin"
-        app:layout_constraintTop_toBottomOf="@+id/flUser">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#80FFFFFF"
-            android:hint="@string/et_password"
-            android:inputType="textPassword"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-    </FrameLayout>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etUser" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginStart="80dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
         android:onClick="attemptLogin"
         android:text="@string/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flPass" />
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <Button
         android:id="@+id/btnSignup"
@@ -90,18 +88,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
-    <ImageView
-        android:id="@+id/ivLogo"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvLogo"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/ivLogin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tvBlurb"
@@ -112,13 +121,13 @@
         android:layout_marginBottom="25dp"
         android:fontFamily="sans-serif"
         android:text="@string/signup_blurb"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:shadowColor="#000000"
+        android:shadowColor="@android:color/black"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
-        android:shadowRadius="1.6"
+        android:shadowRadius="2.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -130,12 +139,16 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="80dp"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="2.5"
         android:text="@string/main_name"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/white"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/cvLogo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
