@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i(TAG, "User successfully signed up; starting MainActivity");
                     etUser.setText("");
                     etPassword.setText("");
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, OnboardingActivity.class));
                 }
                 else {
                     //Error signing up
