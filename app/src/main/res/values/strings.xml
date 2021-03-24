@@ -7,8 +7,23 @@
     <string name="et_password">Password</string>
     <string name="settings_icon">Settings</string>
     <string name="main_name">Runner\'s High</string>
+    <string name="btn_proceed">Let\'s Get Started!</string>
     <string name="signup_blurb">
         - Track your run\n- Log your mood\n- Conquer your day!
+    </string>
+    <string name="welcome_blurb">
+"Stressed out and want to go for a run?
+
+Use Runner\'s High to track your run and your mood at the same!
+
+When starting a run workout, the app will ask you your mood. Then just run like normal.
+You can keep tabs on your progress with statistics and live location tracking.
+Once the run is completed, fill out your new mood and feel free to look back over your
+previous runs as well.
+
+We hope this app treats you well, and enjoy your runs!
+
+- Development Team"
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

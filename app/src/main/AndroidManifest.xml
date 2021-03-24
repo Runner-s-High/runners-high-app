@@ -13,9 +13,8 @@
         android:roundIcon="@mipmap/launcher_ic_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnersHigh">
-        <activity android:name=".OnboardingActivity"></activity>
+        <activity android:name=".OnboardingActivity"/>
         <activity android:name=".MoreInfoActivity" />
-        <activity android:name=".SettingsActivity" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.RunnersHigh.Launcher">

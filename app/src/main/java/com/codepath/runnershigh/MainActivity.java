@@ -10,6 +10,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -18,6 +19,10 @@ import android.widget.Toast;
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 import com.codepath.runnershigh.fragments.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.LogOutCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -32,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements
         RunningFragment.RunningFragmentInterface,
         HomeFragment.HomeFragmentInterface,
         PreRunMoodDialogFragment.PreRunMoodDialogFragmentInterface,
-        PostRunFragment.PostRunFragmentInterface {
+        PostRunFragment.PostRunFragmentInterface,
+        SettingsFragment.SettingsFragmentInterface {
 
     //Bundle for storing new run info until submission
     Bundle newRunBundle;
@@ -56,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements
     StartRunFragment startRunFragment;
     HistoryFragment historyFragment;
     TrackMoodFragment trackMoodFragment;
-
+    SettingsFragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements
         if(startRunFragment==null)
             startRunFragment = new StartRunFragment();
 
+
+        if(settingsFragment==null)
+            settingsFragment=new SettingsFragment();
 
 
 
@@ -119,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+
+
         //Setting default selection
         bottomNavigationView.setSelectedItemId(R.id.itHome);
 
@@ -132,9 +143,17 @@ public class MainActivity extends AppCompatActivity implements
         return super.onCreateOptionsMenu(menu);
     }
 
-    //onClick method for settings icon
-    public void openSettings(MenuItem m) {
-        startActivity(new Intent(this, SettingsActivity.class));
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.icSettings:
+                openSettingsFragment();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
     }
 
     public void hideBottomNav(){
@@ -208,6 +227,16 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void openSettingsFragment() {
+        Fragment fragment = settingsFragment;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.flContainer,fragment)
+                .commit();
+    }
+
+    @Override
     public void runComplete(String runtime) {
         newRunBundle.putString(NEWRUNTIME,runtime);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
@@ -242,4 +271,23 @@ public class MainActivity extends AppCompatActivity implements
         bottomNavigationView.setSelectedItemId(R.id.itHistory);
     }
 
+    //Logs user out of Parse account, sends back to LoginActivity
+    @Override
+    public void logOut() {
+        ParseUser.logOutInBackground(new LogOutCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null) {
+                    Log.i(SettingsFragment.TAG, "Successfully logged out Parse User");
+                    Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
+                }
+                else {
+                    Log.e(SettingsFragment.TAG, e.getMessage());
+                    Toast.makeText(MainActivity.this, "Error logging out", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }
