@@ -15,7 +15,7 @@
         android:id="@+id/tvVibeCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="What's your vibe?"
+        android:text="Vibe Check"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_sentiment_very_dissatisfied_24"
+            android:src="@drawable/mood1"
             android:tint="#FF99C9" />
 
         <ImageButton
@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_sentiment_dissatisfied_24"
+            android:src="@drawable/mood2"
             android:tint="#6A9DB8" />
 
         <ImageButton
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_sentiment_satisfied_24"
+            android:src="@drawable/mood3"
             android:tint="#87DBA8" />
 
         <ImageButton
@@ -70,7 +70,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_sentiment_satisfied_alt_24"
+            android:src="@drawable/mood4"
             android:tint="#C288E5" />
 
         <ImageButton
@@ -82,7 +82,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_sentiment_very_satisfied_24"
+            android:src="@drawable/mood5"
             android:tint="#FFEE58" />
 
     </LinearLayout>

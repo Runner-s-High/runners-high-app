@@ -128,19 +128,13 @@ public class PreRunMoodDialogFragment extends DialogFragment {
                     runData.setPreRunMood(5);
                     break;
             }
-            enableMoodBtns();
-            v.setEnabled(false);
+            unselectMoodButtons();
             v.setSelected(true);
             moodSet = true;
         }
     };
 
-    public void enableMoodBtns(){
-        IB1.setEnabled(true);
-        IB2.setEnabled(true);
-        IB3.setEnabled(true);
-        IB4.setEnabled(true);
-        IB5.setEnabled(true);
+    public void unselectMoodButtons(){
         IB1.setSelected(false);
         IB2.setSelected(false);
         IB3.setSelected(false);
