@@ -157,7 +157,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             }
             else if (prescore == 2) {
 
-                leftgraphcolor=Color.YELLOW;
+                leftgraphcolor=Color.rgb(255,165,0);
             }
             else if (prescore == 3) {
 
@@ -165,7 +165,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             }
             else if (prescore == 4) {
 
-                leftgraphcolor=Color.GREEN;
+                leftgraphcolor=Color.rgb(173,255,47);
             }
             else if (prescore == 5) {
 
@@ -179,14 +179,14 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             }
             else if (postscore == 2) {
 
-                rightgraphcolor=Color.YELLOW;
+                rightgraphcolor=Color.rgb(255,165,0);
             } else if (postscore == 3) {
 
                 rightgraphcolor=Color.YELLOW;
 
             } else if (postscore == 4) {
 
-                rightgraphcolor=Color.GREEN;
+                rightgraphcolor=Color.rgb(173,255,47);
             }
             else if (postscore == 5) {
 

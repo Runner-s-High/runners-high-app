@@ -134,7 +134,7 @@ public class MoreInfoActivity extends AppCompatActivity {
         }
         else if (prescore == 2) {
             preMood.setImageResource(R.drawable.smallorange);
-            leftgraphcolor=Color.YELLOW;
+            leftgraphcolor=Color.rgb(255,165,0);
         }
         else if (prescore == 3) {
             preMood.setImageResource(R.drawable.mediumface);
@@ -142,7 +142,7 @@ public class MoreInfoActivity extends AppCompatActivity {
         }
         else if (prescore == 4) {
             preMood.setImageResource(R.drawable.smalllightgreen);
-            leftgraphcolor=Color.GREEN;
+            leftgraphcolor=Color.rgb(173,255,47);
         }
         else if (prescore == 5) {
             preMood.setImageResource(R.drawable.happiest);
@@ -156,14 +156,14 @@ public class MoreInfoActivity extends AppCompatActivity {
         }
         else if (postscore == 2) {
             postMood.setImageResource(R.drawable.smallorange);
-            rightgraphcolor=Color.YELLOW;
+            rightgraphcolor=Color.rgb(255,165,0);
         } else if (postscore == 3) {
             postMood.setImageResource(R.drawable.mediumface);
             rightgraphcolor=Color.YELLOW;
 
         } else if (postscore == 4) {
             postMood.setImageResource(R.drawable.smalllightgreen);
-            rightgraphcolor=Color.GREEN;
+            rightgraphcolor=Color.rgb(173,255,47);
         }
         else if (postscore == 5) {
             postMood.setImageResource(R.drawable.happiest);
