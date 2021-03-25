@@ -44,6 +44,11 @@ Runner's High is a mood-tracking and run-tracking app that allows users to log t
 ### First App Walkthough GIF
 <img src="https://github.com/Runner-s-High/runners-high-app/blob/main/first%20walkthrough.gif" width=250><br>
 
+### Second App Walkthough GIF
+<img src="https://github.com/Runner-s-High/runners-high-app/blob/main/2nd%20walkthrouhg.gif" width=250><br>
+
+
+
 
 ### 2. Screen Archetypes
 
