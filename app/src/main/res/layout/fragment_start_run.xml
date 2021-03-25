@@ -2,10 +2,10 @@
 <RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.StartRunFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -25,17 +25,17 @@
 
     <ImageButton
         android:id="@+id/IB1"
-        android:layout_width="52dp"
+        android:layout_width="59dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="7dp"
         android:layout_marginTop="48dp"
-        android:layout_marginBottom="167dp"
+        android:layout_marginBottom="168dp"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/IB2"
         app:layout_constraintTop_toBottomOf="@+id/message"
-        app:srcCompat="@drawable/angriest" />
+        app:srcCompat="@drawable/angriestcropped" />
 
     <TextView
         android:id="@+id/message"
@@ -58,13 +58,14 @@
         android:layout_width="73dp"
         android:layout_height="68dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="19dp"
         android:layout_marginTop="48dp"
-        android:layout_marginBottom="169dp"
+        android:layout_marginBottom="170dp"
         android:layout_toEndOf="@+id/IB1"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/IB3"
         app:layout_constraintTop_toBottomOf="@+id/message"
-        app:srcCompat="@drawable/smallorange" />
+        app:srcCompat="@drawable/smallorangecropped" />
 
     <ImageButton
         android:id="@+id/IB4"
@@ -73,11 +74,12 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="48dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginBottom="169dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="172dp"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/IB5"
         app:layout_constraintTop_toBottomOf="@+id/message"
-        app:srcCompat="@drawable/smalllightgreen" />
+        app:srcCompat="@drawable/smalllightgreencropped" />
 
     <ImageButton
         android:id="@+id/IB5"
@@ -85,11 +87,12 @@
         android:layout_height="66dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-8dp"
-        android:layout_marginBottom="166dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="173dp"
+        android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/happiest" />
+        app:srcCompat="@drawable/happiestcropped" />
 
     <ImageButton
         android:id="@+id/IB3"
@@ -98,10 +101,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
-        android:layout_marginBottom="165dp"
+        android:layout_marginBottom="168dp"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/IB4"
         app:layout_constraintTop_toBottomOf="@+id/message"
-        app:srcCompat="@drawable/mediumface" />
+        app:srcCompat="@drawable/mediumfacecropped" />
 
     <Button
         android:id="@+id/btSubmit"

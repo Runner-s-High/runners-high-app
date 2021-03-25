@@ -3,6 +3,7 @@ package com.codepath.runnershigh;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,19 +56,24 @@ public class MoreInfoActivity extends AppCompatActivity {
         int prescore = therun.getPreRunMood();
         int postscore = therun.getPostRunMood();
 
-        SetMessage(prescore,postscore);
-        SetFaces(prescore, postscore);
-
         barEntryArrayList = new ArrayList<>();
+
         barEntryArrayList.add(new BarEntry(0,prescore));
         barEntryArrayList.add(new BarEntry(1,postscore));
         RunLabels.add("PRE-RUN");
         RunLabels.add("POST-RUN");
         BarDataSet barDataSet=new BarDataSet(barEntryArrayList,"Moods");
 
+
+        SetMessage(prescore,postscore);     //Greg- These functions were created and defined below
+        SetFaces(prescore, postscore,barDataSet);      //
+
+       // barDataSet.setColors(Color.RED,Color.GREEN);
+
         BarData barData=new BarData(barDataSet);
         barData.setDrawValues(false);
         mybarchart.setData(barData);
+
         Description description=mybarchart.getDescription();
         description.setEnabled(false);
         Legend legend=mybarchart.getLegend();
@@ -99,6 +105,9 @@ public class MoreInfoActivity extends AppCompatActivity {
         //set to non scrollable
         mybarchart.setScrollContainer(false);
 
+        //SetBarGraphColors(barDataSet);          //Greg 3/24 -created function for changing colors of bar graph
+
+
         GoBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,36 +121,56 @@ public class MoreInfoActivity extends AppCompatActivity {
 
     }
 
-    public void SetFaces(int prescore,int postscore){
+
+
+
+    public void SetFaces(int prescore,int postscore,BarDataSet bardataset){
+        int leftgraphcolor = 0;
+        int rightgraphcolor=0;
+
         if (prescore == 1) {
             preMood.setImageResource(R.drawable.angriest);
-
-        } else if (prescore == 2) {
+            leftgraphcolor=Color.RED;
+        }
+        else if (prescore == 2) {
             preMood.setImageResource(R.drawable.smallorange);
-        } else if (prescore == 3) {
+            leftgraphcolor=Color.YELLOW;
+        }
+        else if (prescore == 3) {
             preMood.setImageResource(R.drawable.mediumface);
-        } else if (prescore == 4) {
+            leftgraphcolor=Color.YELLOW;
+        }
+        else if (prescore == 4) {
             preMood.setImageResource(R.drawable.smalllightgreen);
-        } else if (prescore == 5) {
+            leftgraphcolor=Color.GREEN;
+        }
+        else if (prescore == 5) {
             preMood.setImageResource(R.drawable.happiest);
+            leftgraphcolor=Color.GREEN;
         }
 
 
         if (postscore == 1) {
             postMood.setImageResource(R.drawable.angriest);
-        } else if (postscore == 2) {
+            rightgraphcolor=Color.RED;
+        }
+        else if (postscore == 2) {
             postMood.setImageResource(R.drawable.smallorange);
-
+            rightgraphcolor=Color.YELLOW;
         } else if (postscore == 3) {
             postMood.setImageResource(R.drawable.mediumface);
+            rightgraphcolor=Color.YELLOW;
 
         } else if (postscore == 4) {
             postMood.setImageResource(R.drawable.smalllightgreen);
-
-        } else if (postscore == 5) {
+            rightgraphcolor=Color.GREEN;
+        }
+        else if (postscore == 5) {
             postMood.setImageResource(R.drawable.happiest);
+            rightgraphcolor=Color.GREEN;
 
         }
+        bardataset.setColors(leftgraphcolor,rightgraphcolor);
     }
 
     public void SetMessage(int prescore,int postscore){

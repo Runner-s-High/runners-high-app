@@ -6,47 +6,73 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvPostRunScore"
-        android:layout_width="169dp"
-        android:layout_height="56dp"
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="21dp"
+        android:layout_height="24dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="231dp"
-        android:layout_marginTop="80dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="194dp"
+        android:layout_marginTop="169dp"
+        app:srcCompat="@drawable/smalllightgreencropped" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="21dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="194dp"
+        android:layout_marginTop="247dp"
+        app:srcCompat="@drawable/angriestcropped" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="21dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="194dp"
+        android:layout_marginTop="196dp"
+        app:srcCompat="@drawable/mediumfacecropped" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="21dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="194dp"
+        android:layout_marginTop="144dp"
+        app:srcCompat="@drawable/happiestcropped" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="21dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="194dp"
+        android:layout_marginTop="222dp"
+        app:srcCompat="@drawable/smallorangecropped" />
 
     <TextView
-        android:id="@+id/tvMessage2"
-        android:layout_width="159dp"
-        android:layout_height="48dp"
+        android:id="@+id/tvDate"
+        android:layout_width="339dp"
+        android:layout_height="44dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="7dp"
-        android:text="PostRun Score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="37dp"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="45dp" />
-
-    <TextView
-        android:id="@+id/tvMessage1"
-        android:layout_width="146dp"
-        android:layout_height="44dp"
-        android:layout_alignBottom="@+id/tvMessage2"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="-4dp"
-        android:text="PreRun Score" />
-
-    <TextView
-        android:id="@+id/tvPreRunScore"
-        android:layout_width="131dp"
-        android:layout_height="48dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="78dp" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/thebargraph"
@@ -68,6 +94,28 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="223dp"
         android:text="MORE INFO" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="408dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/thebargraph"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="-2dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="121dp"
+        android:layout_height="73dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="78dp"
+        android:text="add run time here" />
 
 
 </RelativeLayout>

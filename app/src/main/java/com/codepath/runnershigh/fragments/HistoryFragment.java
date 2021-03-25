@@ -54,7 +54,7 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_history, container, false);
     }
-                                        //retrives past runs on back4app for the signed in user
+                                        //retrieves past runs on back4app for the signed in user
     protected void queryPosts() {
         ParseQuery<RunData> query=ParseQuery.getQuery(RunData.class);
         query.include(RunData.KEY_USER);

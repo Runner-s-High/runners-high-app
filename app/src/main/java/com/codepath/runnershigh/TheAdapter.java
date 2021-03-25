@@ -2,6 +2,7 @@ package com.codepath.runnershigh;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,9 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import org.parceler.Parcels;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
     //layout resource file "eachrun" defines the layout for each view in recyclerview
@@ -63,8 +66,8 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView PreRunScore;
-        TextView PostRunScore;
+        TextView TheDate;
+
         Button infobutton;
 
         BarChart TheBarChart;
@@ -74,8 +77,8 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            PreRunScore=itemView.findViewById(R.id.tvPreRunScore);
-            PostRunScore=itemView.findViewById(R.id.tvPostRunScore);
+           TheDate=itemView.findViewById(R.id.tvDate);
+
             TheBarChart = itemView.findViewById(R.id.thebargraph);
             infobutton = itemView.findViewById(R.id.infobutton);
 
@@ -91,11 +94,12 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
                 }
             });
 
+                            // Greg 3/24 removed scores and swapped with date
+            TheDate.setText(run.getRunDate());
+
             String a= String.valueOf(run.getPreRunMood());
             String b=String.valueOf(run.getPostRunMood());
 
-            PreRunScore.setText(a);
-            PostRunScore.setText(b);
 
             RunLabels=new ArrayList<>();
             int prescore = run.getPreRunMood();
@@ -138,8 +142,58 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
             TheBarChart.setDrawValueAboveBar(false);
             TheBarChart.setDrawGridBackground(true);
+            TheBarChart.animateY(1000);
             TheBarChart.invalidate();
+            SetGraphColors(prescore,postscore,barDataSet);         //Greg-function defined below
+        }
 
+        public void SetGraphColors(int prescore,int postscore,BarDataSet bardataset){
+            int leftgraphcolor,rightgraphcolor;
+            leftgraphcolor=rightgraphcolor=0;
+
+            if (prescore == 1) {
+
+                leftgraphcolor= Color.RED;
+            }
+            else if (prescore == 2) {
+
+                leftgraphcolor=Color.YELLOW;
+            }
+            else if (prescore == 3) {
+
+                leftgraphcolor=Color.YELLOW;
+            }
+            else if (prescore == 4) {
+
+                leftgraphcolor=Color.GREEN;
+            }
+            else if (prescore == 5) {
+
+                leftgraphcolor=Color.GREEN;
+            }
+
+
+            if (postscore == 1) {
+
+                rightgraphcolor=Color.RED;
+            }
+            else if (postscore == 2) {
+
+                rightgraphcolor=Color.YELLOW;
+            } else if (postscore == 3) {
+
+                rightgraphcolor=Color.YELLOW;
+
+            } else if (postscore == 4) {
+
+                rightgraphcolor=Color.GREEN;
+            }
+            else if (postscore == 5) {
+
+                rightgraphcolor=Color.GREEN;
+
+            }
+            bardataset.setColors(leftgraphcolor,rightgraphcolor);
         }
 
     }

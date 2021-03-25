@@ -24,11 +24,16 @@ import com.parse.SaveCallback;
 
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 
-    //Temporary setup just to test pre and post run moods-Greg
+import java.text.DateFormat;
+import java.util.Calendar;
+
+//Temporary setup just to test pre and post run moods-Greg
     //visual could be improved by cropping whitespace around each circle and
     //figuring out radiobox and radiobuttons instead of 5 buttons with click handlers
 
 public class StartRunFragment extends Fragment {
+
+
 
     Button btnStart;
     StartRunFragmentInterface startRunFragmentInterface;
@@ -161,10 +166,14 @@ public class StartRunFragment extends Fragment {
     //Todo: Move PutOnCloud to postRunFragment and upload on save.
                                                                 //saving data to back4app
     public void PutOnCloud(int pre, int post, ParseUser user){
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+
         RunData RD=new RunData();
         RD.setPreRunMood(pre);
         RD.setPostRunMood(post);
         RD.setUser(user);
+        RD.setRunDate(currentDate);
         RD.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

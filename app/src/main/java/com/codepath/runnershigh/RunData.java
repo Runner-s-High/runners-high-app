@@ -12,6 +12,7 @@ public class RunData extends ParseObject {          //keys are the names of the 
     public static final String KEY_USER="TheUser";
     public static final String KEY_CREATED_AT="createdAt";
     public static final String KEY_RUN_TIME="RunTime";
+    public static final String KEY_RUN_DATE="RunDate";
 
     public int getPreRunMood(){
         return getInt(KEY_PRERUNMOOD);
@@ -53,6 +54,14 @@ public class RunData extends ParseObject {          //keys are the names of the 
     public void setRunTime(String runTime){
 
         put(KEY_RUN_TIME,runTime);
+    }
+
+    public String getRunDate(){
+        return getString(KEY_RUN_DATE);
+    }
+
+    public void setRunDate(String date){
+        put(KEY_RUN_DATE,date);
     }
 
 }

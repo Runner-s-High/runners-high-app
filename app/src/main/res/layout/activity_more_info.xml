@@ -8,6 +8,29 @@
     android:layout_height="match_parent"
     tools:context=".MoreInfoActivity">
 
+    <TextView
+        android:id="@+id/message2"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ivpostmood"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="101dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="4dp"
+        android:text="Post-Run Mood"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/ivpostmood"
+        android:layout_width="wrap_content"
+        android:layout_height="114dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="309dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <ImageView
         android:id="@+id/ivangriest"
         android:layout_width="27dp"
@@ -63,16 +86,6 @@
         android:layout_marginBottom="261dp"
         app:srcCompat="@drawable/happiest" />
 
-    <ImageView
-        android:id="@+id/ivpostmood"
-        android:layout_width="wrap_content"
-        android:layout_height="114dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="272dp"
-        android:layout_marginBottom="388dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -82,24 +95,15 @@
 
     <TextView
         android:id="@+id/message1"
-        android:layout_width="133dp"
-        android:layout_height="109dp"
+        android:layout_width="130dp"
+        android:layout_height="81dp"
+        android:layout_above="@+id/ivpremood"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="102dp"
+        android:layout_marginBottom="5dp"
         android:text="Pre-Run Mood"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/message2"
-        android:layout_width="124dp"
-        android:layout_height="118dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="101dp"
-        android:layout_marginEnd="17dp"
-        android:text="Post-Run Mood"
         android:textSize="30sp" />
 
     <ImageView
@@ -108,8 +112,8 @@
         android:layout_height="114dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="390dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="301dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <com.github.mikephil.charting.charts.BarChart
@@ -130,20 +134,22 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="80dp"
         android:textAlignment="viewStart"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/nextbutton"
-        android:layout_width="wrap_content"
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="110dp"
-        android:layout_marginBottom="319dp"
-        android:text="Back" />
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="262dp"
+        android:layout_marginBottom="6dp"
+        android:text="Go Back" />
 
 
 </RelativeLayout>
