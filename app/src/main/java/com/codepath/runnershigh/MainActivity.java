@@ -1,36 +1,35 @@
 package com.codepath.runnershigh;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
-import com.codepath.runnershigh.fragments.*;
+import com.codepath.runnershigh.fragments.HistoryFragment;
+import com.codepath.runnershigh.fragments.HomeFragment;
+import com.codepath.runnershigh.fragments.PostRunFragment;
+import com.codepath.runnershigh.fragments.RunningFragment;
+import com.codepath.runnershigh.fragments.SettingsFragment;
+import com.codepath.runnershigh.fragments.StartRunFragment;
+import com.codepath.runnershigh.fragments.TrackMoodFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements
         StartRunFragment.StartRunFragmentInterface,
@@ -217,6 +216,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void openRunningFragment() {
+        //Starting location Service
+        //Intent intent = new Intent(getApplicationContext(), LocationService.class);
+        //startService(intent);
+
         hideBottomNav();
         RunningFragment runningFragment = new RunningFragment();
         getSupportFragmentManager()
@@ -238,6 +241,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void runComplete(String runtime) {
+        //Stopping location service
+        //Intent intent = new Intent(getApplicationContext(), LocationService.class);
+        //stopService(intent);
+
         newRunBundle.putString(NEWRUNTIME,runtime);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()

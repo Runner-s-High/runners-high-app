@@ -1,11 +1,17 @@
 package com.codepath.runnershigh.fragments;
 
+import android.Manifest;
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -26,6 +32,8 @@ import java.util.Random;
 
 
 public class HomeFragment extends Fragment {
+    public static final int REQUEST_CODE_LOCATION_PERMISSION=1;
+
     TextClock tcDate;
     TextClock tcTime;
 
@@ -89,10 +97,41 @@ public class HomeFragment extends Fragment {
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(ContextCompat.checkSelfPermission(
+                        getActivity().getApplicationContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(
+                            getActivity(),
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION},
+                            REQUEST_CODE_LOCATION_PERMISSION);
+                }else {
+
+                    if (completedMoodSurvey) {
+                        completedMoodSurvey = false;
+                        homeFragmentInterface.openRunningFragment();
+                    } else {
+                        FragmentManager fm = HomeFragment.this.getChildFragmentManager();
+                        moodSurvey = new PreRunMoodDialogFragment();
+                        moodSurvey.show(fm, "Survey");
+                    }
+                }
+            }
+        });
+
+        //TODO: set up most recent run
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==REQUEST_CODE_LOCATION_PERMISSION){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 if (completedMoodSurvey) {
-                    completedMoodSurvey=false;
-                    //Todo: pass mood object
-                    //startRunFragmentInterface.openRunningFragment(preRunMood);
+                    completedMoodSurvey = false;
                     homeFragmentInterface.openRunningFragment();
                 } else {
                     FragmentManager fm = HomeFragment.this.getChildFragmentManager();
@@ -100,10 +139,7 @@ public class HomeFragment extends Fragment {
                     moodSurvey.show(fm, "Survey");
                 }
             }
-        });
-
-        //TODO: set up most recent run
-
+        }
     }
 
     @Override
