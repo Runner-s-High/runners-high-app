@@ -32,8 +32,6 @@ import com.codepath.runnershigh.services.RunnersHighLocationService;
 public class RunningFragment extends Fragment {
     public static final String TAG=RunningFragment.class.getCanonicalName();
 
-    SensorManager sensorManager;
-
     ImageButton ibPauseResume;
     ImageButton ibStop;
 
@@ -80,45 +78,7 @@ public class RunningFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-/*
-        initializeLocationManager();
-
-        try {
-            locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL
-                    , LOCATION_DISTANCE
-                    , locationListeners[1]
-            );
-            lastLocation=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }catch(java.lang.SecurityException e){
-            Log.e(TAG, "fail to request location update: ",e );
-
-        }catch(IllegalArgumentException e){
-            Log.e(TAG, "network provider does not exist: "+ e.getMessage() );
-        }
-
-        try {
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, LOCATION_INTERVAL
-                    , LOCATION_DISTANCE
-                    , locationListeners[0]
-            );
-            lastLocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        }catch(java.lang.SecurityException e){
-            Log.e(TAG, "fail to request location update: ",e );
-
-        }catch(IllegalArgumentException e){
-            Log.e(TAG, "gps provider does not exist: "+ e.getMessage() );
-        }
-
- */
-
-
-
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -240,94 +200,4 @@ public class RunningFragment extends Fragment {
         //Todo: implement with RunStats Object
         //public void runComplete(RunStats runStats);
     }
-
-    //
-    //
-    //
-    //      Just trying something out
-    //
-    //
-
-/*
-    LocationManager locationManager;
-    public static final int LOCATION_INTERVAL = 1000;       //Get location every x miliseconds, probably gotta change
-    public static final float LOCATION_DISTANCE = 1f;       //Get location every x meters, probably gotta change
-    Location lastLocation;
-
-    private class LocationListener implements android.location.LocationListener {
-
-
-        public LocationListener(String provider) {
-            Log.i(TAG, "LocationListener: " + provider);
-            lastLocation = new Location(provider);
-
-        }
-
-        @Override
-        public void onLocationChanged(@NonNull Location location) {
-            Log.i(TAG, "onLocationChanged: " + location);
-            //Only calculate the distance if the run is being timed
-            if(ticking) {
-                Float distance = lastLocation.distanceTo(location);
-                totalDistance += distance * 0.000621371f;
-                tvDistance.setText(String.format("%.2f", totalDistance));
-            }
-
-            lastLocation.set(location);
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.i(TAG, "onStatusChanged: " + provider);
-        }
-
-        @Override
-        public void onProviderEnabled(@NonNull String provider) {
-            Log.i(TAG, "onProviderEnabled: " + provider);
-
-        }
-
-        @Override
-        public void onProviderDisabled(@NonNull String provider) {
-            Log.i(TAG, "onProviderDisabled: " + provider);
-
-        }
-    }
-
-    RunningFragment.LocationListener[] locationListeners = new RunningFragment.LocationListener[]{
-            new RunningFragment.LocationListener(LocationManager.GPS_PROVIDER),
-            new RunningFragment.LocationListener(LocationManager.NETWORK_PROVIDER)
-    };
-
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG,"onDestroy");
-        releaseLocationManager();
-    }
-
-    private void releaseLocationManager(){
-        Log.d(TAG,"releaseLocationManager");
-        if(locationManager!=null){
-            for(int i = 0; i <locationListeners.length;i++) {
-                try {
-                    locationManager.removeUpdates(locationListeners[i]);
-                } catch (Exception e) {
-                    Log.e(TAG, "Fail to remove location listeners", e);
-                }
-            }
-        }
-    }
-
-    private void initializeLocationManager(){
-        if(locationManager==null){
-            locationManager= (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        }
-    }
-
- */
-
-
 }

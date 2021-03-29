@@ -216,10 +216,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void openRunningFragment() {
-        //Starting location Service
-        //Intent intent = new Intent(getApplicationContext(), LocationService.class);
-        //startService(intent);
-
         hideBottomNav();
         RunningFragment runningFragment = new RunningFragment();
         getSupportFragmentManager()
@@ -241,10 +237,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void runComplete(String runtime) {
-        //Stopping location service
-        //Intent intent = new Intent(getApplicationContext(), LocationService.class);
-        //stopService(intent);
-
         newRunBundle.putString(NEWRUNTIME,runtime);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()
