@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.runnershigh.R;
@@ -51,10 +54,25 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextView tvLearn, tvHelp, tvPhone1, tvPhone2, tvRes1, tvRes2, tvRes3;
         Button btnLogOut;
 
         //Initialize views
+        tvLearn = view.findViewById(R.id.tvLearn);
+        tvHelp = view.findViewById(R.id.tvHelp);
+        tvPhone1 = view.findViewById(R.id.tvPhone1);
+        tvPhone2 = view.findViewById(R.id.tvPhone2);
+        tvRes1 = view.findViewById(R.id.tvRes1);
+        tvRes2 = view.findViewById(R.id.tvRes2);
+        tvRes3 = view.findViewById(R.id.tvRes3);
         btnLogOut = view.findViewById(R.id.btnLogOut);
+
+        tvRes1.setMovementMethod(LinkMovementMethod.getInstance());
+        tvRes2.setMovementMethod(LinkMovementMethod.getInstance());
+        tvRes3.setMovementMethod(LinkMovementMethod.getInstance());
+
+        Linkify.addLinks(tvPhone1, Linkify.ALL);
+        Linkify.addLinks(tvPhone2, Linkify.ALL);
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,6 +8,13 @@
     <string name="settings_icon">Settings</string>
     <string name="main_name">Runner\'s High</string>
     <string name="btn_proceed">Let\'s Get Started!</string>
+    <string name="learn_more">Learn More</string>
+    <string name="help">Immediate Help</string>
+    <string name="nimh"><a href="https://www.nimh.nih.gov/index.shtml">National Institute of Mental Health</a></string>
+    <string name="cdc"><a href="https://www.cdc.gov/mentalhealth/">Mental Health - CDC</a></string>
+    <string name="fsu"><a href="https://counseling.fsu.edu">FSU Counseling Center</a></string>
+    <string name="hotline_suicide">National Suicide Prevention Lifeline\n(+18002738255)</string>
+    <string name="hotline_samhsa">SAMHSA National Helpline\n(+18006624357)</string>
     <string name="signup_blurb">
         - Track your run\n- Log your mood\n- Conquer your day!
     </string>
