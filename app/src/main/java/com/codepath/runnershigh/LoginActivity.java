@@ -87,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                     //Display Toast to user
                     Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, e.getMessage());
-                    e.printStackTrace();
                 }
             }
         });

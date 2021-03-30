@@ -2,7 +2,6 @@ package com.codepath.runnershigh.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -21,10 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
 
-public class PostRunFragment extends Fragment {
+public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     PostRunFragmentInterface postRunFragmentInterface;
 
     Button btSave;
@@ -37,9 +43,13 @@ public class PostRunFragment extends Fragment {
     int postRunMoodRating;
 
     TextView tvRunTime;
+    TextView tvRunDistance;
     EditText etNotes;
 
     Bundle RunInfo;
+
+    MapView mvPostRun;
+    GoogleMap mMap;
 
 
     public PostRunFragment() {
@@ -78,8 +88,11 @@ public class PostRunFragment extends Fragment {
         ivPreMood = view.findViewById(R.id.ivPreMood);
         etNotes = view.findViewById(R.id.etNotes);
         tvRunTime = view.findViewById(R.id.tvRunTime);
+        tvRunDistance = view.findViewById(R.id.tvRunDistance);
+        mvPostRun = view.findViewById(R.id.mvPostRun);
 
         tvRunTime.setText("Time: "+RunInfo.get(MainActivity.NEWRUNTIME));
+        tvRunDistance.setText("Distance: " + RunInfo.get(MainActivity.NEWRUNDISTANCE));
 
         IB1=view.findViewById(R.id.IB1);
         IB2=view.findViewById(R.id.IB2);
@@ -93,7 +106,8 @@ public class PostRunFragment extends Fragment {
         IB4.setOnClickListener(moodBtnListener);
         IB5.setOnClickListener(moodBtnListener);
 
-
+        mvPostRun.onCreate(savedInstanceState);
+        mvPostRun.getMapAsync(this);
 
         //Setting up UI
         setPreMoodImage();
@@ -122,6 +136,7 @@ public class PostRunFragment extends Fragment {
             public void onClick(View v) {
                 if(moodSet) {
                     RunInfo.putString(MainActivity.NEWRUNNOTE, etNotes.getText().toString());
+                    RunInfo.putString(MainActivity.NEWRUNDATE, "Thursday, March 28, 2021");
                     postRunFragmentInterface.exitPostRun(true, RunInfo);
                 }else
                     Toast.makeText(getActivity(), "Finish the post run survey", Toast.LENGTH_SHORT).show();
@@ -203,6 +218,18 @@ public class PostRunFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     +"must implement PostRunFragmentInterface");
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions()
+                .position(sydney)
+                .title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     public interface PostRunFragmentInterface{

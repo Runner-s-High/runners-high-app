@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        tools:src="@drawable/main_background" />
 
 
     <FrameLayout
@@ -37,6 +37,7 @@
                 android:maxLines="1"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 tools:text="Thurs, Jan 10, '21" />
 
@@ -45,11 +46,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tcDate"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="0dp"
                 android:autoSizeTextType="uniform"
                 android:maxLines="1"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="56sp"
                 android:textStyle="bold"
                 tools:text="12:08 PM" />
 
@@ -75,7 +77,8 @@
                 android:autoSizeTextType="uniform"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="20sp" />
+                android:textStyle="italic"
+                tools:text="Really cool tips and quotes that the user will cherish and love" />
 
             <Button
                 android:id="@+id/btSubmit"

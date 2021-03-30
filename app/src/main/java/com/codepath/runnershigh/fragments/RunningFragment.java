@@ -131,7 +131,7 @@ public class RunningFragment extends Fragment {
                 //TODO: build a post run class for all post run info
 
 
-                runningFragmentInterface.runComplete(cmTime.getText().toString());
+                runningFragmentInterface.runComplete(cmTime.getText().toString(), Double.parseDouble(tvDistance.getText().toString()));
             }
         });
 
@@ -158,7 +158,7 @@ public class RunningFragment extends Fragment {
     }
 
     public interface RunningFragmentInterface{
-        public void runComplete(String runtime);
+        public void runComplete(String runtime, double rundistance);
         //Todo: implement with RunStats Object
         //public void runComplete(RunStats runStats);
     }

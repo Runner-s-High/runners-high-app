@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements
     public static final String NEWRUNPREMOOD="newrunpremood",
             NEWRUNPOSTMOOD="newrunpostmood",
             NEWRUNTIME="newruntime",
-            NEWRUNNOTE="newrunnote";
+            NEWRUNDISTANCE="newrundistance",
+            NEWRUNNOTE="newrunnote",
+            NEWRUNDATE="newrundate";
 
 
 
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements
     HomeFragment homeFragment;
     StartRunFragment startRunFragment;
     HistoryFragment historyFragment;
-    TrackMoodFragment trackMoodFragment;
     SettingsFragment settingsFragment;
 
     @Override
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setLogo(R.drawable.ic_running_at_finish_line);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         context=this;
 
@@ -78,9 +79,6 @@ public class MainActivity extends AppCompatActivity implements
         //Initializing Fragments
         if(homeFragment==null)
             homeFragment = new HomeFragment();
-
-        if(trackMoodFragment==null)
-            trackMoodFragment = new TrackMoodFragment();
 
         if(startRunFragment==null)
             startRunFragment = new StartRunFragment();
@@ -112,9 +110,6 @@ public class MainActivity extends AppCompatActivity implements
                         fragment = startRunFragment;
 
 
-                        break;
-                    case R.id.itTrackMood:
-                        fragment = trackMoodFragment;
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + item.getItemId());
@@ -192,6 +187,10 @@ public class MainActivity extends AppCompatActivity implements
 
         runData.setRunTime(runBundle.getString(NEWRUNTIME));
 
+        runData.setRunDistance(runBundle.getDouble(NEWRUNDISTANCE));
+
+        runData.setRunDate(runBundle.getString(NEWRUNDATE));
+
         runData.setUser(ParseUser.getCurrentUser());
         return runData;
     }
@@ -200,8 +199,9 @@ public class MainActivity extends AppCompatActivity implements
         runData.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e!=null)
+                if(e!=null) {
                     Toast.makeText(context, "Error Saving Run", Toast.LENGTH_SHORT).show();
+                }
                 else
                     Toast.makeText(context, "Run Saved", Toast.LENGTH_SHORT).show();
             }
@@ -237,8 +237,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void runComplete(String runtime) {
+    public void runComplete(String runtime, double rundistance) {
         newRunBundle.putString(NEWRUNTIME,runtime);
+        newRunBundle.putDouble(NEWRUNDISTANCE, rundistance);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()
                 .beginTransaction()

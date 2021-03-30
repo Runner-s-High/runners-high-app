@@ -10,10 +10,6 @@
         android:icon="@drawable/ic_baseline_directions_run_24"
         android:title="Run" />
     <item
-        android:id="@+id/itTrackMood"
-        android:icon="@drawable/ic_baseline_add_reaction_24"
-        android:title="Track Mood" />
-    <item
         android:id="@+id/itHistory"
         android:icon="@drawable/ic_baseline_history_24"
         android:title="History" />

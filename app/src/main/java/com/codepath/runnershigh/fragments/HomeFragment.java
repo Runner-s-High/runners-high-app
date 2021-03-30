@@ -78,10 +78,17 @@ public class HomeFragment extends Fragment {
         //Get quotes from resources and set text view to random quote
         Resources resources = getResources();
         List<String> Quotes = Arrays.asList(resources.getStringArray(R.array.Quotes));
+        List<String> tips = Arrays.asList(resources.getStringArray(R.array.tips));
         Random random =new Random();
-        tvQuote.setText(Quotes.get(
-                random.nextInt(
-                        Quotes.size())));
+
+        if(random.nextInt() % 2 == 0) {
+            tvQuote.setText(Quotes.get(
+                    random.nextInt(
+                            Quotes.size())));
+        }
+        else {
+            tvQuote.setText(tips.get(random.nextInt(tips.size())));
+        }
 
         //Todo: set random background
 
