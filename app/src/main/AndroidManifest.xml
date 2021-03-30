@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codepath.runnershigh">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -22,9 +21,11 @@
         android:roundIcon="@mipmap/launcher_ic_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnersHigh">
+        <activity android:name=".SetupProfileActivity"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyArR0ZWiepFnlkb3Vf4qqrTTgVOpsWcq-s"/>
+            android:value="${MAPS_API_KEY}" />
 
         <service
             android:name=".services.RunnersHighLocationService"

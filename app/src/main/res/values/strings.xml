@@ -44,9 +44,13 @@ We hope this app treats you well, and enjoy your runs!
     <array name="tips">
         <item>Stressed out? Try to sit down and take some deep breaths</item>
         <item>If you\'re struggling, reach out to someone you trust for support</item>
-        <item>Pat yourself on the back for taking the opportunity to get out and get exercise today</item>
+        <item>Pat yourself on the back for taking the opportunity to get out and get exercise
+            today
+        </item>
         <item>Take a moment to appreciate all the progress you\'ve made recently</item>
-        <item>Give yourself the same forgiveness and unconditional love that you would give a friend or relative</item>
+        <item>Give yourself the same forgiveness and unconditional love that you would give a friend
+            or relative
+        </item>
         <item>Take some time to appreciate the world around you</item>
     </array>
 </resources>
