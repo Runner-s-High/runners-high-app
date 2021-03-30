@@ -23,15 +23,21 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import org.parceler.MapsUtil;
 
 import java.util.List;
 
@@ -232,29 +238,41 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         Log.d(TAG,"onMapReady");
-        // Add a marker in Sydney and move the camera
-        mMap.addMarker(new MarkerOptions()
-                .position(latLngList.get(0))
-                .title("Start of Run"));
-        Log.d(TAG,latLngList.get(0).toString());
+        // Add a marker in start and stop of run
+        if(latLngList.size()>0) {
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLngList.get(0))
+                    .title("Start of Run"));
+            Log.d(TAG, latLngList.get(0).toString());
 
-        mMap.addMarker(new MarkerOptions()
-                .position(latLngList.get(latLngList.size()-1))
-                .title("End of Run"));
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLngList.get(latLngList.size() - 1))
+                    .title("End of Run"));
 
-        Log.d(TAG,latLngList.get(latLngList.size()-1).toString());
+            Log.d(TAG, latLngList.get(latLngList.size() - 1).toString());
 
-        PolylineOptions polylineOptions = new PolylineOptions();
-        polylineOptions.addAll(latLngList);
-        mMap.addPolyline(polylineOptions);
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for(LatLng latLng : latLngList){
-            builder.include(latLng);
+            PolylineOptions polylineOptions = new PolylineOptions();
+            polylineOptions.addAll(latLngList);
+            mMap.addPolyline(polylineOptions);
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (LatLng latLng : latLngList) {
+                builder.include(latLng);
+            }
+            mMap.moveCamera(CameraUpdateFactory
+                    .newCameraPosition
+                            (new CameraPosition
+                                    .Builder()
+                                    .tilt(0)
+                                    .target(builder.build().getCenter())
+                                    .build()));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100));
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),10));
     }
+
 
     public interface PostRunFragmentInterface{
         public void exitPostRun(boolean save,Bundle postRunInfo);

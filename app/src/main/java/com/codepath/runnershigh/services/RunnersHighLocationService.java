@@ -44,7 +44,7 @@ public class RunnersHighLocationService extends Service {
     FusedLocationProviderClient fusedLocationProviderClient;
 
     Location lastLocation;
-    Float totalDistance=0.0f;
+    Float totalDistance = 0.0f;
 
     LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -52,13 +52,13 @@ public class RunnersHighLocationService extends Service {
             super.onLocationResult(locationResult);
             if (locationResult != null && locationResult.getLastLocation() != null) {
                 Log.i(TAG, locationResult.getLastLocation().toString());
-                if(lastLocation!=null){
+                if (lastLocation != null) {
                     Message message = Message.obtain();
                     Bundle data = new Bundle();
-                    totalDistance+=lastLocation.distanceTo(locationResult.getLastLocation())*0.000621371f;
+                    totalDistance += lastLocation.distanceTo(locationResult.getLastLocation()) * 0.000621371f;
 
                     data.putParcelable(LOCATION_PARCELABLE, lastLocation);
-                    data.putFloat(TOTAL_DISTANCE,totalDistance);
+                    data.putFloat(TOTAL_DISTANCE, totalDistance);
 
                     message.setData(data);
                     try {
@@ -67,7 +67,7 @@ public class RunnersHighLocationService extends Service {
                         e.printStackTrace();
                     }
                 }
-                lastLocation=locationResult.getLastLocation();
+                lastLocation = locationResult.getLastLocation();
             }
         }
     };
@@ -96,12 +96,12 @@ public class RunnersHighLocationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Bundle extras = intent.getExtras();
-        if(extras!=null){
-            if(messenger==null) {
+        if (extras != null) {
+            if (messenger == null) {
                 messenger = (Messenger) extras.get("messenger");
             }
         }
-        switch(intent.getAction()){
+        switch (intent.getAction()) {
             case START_LOCATION_UPDATE:
                 startLocationUpdates();
                 break;
@@ -114,7 +114,6 @@ public class RunnersHighLocationService extends Service {
             default:
                 break;
         }
-
 
         super.onStartCommand(intent, flags, startId);
         return START_STICKY;
