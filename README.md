@@ -39,7 +39,7 @@ Runner's High is a mood-tracking and run-tracking app that allows users to log t
 - [ ] Being able to see graph of emotional progress over time
 - [x] Being able to see relationship between pre-run mood and run performance or mood post-run and run performance.-definitely optional for now
 - [ ] Implement map so user can see live position while running
-- [ ] Implement links to mental health links/phone numbers
+- [x] Implement links to mental health links/phone numbers
 
 ### First App Walkthough GIF
 <img src="https://github.com/Runner-s-High/runners-high-app/blob/main/first%20walkthrough.gif" width=250><br>
