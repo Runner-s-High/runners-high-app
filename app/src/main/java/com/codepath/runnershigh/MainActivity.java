@@ -23,14 +23,9 @@ import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements
         StartRunFragment.StartRunFragmentInterface,
@@ -42,12 +37,12 @@ public class MainActivity extends AppCompatActivity implements
 
     //Bundle for storing new run info until submission
     Bundle newRunBundle;
-    public static final String NEWRUNPREMOOD="newrunpremood",
-            NEWRUNPOSTMOOD="newrunpostmood",
-            NEWRUNTIME="newruntime",
-            NEWRUNDISTANCE="newrundistance",
-            NEWRUNNOTE="newrunnote",
-            NEWRUNDATE="newrundate";
+    public static final String NEW_RUN_PRE_MOOD ="newrunpremood",
+            NEW_RUN_POST_MOOD ="newrunpostmood",
+            NEW_RUN_TIME ="newruntime",
+            NEW_RUN_DISTANCE ="newrundistance",
+            NEW_RUN_NOTE ="newrunnote",
+            NEW_RUN_DATE ="newrundate";
 
 
 
@@ -181,15 +176,15 @@ public class MainActivity extends AppCompatActivity implements
 
     public RunData runDataFromBundle(Bundle runBundle){
         RunData runData= new RunData();
-        runData.setPreRunMood(runBundle.getInt(NEWRUNPREMOOD));
+        runData.setPreRunMood(runBundle.getInt(NEW_RUN_PRE_MOOD));
 
-        runData.setPostRunMood(runBundle.getInt(NEWRUNPOSTMOOD));
+        runData.setPostRunMood(runBundle.getInt(NEW_RUN_POST_MOOD));
 
-        runData.setRunTime(runBundle.getString(NEWRUNTIME));
+        runData.setRunTime(runBundle.getString(NEW_RUN_TIME));
 
-        runData.setRunDistance(runBundle.getDouble(NEWRUNDISTANCE));
+        runData.setRunDistance(runBundle.getDouble(NEW_RUN_DISTANCE));
 
-        runData.setRunDate(runBundle.getString(NEWRUNDATE));
+        runData.setRunDate(runBundle.getString(NEW_RUN_DATE));
 
         runData.setUser(ParseUser.getCurrentUser());
         return runData;
@@ -238,8 +233,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void runComplete(String runtime, double rundistance) {
-        newRunBundle.putString(NEWRUNTIME,runtime);
-        newRunBundle.putDouble(NEWRUNDISTANCE, rundistance);
+        newRunBundle.putString(NEW_RUN_TIME,runtime);
+        newRunBundle.putDouble(NEW_RUN_DISTANCE, rundistance);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -256,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void surveyCompleted(int preRunMood) {
         newRunBundle = new Bundle();
-        newRunBundle.putInt(NEWRUNPREMOOD,preRunMood);
+        newRunBundle.putInt(NEW_RUN_PRE_MOOD,preRunMood);
         openRunningFragment();
     }
 

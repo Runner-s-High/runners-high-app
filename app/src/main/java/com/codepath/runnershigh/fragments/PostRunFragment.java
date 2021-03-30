@@ -91,8 +91,8 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         tvRunDistance = view.findViewById(R.id.tvRunDistance);
         mvPostRun = view.findViewById(R.id.mvPostRun);
 
-        tvRunTime.setText("Time: "+RunInfo.get(MainActivity.NEWRUNTIME));
-        tvRunDistance.setText("Distance: " + RunInfo.get(MainActivity.NEWRUNDISTANCE));
+        tvRunTime.setText("Time: "+RunInfo.get(MainActivity.NEW_RUN_TIME));
+        tvRunDistance.setText("Distance: " + RunInfo.get(MainActivity.NEW_RUN_DISTANCE));
 
         IB1=view.findViewById(R.id.IB1);
         IB2=view.findViewById(R.id.IB2);
@@ -135,8 +135,8 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if(moodSet) {
-                    RunInfo.putString(MainActivity.NEWRUNNOTE, etNotes.getText().toString());
-                    RunInfo.putString(MainActivity.NEWRUNDATE, "Thursday, March 28, 2021");
+                    RunInfo.putString(MainActivity.NEW_RUN_NOTE, etNotes.getText().toString());
+                    RunInfo.putString(MainActivity.NEW_RUN_DATE, "Thursday, March 28, 2021");
                     postRunFragmentInterface.exitPostRun(true, RunInfo);
                 }else
                     Toast.makeText(getActivity(), "Finish the post run survey", Toast.LENGTH_SHORT).show();
@@ -146,7 +146,7 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void setPreMoodImage(){
-        int premood = RunInfo.getInt(MainActivity.NEWRUNPREMOOD);
+        int premood = RunInfo.getInt(MainActivity.NEW_RUN_PRE_MOOD);
         switch(premood){
             case 1:
                 ivPreMood.setImageResource(R.drawable.mood1);
@@ -194,7 +194,7 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
             unselectMoodButtons();
             v.setSelected(true);
             moodSet = true;
-            RunInfo.putInt(MainActivity.NEWRUNPOSTMOOD,postRunMoodRating);
+            RunInfo.putInt(MainActivity.NEW_RUN_POST_MOOD,postRunMoodRating);
         }
     };
 
