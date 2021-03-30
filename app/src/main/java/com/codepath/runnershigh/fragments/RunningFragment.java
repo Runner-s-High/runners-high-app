@@ -2,17 +2,14 @@ package com.codepath.runnershigh.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
+import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.Messenger;
 import android.os.SystemClock;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +18,21 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import com.codepath.runnershigh.R;
-import com.codepath.runnershigh.RunData;
+import com.codepath.runnershigh.services.RunnersHighLocationService;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RunningFragment extends Fragment {
-    SensorManager sensorManager;
+    public static final String TAG=RunningFragment.class.getCanonicalName();
 
     ImageButton ibPauseResume;
     ImageButton ibStop;
@@ -41,8 +47,33 @@ public class RunningFragment extends Fragment {
     TextView tvDistance;
     TextView tvPace;
 
+    Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if (msg != null) {
+                Bundle data = msg.getData();
+                Location location = data.getParcelable(RunnersHighLocationService.LOCATION_PARCELABLE);
+                totalDistance=data.getFloat(RunnersHighLocationService.TOTAL_DISTANCE);
+                if (ticking) {
+                    tvDistance.setText(String.format("%.2f", totalDistance));
+                    //Pace acts a little wonky but I think that has to do with testing
+                    //on an emulator
+                    Float pace = location.getSpeed() * 2.23694f;
+                    tvPace.setText(String.format("%.2f", pace));
+                }
+                LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                latLngList.add(latLng);
+                lastLocation=location;
 
+            }
+        }
+    };
 
+    Float totalDistance=0f;
+    Location lastLocation;
+
+    List<LatLng> latLngList;
 
     public RunningFragment() {
         // Required empty public constructor
@@ -57,8 +88,8 @@ public class RunningFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+        latLngList = new ArrayList<>();
+        super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,8 +127,29 @@ public class RunningFragment extends Fragment {
             }
         });
 
+
         play();
 
+    }
+
+
+    private void startLocationUpdates(){
+        Intent i =new Intent(getActivity(),RunnersHighLocationService.class);
+        i.putExtra("messenger",new Messenger(handler));
+        i.setAction(RunnersHighLocationService.START_LOCATION_UPDATE);
+        getActivity().startService(i);
+    }
+    private void stopLocationUpdates(){
+        Intent i =new Intent(getActivity(),RunnersHighLocationService.class);
+        i.putExtra("messenger",new Messenger(handler));
+        i.setAction(RunnersHighLocationService.STOP_LOCATION_UPDATE);
+        getActivity().startService(i);
+    }
+    private void stopLocationService(){
+        Intent i =new Intent(getActivity(),RunnersHighLocationService.class);
+        i.putExtra("messenger",new Messenger(handler));
+        i.setAction(RunnersHighLocationService.STOP_LOCATION_SERVICE);
+        getActivity().startService(i);
     }
 
     private void pause() {
@@ -112,26 +164,27 @@ public class RunningFragment extends Fragment {
         cmTime.setBase(SystemClock.elapsedRealtime()-pauseOffset);
         cmTime.start();
         ticking=true;
+        startLocationUpdates();
     }
 
     private void stop() {
         if(ticking)
             pause();
+
         //display dialog "are you sure you want to end your run"
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
-
-
         builder.setMessage("Are you sure you want to end this run?");
-
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), "user clicks yes, move to post run screen", Toast.LENGTH_SHORT).show();
-
                 //TODO: build a post run class for all post run info
 
+                stopLocationService();
 
-                runningFragmentInterface.runComplete(cmTime.getText().toString(), Double.parseDouble(tvDistance.getText().toString()));
+                runningFragmentInterface.runComplete(cmTime.getText().toString(),
+                        totalDistance,
+                        latLngList);
             }
         });
 
@@ -141,7 +194,6 @@ public class RunningFragment extends Fragment {
                 Toast.makeText(getContext(), "if the user clicks no the run continues", Toast.LENGTH_SHORT).show();
             }
         });
-
         builder.create().show();
     }
 
@@ -158,8 +210,6 @@ public class RunningFragment extends Fragment {
     }
 
     public interface RunningFragmentInterface{
-        public void runComplete(String runtime, double rundistance);
-        //Todo: implement with RunStats Object
-        //public void runComplete(RunStats runStats);
+        public void runComplete(String runtime,double distance,List<LatLng> latLngList);
     }
 }

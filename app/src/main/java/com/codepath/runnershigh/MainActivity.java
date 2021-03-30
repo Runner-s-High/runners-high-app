@@ -10,22 +10,43 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
-import com.codepath.runnershigh.fragments.*;
+import com.codepath.runnershigh.fragments.HistoryFragment;
+import com.codepath.runnershigh.fragments.HomeFragment;
+import com.codepath.runnershigh.fragments.PostRunFragment;
+import com.codepath.runnershigh.fragments.RunningFragment;
+import com.codepath.runnershigh.fragments.SettingsFragment;
+import com.codepath.runnershigh.fragments.StartRunFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
         StartRunFragment.StartRunFragmentInterface,
@@ -40,7 +61,10 @@ public class MainActivity extends AppCompatActivity implements
     public static final String NEW_RUN_PRE_MOOD ="newrunpremood",
             NEW_RUN_POST_MOOD ="newrunpostmood",
             NEW_RUN_TIME ="newruntime",
-            NEW_RUN_DISTANCE ="newrundistance",
+            NEW_RUN_DISTANCE="newrundistance",
+            NEW_RUN_LATLNG_LIST="NEW_RUN_LATLNG_LIST",
+            NEW_RUN_LAT_LIST="NEW_RUN_LAT_LIST",
+            NEW_RUN_LNG_LIST="NEW_RUN_LNG_LIST",
             NEW_RUN_NOTE ="newrunnote",
             NEW_RUN_DATE ="newrundate";
 
@@ -232,9 +256,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void runComplete(String runtime, double rundistance) {
+    public void runComplete(String runtime, double rundistance, List<LatLng> latLngList) {
         newRunBundle.putString(NEW_RUN_TIME,runtime);
         newRunBundle.putDouble(NEW_RUN_DISTANCE, rundistance);
+        newRunBundle.putParcelableArrayList(NEW_RUN_LATLNG_LIST, (ArrayList<? extends Parcelable>) latLngList);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()
                 .beginTransaction()
