@@ -80,10 +80,8 @@ public class PreRunMoodDialogFragment extends DialogFragment {
         btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: collect info from views and create mood object, pass mood object as param
                 if(moodSet) {
                     preRunMoodDialogFragmentInterface.surveyCompleted(preRunMoodRating);
-                    //preRunMoodDialogFragmentInterface.surveyCompleted(preRunMood);
                     dismiss();
                 }else{
                     Toast.makeText(getActivity(), "Must Select Mood", Toast.LENGTH_SHORT).show();

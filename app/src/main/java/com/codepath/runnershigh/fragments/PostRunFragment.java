@@ -2,7 +2,6 @@ package com.codepath.runnershigh.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -79,7 +78,7 @@ public class PostRunFragment extends Fragment {
         etNotes = view.findViewById(R.id.etNotes);
         tvRunTime = view.findViewById(R.id.tvRunTime);
 
-        tvRunTime.setText("Time: "+RunInfo.get(MainActivity.NEWRUNTIME));
+        tvRunTime.setText("Time: "+RunInfo.get(MainActivity.NEW_RUN_TIME));
 
         IB1=view.findViewById(R.id.IB1);
         IB2=view.findViewById(R.id.IB2);
@@ -121,7 +120,7 @@ public class PostRunFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(moodSet) {
-                    RunInfo.putString(MainActivity.NEWRUNNOTE, etNotes.getText().toString());
+                    RunInfo.putString(MainActivity.NEW_RUN_NOTE, etNotes.getText().toString());
                     postRunFragmentInterface.exitPostRun(true, RunInfo);
                 }else
                     Toast.makeText(getActivity(), "Finish the post run survey", Toast.LENGTH_SHORT).show();
@@ -131,7 +130,7 @@ public class PostRunFragment extends Fragment {
     }
 
     public void setPreMoodImage(){
-        int premood = RunInfo.getInt(MainActivity.NEWRUNPREMOOD);
+        int premood = RunInfo.getInt(MainActivity.NEW_RUN_PRE_MOOD);
         switch(premood){
             case 1:
                 ivPreMood.setImageResource(R.drawable.mood1);
@@ -179,7 +178,7 @@ public class PostRunFragment extends Fragment {
             unselectMoodButtons();
             v.setSelected(true);
             moodSet = true;
-            RunInfo.putInt(MainActivity.NEWRUNPOSTMOOD,postRunMoodRating);
+            RunInfo.putInt(MainActivity.NEW_RUN_POST_MOOD,postRunMoodRating);
         }
     };
 

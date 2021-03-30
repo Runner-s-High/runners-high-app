@@ -3,7 +3,6 @@ package com.codepath.runnershigh.fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +10,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.SystemClock;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +25,10 @@ import androidx.fragment.app.Fragment;
 
 import com.codepath.runnershigh.R;
 import com.codepath.runnershigh.services.RunnersHighLocationService;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RunningFragment extends Fragment {
@@ -55,16 +57,23 @@ public class RunningFragment extends Fragment {
                 totalDistance=data.getFloat(RunnersHighLocationService.TOTAL_DISTANCE);
                 if (ticking) {
                     tvDistance.setText(String.format("%.2f", totalDistance));
+                    //Pace acts a little wonky but I think that has to do with testing
+                    //on an emulator
                     Float pace = location.getSpeed() * 2.23694f;
                     tvPace.setText(String.format("%.2f", pace));
                 }
+                LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                latLngList.add(latLng);
                 lastLocation=location;
+
             }
         }
     };
 
     Float totalDistance=0f;
     Location lastLocation;
+
+    List<LatLng> latLngList;
 
     public RunningFragment() {
         // Required empty public constructor
@@ -78,7 +87,9 @@ public class RunningFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        latLngList = new ArrayList<>();
+        super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,6 +131,7 @@ public class RunningFragment extends Fragment {
         play();
 
     }
+
 
     private void startLocationUpdates(){
         Intent i =new Intent(getActivity(),RunnersHighLocationService.class);
@@ -166,11 +178,13 @@ public class RunningFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), "user clicks yes, move to post run screen", Toast.LENGTH_SHORT).show();
-                //releaseLocationManager();
                 //TODO: build a post run class for all post run info
 
                 stopLocationService();
-                runningFragmentInterface.runComplete(cmTime.getText().toString());
+
+                runningFragmentInterface.runComplete(cmTime.getText().toString(),
+                        totalDistance.toString(),
+                        latLngList);
             }
         });
 
@@ -196,8 +210,6 @@ public class RunningFragment extends Fragment {
     }
 
     public interface RunningFragmentInterface{
-        public void runComplete(String runtime);
-        //Todo: implement with RunStats Object
-        //public void runComplete(RunStats runStats);
+        public void runComplete(String runtime,String distance,List<LatLng> latLngList);
     }
 }

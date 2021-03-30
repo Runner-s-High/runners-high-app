@@ -25,11 +25,14 @@ import com.codepath.runnershigh.fragments.RunningFragment;
 import com.codepath.runnershigh.fragments.SettingsFragment;
 import com.codepath.runnershigh.fragments.StartRunFragment;
 import com.codepath.runnershigh.fragments.TrackMoodFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
         StartRunFragment.StartRunFragmentInterface,
@@ -41,10 +44,12 @@ public class MainActivity extends AppCompatActivity implements
 
     //Bundle for storing new run info until submission
     Bundle newRunBundle;
-    public static final String NEWRUNPREMOOD="newrunpremood",
-            NEWRUNPOSTMOOD="newrunpostmood",
-            NEWRUNTIME="newruntime",
-            NEWRUNNOTE="newrunnote";
+    public static final String NEW_RUN_PRE_MOOD ="newrunpremood",
+            NEW_RUN_POST_MOOD ="newrunpostmood",
+            NEW_RUN_TIME ="newruntime",
+            NEW_RUN_DISTANCE="newrundistance",
+            NEW_RUN_LATLNG_LIST="NEW_RUN_LATLNG_LIST",
+            NEW_RUN_NOTE ="newrunnote";
 
 
 
@@ -185,11 +190,11 @@ public class MainActivity extends AppCompatActivity implements
 
     public RunData runDataFromBundle(Bundle runBundle){
         RunData runData= new RunData();
-        runData.setPreRunMood(runBundle.getInt(NEWRUNPREMOOD));
+        runData.setPreRunMood(runBundle.getInt(NEW_RUN_PRE_MOOD));
 
-        runData.setPostRunMood(runBundle.getInt(NEWRUNPOSTMOOD));
+        runData.setPostRunMood(runBundle.getInt(NEW_RUN_POST_MOOD));
 
-        runData.setRunTime(runBundle.getString(NEWRUNTIME));
+        runData.setRunTime(runBundle.getString(NEW_RUN_TIME));
 
         runData.setUser(ParseUser.getCurrentUser());
         return runData;
@@ -236,8 +241,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void runComplete(String runtime) {
-        newRunBundle.putString(NEWRUNTIME,runtime);
+    public void runComplete(String runtime,String distance,List<LatLng> latLngList) {
+        newRunBundle.putString(NEW_RUN_TIME,runtime);
+        newRunBundle.putString(NEW_RUN_DISTANCE,distance);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -254,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void surveyCompleted(int preRunMood) {
         newRunBundle = new Bundle();
-        newRunBundle.putInt(NEWRUNPREMOOD,preRunMood);
+        newRunBundle.putInt(NEW_RUN_PRE_MOOD,preRunMood);
         openRunningFragment();
     }
 
@@ -265,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements
         if(save){
             saveRunData(runDataFromBundle(completeRunInfo));
             //Todo: Make a new RunData object with all the info from the complete run and upload it
+
         }
         showBottomNav();
         bottomNavigationView.setSelectedItemId(R.id.itHistory);
