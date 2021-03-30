@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements
             NEW_RUN_TIME ="newruntime",
             NEW_RUN_DISTANCE="newrundistance",
             NEW_RUN_LATLNG_LIST="NEW_RUN_LATLNG_LIST",
+            NEW_RUN_LAT_LIST="NEW_RUN_LAT_LIST",
+            NEW_RUN_LNG_LIST="NEW_RUN_LNG_LIST",
             NEW_RUN_NOTE ="newrunnote";
 
 
@@ -244,6 +248,18 @@ public class MainActivity extends AppCompatActivity implements
     public void runComplete(String runtime,String distance,List<LatLng> latLngList) {
         newRunBundle.putString(NEW_RUN_TIME,runtime);
         newRunBundle.putString(NEW_RUN_DISTANCE,distance);
+/*
+        ArrayList<Double> latList= new ArrayList<>();
+        ArrayList<Double> lngList= new ArrayList<>();
+        for(int i = 0;i < latLngList.size();i++){
+            latList.add(latLngList.get(i).latitude);
+            lngList.add(latLngList.get(i).longitude);
+        }
+        
+ */
+
+        newRunBundle.putParcelableArrayList(NEW_RUN_LATLNG_LIST, (ArrayList<? extends Parcelable>) latLngList);
+
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()
                 .beginTransaction()
