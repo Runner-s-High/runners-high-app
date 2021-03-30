@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.List;
 
 public class PostRunFragment extends Fragment implements OnMapReadyCallback {
+    private static final String TAG = PostRunFragment.class.getCanonicalName();
     PostRunFragmentInterface postRunFragmentInterface;
 
     Button btSave;
@@ -47,6 +53,7 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     EditText etNotes;
 
     Bundle RunInfo;
+    List<LatLng> latLngList;
 
     MapView mvPostRun;
     GoogleMap mMap;
@@ -67,8 +74,10 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null)
+        if (getArguments() != null){
             RunInfo = getArguments();
+            latLngList=RunInfo.getParcelableArrayList(MainActivity.NEW_RUN_LATLNG_LIST);
+        }
     }
 
     @Override
@@ -92,7 +101,7 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         mvPostRun = view.findViewById(R.id.mvPostRun);
 
         tvRunTime.setText("Time: "+RunInfo.get(MainActivity.NEW_RUN_TIME));
-        tvRunDistance.setText("Distance: " + RunInfo.get(MainActivity.NEW_RUN_DISTANCE));
+        tvRunDistance.setText("Distance: " + String.format("%.2f",RunInfo.get(MainActivity.NEW_RUN_DISTANCE)));
 
         IB1=view.findViewById(R.id.IB1);
         IB2=view.findViewById(R.id.IB2);
@@ -224,12 +233,27 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        Log.d(TAG,"onMapReady");
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                .position(latLngList.get(0))
+                .title("Start of Run"));
+        Log.d(TAG,latLngList.get(0).toString());
+
+        mMap.addMarker(new MarkerOptions()
+                .position(latLngList.get(latLngList.size()-1))
+                .title("End of Run"));
+
+        Log.d(TAG,latLngList.get(latLngList.size()-1).toString());
+
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.addAll(latLngList);
+        mMap.addPolyline(polylineOptions);
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for(LatLng latLng : latLngList){
+            builder.include(latLng);
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),10));
     }
 
     public interface PostRunFragmentInterface{
