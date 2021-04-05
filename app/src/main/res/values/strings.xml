@@ -6,10 +6,15 @@
     <string name="et_user">Username</string>
     <string name="et_password">Password</string>
     <string name="settings_icon">Settings</string>
+    <string name="resources_icon">Resources</string>
     <string name="main_name">Runner\'s High</string>
     <string name="btn_proceed">Let\'s Get Started!</string>
+    <string name="btn_submit_profile">Submit Profile</string>
     <string name="learn_more">Learn More</string>
     <string name="help">Immediate Help</string>
+    <string name="et_firstname">First Name</string>
+    <string name="et_lastname">Last Name</string>
+    <string name="et_weight">Weight (lbs)</string>
     <string name="nimh"><a href="https://www.nimh.nih.gov/index.shtml">National Institute of Mental Health</a></string>
     <string name="cdc"><a href="https://www.cdc.gov/mentalhealth/">Mental Health - CDC</a></string>
     <string name="fsu"><a href="https://counseling.fsu.edu">FSU Counseling Center</a></string>

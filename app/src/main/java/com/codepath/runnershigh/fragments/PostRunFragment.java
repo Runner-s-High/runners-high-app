@@ -41,6 +41,8 @@ import org.parceler.MapsUtil;
 
 import java.util.List;
 
+//TODO: Figure out why the MapView is being stupid slow
+
 public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = PostRunFragment.class.getCanonicalName();
     PostRunFragmentInterface postRunFragmentInterface;
@@ -61,7 +63,7 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     Bundle RunInfo;
     List<LatLng> latLngList;
 
-    MapView mvPostRun;
+    public static MapView mvPostRun;
     GoogleMap mMap;
 
 

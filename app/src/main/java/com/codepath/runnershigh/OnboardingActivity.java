@@ -21,7 +21,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
     //onClick method for btnProceed; moves to MainActivity
     public void proceed(View v) {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, SetupProfileActivity.class));
         finish();
     }
 }

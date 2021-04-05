@@ -21,7 +21,7 @@
         android:roundIcon="@mipmap/launcher_ic_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnersHigh">
-        <activity android:name=".SetupProfileActivity"></activity>
+        <activity android:name=".SetupProfileActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

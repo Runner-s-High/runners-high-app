@@ -150,6 +150,38 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(PostRunFragment.mvPostRun != null) {
+            PostRunFragment.mvPostRun.onDestroy();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(PostRunFragment.mvPostRun != null) {
+            PostRunFragment.mvPostRun.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(PostRunFragment.mvPostRun != null) {
+            PostRunFragment.mvPostRun.onPause();
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if(PostRunFragment.mvPostRun != null) {
+            PostRunFragment.mvPostRun.onLowMemory();
+        }
+    }
+
     //Set up settings icon in action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements
         switch(item.getItemId()) {
             case R.id.icSettings:
                 openSettingsFragment();
+                break;
+            case R.id.icResources:
+                //TODO: Set up the Fragment for the mental health resources
                 break;
             default:
                 return super.onOptionsItemSelected(item);
