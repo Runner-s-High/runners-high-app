@@ -11,18 +11,18 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="80dp"
-        android:textColorHint="@android:color/darker_gray"
-        android:textColor="@color/secondaryTextColor"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
+        android:background="@drawable/custom_input"
         android:hint="@string/et_firstname"
         android:inputType="textPersonName"
-        android:background="@drawable/custom_input"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textColor="@color/secondaryTextColor"
+        android:textColorHint="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvProfileSetup" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etLastName"
@@ -72,5 +72,34 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvProfileSetup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
+        android:text="@string/profile_setup"
+        android:textColor="@android:color/black"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSetupDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/setup_description"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etWeight" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

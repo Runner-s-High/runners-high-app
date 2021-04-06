@@ -27,6 +27,7 @@ import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 import com.codepath.runnershigh.fragments.HistoryFragment;
 import com.codepath.runnershigh.fragments.HomeFragment;
 import com.codepath.runnershigh.fragments.PostRunFragment;
+import com.codepath.runnershigh.fragments.ResourcesFragment;
 import com.codepath.runnershigh.fragments.RunningFragment;
 import com.codepath.runnershigh.fragments.SettingsFragment;
 import com.codepath.runnershigh.fragments.StartRunFragment;
@@ -54,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements
         HomeFragment.HomeFragmentInterface,
         PreRunMoodDialogFragment.PreRunMoodDialogFragmentInterface,
         PostRunFragment.PostRunFragmentInterface,
-        SettingsFragment.SettingsFragmentInterface {
+        SettingsFragment.SettingsFragmentInterface,
+        ResourcesFragment.ResourcesFragmentInterface {
 
     //Bundle for storing new run info until submission
     Bundle newRunBundle;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements
     StartRunFragment startRunFragment;
     HistoryFragment historyFragment;
     SettingsFragment settingsFragment;
+    ResourcesFragment resourcesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements
 
         if(settingsFragment==null)
             settingsFragment=new SettingsFragment();
+
+        if(resourcesFragment==null)
+            resourcesFragment=new ResourcesFragment();
 
 
 
@@ -196,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements
                 openSettingsFragment();
                 break;
             case R.id.icResources:
-                //TODO: Set up the Fragment for the mental health resources
+                openResourcesFragment();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -283,6 +289,18 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void openSettingsFragment() {
         Fragment fragment = settingsFragment;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.flContainer,fragment)
+                .commit();
+    }
+
+
+    //Opens Resources Fragment when icon clicked
+    @Override
+    public void openResourcesFragment() {
+        Fragment fragment = resourcesFragment;
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
