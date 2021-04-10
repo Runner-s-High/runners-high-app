@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
-    <!--<item android:drawable="@android:color/white"/>-->
+    <item android:drawable="@color/primaryColor"/>
     <item>
         <bitmap
-            android:src="@drawable/splash_background"/>
-    </item>
-    <item>
-        <!--Insert the image we will use for the splash screen here-->
-        <bitmap
-            android:src="@drawable/ic_running_at_finish_line"
-            android:gravity="center"/>
+            android:src="@drawable/logo"
+            android:gravity="center" />
     </item>
 </layer-list>
