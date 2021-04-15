@@ -18,11 +18,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 import com.codepath.runnershigh.fragments.HistoryFragment;
 import com.codepath.runnershigh.fragments.HomeFragment;
@@ -37,14 +32,7 @@ import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
