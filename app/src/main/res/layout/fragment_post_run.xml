@@ -138,13 +138,13 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="119dp"
+                android:layout_height="130dp"
                 android:padding="5dp">
 
                 <EditText
                     android:id="@+id/etNotes"
                     android:layout_width="match_parent"
-                    android:layout_height="114dp"
+                    android:layout_height="127dp"
                     android:ems="10"
                     android:gravity="start|top"
                     android:hint="Notes..."

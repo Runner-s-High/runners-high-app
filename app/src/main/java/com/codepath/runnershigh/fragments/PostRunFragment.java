@@ -63,7 +63,7 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     Bundle RunInfo;
     List<LatLng> latLngList;
 
-    public static MapView mvPostRun;
+    MapView mvPostRun;
     GoogleMap mMap;
 
 
@@ -79,9 +79,19 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         return fragment;
     }
 
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//
+//        if(mvPostRun != null)
+//            mvPostRun.onCreate(savedInstanceState);
+//    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(mvPostRun != null)
+            mvPostRun.onCreate(savedInstanceState);
         if (getArguments() != null){
             RunInfo = getArguments();
             latLngList=RunInfo.getParcelableArrayList(MainActivity.NEW_RUN_LATLNG_LIST);
@@ -160,6 +170,36 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mvPostRun.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mvPostRun.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mvPostRun.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mvPostRun.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mvPostRun.onLowMemory();
     }
 
     public void setPreMoodImage(){
