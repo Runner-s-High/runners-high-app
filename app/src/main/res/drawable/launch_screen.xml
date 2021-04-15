@@ -2,7 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
     <item android:drawable="@color/primaryColor"/>
     <item>
-        <!--Insert the image we will use for the splash screen here-->
         <bitmap
             android:src="@drawable/ic_running_at_finish_line"
             android:gravity="center"/>
