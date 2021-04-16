@@ -39,9 +39,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.parceler.MapsUtil;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.List;
-
-//TODO: Figure out why the MapView is being stupid slow
 
 public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = PostRunFragment.class.getCanonicalName();
@@ -162,8 +162,10 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if(moodSet) {
+                    Calendar calendar = Calendar.getInstance();
+                    String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                     RunInfo.putString(MainActivity.NEW_RUN_NOTE, etNotes.getText().toString());
-                    RunInfo.putString(MainActivity.NEW_RUN_DATE, "Thursday, March 28, 2021");
+                    RunInfo.putString(MainActivity.NEW_RUN_DATE, currentDate);
                     postRunFragmentInterface.exitPostRun(true, RunInfo);
                 }else
                     Toast.makeText(getActivity(), "Finish the post run survey", Toast.LENGTH_SHORT).show();
