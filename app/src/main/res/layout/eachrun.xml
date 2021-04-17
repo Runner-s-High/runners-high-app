@@ -66,10 +66,10 @@
         android:id="@+id/thebargraph"
         android:layout_width="180dp"
         android:layout_height="147dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTimeRV" />
 
     <Button
         android:id="@+id/infobutton"
@@ -94,7 +94,7 @@
         android:id="@+id/tvTimeRV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="@+id/tvTimeTitleRV"
         app:layout_constraintTop_toBottomOf="@+id/tvTimeTitleRV"
         tools:text="RUN TIME" />
@@ -103,7 +103,7 @@
         android:id="@+id/tvDistanceRV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="@+id/tvDistanceTitleRV"
         app:layout_constraintTop_toBottomOf="@+id/tvDistanceTitleRV"
         tools:text="RUN DISTANCE" />
@@ -129,6 +129,25 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+    <TextView
+        android:id="@+id/tvCaloriesTitleRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/calories_label"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvTimeTitleRV"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimeRV" />
+
+    <TextView
+        android:id="@+id/tvCaloriesRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="@+id/tvCaloriesTitleRV"
+        app:layout_constraintTop_toBottomOf="@+id/tvCaloriesTitleRV"
+        tools:text="RUN CALORIES" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

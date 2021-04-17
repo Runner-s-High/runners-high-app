@@ -6,9 +6,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,9 +24,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import org.parceler.Parcels;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
     //layout resource file "eachrun" defines the layout for each view in recyclerview
@@ -66,7 +62,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TheDate, tvTimeRV, tvDistanceRV;
+        TextView TheDate, tvTimeRV, tvDistanceRV, tvCaloriesRV;
 
         Button infobutton;
 
@@ -79,6 +75,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             TheDate=itemView.findViewById(R.id.tvDate);
             tvTimeRV=itemView.findViewById(R.id.tvTimeRV);
             tvDistanceRV=itemView.findViewById(R.id.tvDistanceRV);
+            tvCaloriesRV=itemView.findViewById(R.id.tvCaloriesRV);
 
             TheBarChart = itemView.findViewById(R.id.thebargraph);
             infobutton = itemView.findViewById(R.id.infobutton);
@@ -99,6 +96,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             TheDate.setText(run.getRunDate());
             tvTimeRV.setText(run.getRunTime());
             tvDistanceRV.setText(String.format("%.2f", run.getRunDistance()));
+            tvCaloriesRV.setText(String.format("%.1f", run.getRunCalories()));
 
             String a= String.valueOf(run.getPreRunMood());
             String b=String.valueOf(run.getPostRunMood());

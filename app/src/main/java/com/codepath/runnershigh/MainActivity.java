@@ -56,9 +56,10 @@ public class MainActivity extends AppCompatActivity implements
             NEW_RUN_LAT_LIST="NEW_RUN_LAT_LIST",
             NEW_RUN_LNG_LIST="NEW_RUN_LNG_LIST",
             NEW_RUN_NOTE ="newrunnote",
-            NEW_RUN_DATE ="newrundate";
+            NEW_RUN_DATE ="newrundate",
+            NEW_RUN_CALORIES="newruncalories";
 
-
+    public static double LBS_TO_KG = 0.4535924;
 
     Context context;
 
@@ -207,6 +208,8 @@ public class MainActivity extends AppCompatActivity implements
 
         runData.setRunDate(runBundle.getString(NEW_RUN_DATE));
 
+        runData.setRunCalories(runBundle.getDouble(NEW_RUN_CALORIES));
+
         runData.setUser(ParseUser.getCurrentUser());
         return runData;
     }
@@ -264,10 +267,13 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
+    //TODO: Rewrite runComplete to take in calories as parameter
     @Override
-    public void runComplete(String runtime, double rundistance, List<LatLng> latLngList) {
+    public void runComplete(String runtime, double rundistance, double calories, List<LatLng> latLngList) {
+
         newRunBundle.putString(NEW_RUN_TIME,runtime);
         newRunBundle.putDouble(NEW_RUN_DISTANCE, rundistance);
+        newRunBundle.putDouble(NEW_RUN_CALORIES, calories);
         newRunBundle.putParcelableArrayList(NEW_RUN_LATLNG_LIST, (ArrayList<? extends Parcelable>) latLngList);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()

@@ -182,8 +182,11 @@ public class RunningFragment extends Fragment {
 
                 stopLocationService();
 
+                double calories = calculateCalories(cmTime.getText().toString(), totalDistance);
+
                 runningFragmentInterface.runComplete(cmTime.getText().toString(),
                         totalDistance,
+                        calories,
                         latLngList);
             }
         });
@@ -209,7 +212,12 @@ public class RunningFragment extends Fragment {
         }
     }
 
+    public double calculateCalories(String time, double distance) {
+        //TODO: Come back and actually calculate calories
+        return 0;
+    }
+
     public interface RunningFragmentInterface{
-        public void runComplete(String runtime,double distance,List<LatLng> latLngList);
+        public void runComplete(String runtime,double distance,double calories, List<LatLng> latLngList);
     }
 }
