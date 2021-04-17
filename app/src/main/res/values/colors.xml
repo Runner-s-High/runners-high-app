@@ -8,6 +8,11 @@
   <color name="secondaryDarkColor">#14cba8</color>
   <color name="primaryTextColor">#ffffff</color>
   <color name="secondaryTextColor">#000000</color>
+  <color name="mood1">#FF99C9</color>
+  <color name="mood2">#6A9DB8</color>
+  <color name="mood3">#87DBA8</color>
+  <color name="mood4">#C288E5</color>
+  <color name="mood5">#FFEE58</color>
 
 
   <color name="Orange">#ffa500</color>

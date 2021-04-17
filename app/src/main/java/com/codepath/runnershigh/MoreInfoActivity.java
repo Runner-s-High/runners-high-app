@@ -28,7 +28,7 @@ public class MoreInfoActivity extends AppCompatActivity {
 
     ImageView preMood;
     ImageView postMood;
-    TextView FinishMessage;
+    TextView FinishMessage, tvTimeMI, tvDistanceMI, tvCaloriesMI;
 
     Button GoBackButton;
     RunData therun;
@@ -51,10 +51,17 @@ public class MoreInfoActivity extends AppCompatActivity {
         postMood = findViewById(R.id.ivpostmood);
         mybarchart = findViewById(R.id.mybargraph);
         FinishMessage=findViewById(R.id.tvFinish);
+        tvTimeMI = findViewById(R.id.tvTimeMI);
+        tvDistanceMI = findViewById(R.id.tvDistanceMI);
+        tvCaloriesMI = findViewById(R.id.tvCaloriesMI);
 
         therun = Parcels.unwrap(getIntent().getParcelableExtra("pizza"));
         int prescore = therun.getPreRunMood();
         int postscore = therun.getPostRunMood();
+
+        tvTimeMI.setText(therun.getRunTime());
+        tvDistanceMI.setText(String.format("%.2f", therun.getRunDistance()));
+        tvCaloriesMI.setText(String.format("%.1f", therun.getRunCalories()));
 
         barEntryArrayList = new ArrayList<>();
 
@@ -121,55 +128,56 @@ public class MoreInfoActivity extends AppCompatActivity {
 
     }
 
-
-
-
     public void SetFaces(int prescore,int postscore,BarDataSet bardataset){
         int leftgraphcolor = 0;
         int rightgraphcolor=0;
 
-        if (prescore == 1) {
-            preMood.setImageResource(R.drawable.angriest);
-            leftgraphcolor=Color.RED;
-        }
-        else if (prescore == 2) {
-            preMood.setImageResource(R.drawable.smallorange);
-            leftgraphcolor=Color.rgb(255,165,0);
-        }
-        else if (prescore == 3) {
-            preMood.setImageResource(R.drawable.mediumface);
-            leftgraphcolor=Color.YELLOW;
-        }
-        else if (prescore == 4) {
-            preMood.setImageResource(R.drawable.smalllightgreen);
-            leftgraphcolor=Color.rgb(173,255,47);
-        }
-        else if (prescore == 5) {
-            preMood.setImageResource(R.drawable.happiest);
-            leftgraphcolor=Color.GREEN;
+        switch(prescore) {
+            case 1:
+                preMood.setImageResource(R.drawable.mood1);
+                leftgraphcolor=Color.RED;
+                break;
+            case 2:
+                preMood.setImageResource(R.drawable.mood2);
+                leftgraphcolor=Color.rgb(255,165,0);
+                break;
+            case 3:
+                preMood.setImageResource(R.drawable.mood3);
+                leftgraphcolor=Color.YELLOW;
+                break;
+            case 4:
+                preMood.setImageResource(R.drawable.mood4);
+                leftgraphcolor=Color.rgb(173,255,47);
+                break;
+            case 5:
+                preMood.setImageResource(R.drawable.mood5);
+                leftgraphcolor=Color.GREEN;
+                break;
         }
 
-
-        if (postscore == 1) {
-            postMood.setImageResource(R.drawable.angriest);
-            rightgraphcolor=Color.RED;
+        switch(postscore) {
+            case 1:
+                postMood.setImageResource(R.drawable.mood1);
+                rightgraphcolor=Color.RED;
+                break;
+            case 2:
+                postMood.setImageResource(R.drawable.mood2);
+                rightgraphcolor=Color.rgb(255,165,0);
+                break;
+            case 3:
+                postMood.setImageResource(R.drawable.mood3);
+                rightgraphcolor=Color.YELLOW;
+                break;
+            case 4:
+                postMood.setImageResource(R.drawable.mood4);
+                rightgraphcolor=Color.rgb(173,255,47);
+                break;
+            case 5:
+                postMood.setImageResource(R.drawable.mood5);
+                rightgraphcolor=Color.GREEN;
+                break;
         }
-        else if (postscore == 2) {
-            postMood.setImageResource(R.drawable.smallorange);
-            rightgraphcolor=Color.rgb(255,165,0);
-        } else if (postscore == 3) {
-            postMood.setImageResource(R.drawable.mediumface);
-            rightgraphcolor=Color.YELLOW;
 
-        } else if (postscore == 4) {
-            postMood.setImageResource(R.drawable.smalllightgreen);
-            rightgraphcolor=Color.rgb(173,255,47);
-        }
-        else if (postscore == 5) {
-            postMood.setImageResource(R.drawable.happiest);
-            rightgraphcolor=Color.GREEN;
-
-        }
         bardataset.setColors(leftgraphcolor,rightgraphcolor);
     }
 
@@ -178,18 +186,22 @@ public class MoreInfoActivity extends AppCompatActivity {
 
         FinishMessage.setText("IMPROVEMENT");
 
-        if (result==1)
-            FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 1! Way to Go!");
-        else if (result==2)
-            FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 2! Nice Work!");
-        else if (result==3)
-            FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 3! Nice Job!");
-        else if (result==4)
-            FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 4! Way to Go!");
-        else
-            FinishMessage.setText("Note:\n\nMood didn't improve this time. Don't give up!");
-
-
+        switch(result) {
+            case 1:
+                FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 1! Way to Go!");
+                break;
+            case 2:
+                FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 2! Nice Work!");
+                break;
+            case 3:
+                FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 3! Nice Job!");
+                break;
+            case 4:
+                FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 4! Way to Go!");
+                break;
+            default:
+                FinishMessage.setText("Note:\n\nMood didn't improve this time. Don't give up!");
+        }
     }
 
 }

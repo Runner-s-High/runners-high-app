@@ -9,8 +9,6 @@
     android:orientation="vertical"
     tools:context=".dialogFragments.PreRunMoodDialogFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <TextView
         android:id="@+id/tvVibeCheck"
         android:layout_width="match_parent"
@@ -35,7 +33,7 @@
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
             android:src="@drawable/mood1"
-            android:tint="#FF99C9" />
+            android:tint="@color/mood1" />
 
         <ImageButton
             android:id="@+id/IB2"
@@ -47,7 +45,7 @@
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
             android:src="@drawable/mood2"
-            android:tint="#6A9DB8" />
+            android:tint="@color/mood2" />
 
         <ImageButton
             android:id="@+id/IB3"
@@ -59,7 +57,7 @@
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
             android:src="@drawable/mood3"
-            android:tint="#87DBA8" />
+            android:tint="@color/mood3" />
 
         <ImageButton
             android:id="@+id/IB4"
@@ -71,7 +69,7 @@
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
             android:src="@drawable/mood4"
-            android:tint="#C288E5" />
+            android:tint="@color/mood4" />
 
         <ImageButton
             android:id="@+id/IB5"
@@ -83,7 +81,7 @@
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
             android:src="@drawable/mood5"
-            android:tint="#FFEE58" />
+            android:tint="@color/mood5" />
 
     </LinearLayout>
 
