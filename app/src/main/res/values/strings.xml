@@ -16,6 +16,9 @@
     <string name="et_firstname">First Name</string>
     <string name="et_lastname">Last Name</string>
     <string name="et_weight">Weight (lbs)</string>
+    <string name="time_label">TIME</string>
+    <string name="distance_label">DISTANCE</string>
+    <string name="btn_more_info">MORE INFO</string>
     <string name="nimh"><a href="https://www.nimh.nih.gov/index.shtml">National Institute of Mental Health</a></string>
     <string name="cdc"><a href="https://www.cdc.gov/mentalhealth/">Mental Health - CDC</a></string>
     <string name="fsu"><a href="https://counseling.fsu.edu">FSU Counseling Center</a></string>

@@ -66,7 +66,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TheDate;
+        TextView TheDate, tvTimeRV, tvDistanceRV;
 
         Button infobutton;
 
@@ -76,8 +76,9 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-           TheDate=itemView.findViewById(R.id.tvDate);
+            TheDate=itemView.findViewById(R.id.tvDate);
+            tvTimeRV=itemView.findViewById(R.id.tvTimeRV);
+            tvDistanceRV=itemView.findViewById(R.id.tvDistanceRV);
 
             TheBarChart = itemView.findViewById(R.id.thebargraph);
             infobutton = itemView.findViewById(R.id.infobutton);
@@ -96,6 +97,8 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
                             // Greg 3/24 removed scores and swapped with date
             TheDate.setText(run.getRunDate());
+            tvTimeRV.setText(run.getRunTime());
+            tvDistanceRV.setText(String.format("%.2f", run.getRunDistance()));
 
             String a= String.valueOf(run.getPreRunMood());
             String b=String.valueOf(run.getPostRunMood());
@@ -151,48 +154,42 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             int leftgraphcolor,rightgraphcolor;
             leftgraphcolor=rightgraphcolor=0;
 
-            if (prescore == 1) {
-
-                leftgraphcolor= Color.RED;
-            }
-            else if (prescore == 2) {
-
-                leftgraphcolor=Color.rgb(255,165,0);
-            }
-            else if (prescore == 3) {
-
-                leftgraphcolor=Color.YELLOW;
-            }
-            else if (prescore == 4) {
-
-                leftgraphcolor=Color.rgb(173,255,47);
-            }
-            else if (prescore == 5) {
-
-                leftgraphcolor=Color.GREEN;
+            switch(prescore) {
+                case 1:
+                    leftgraphcolor= Color.RED;
+                    break;
+                case 2:
+                    leftgraphcolor=Color.rgb(255,165,0);
+                    break;
+                case 3:
+                    leftgraphcolor=Color.YELLOW;
+                    break;
+                case 4:
+                    leftgraphcolor=Color.rgb(173,255,47);
+                    break;
+                case 5:
+                    leftgraphcolor=Color.GREEN;
+                    break;
             }
 
-
-            if (postscore == 1) {
-
-                rightgraphcolor=Color.RED;
+            switch(postscore) {
+                case 1:
+                    rightgraphcolor=Color.RED;
+                    break;
+                case 2:
+                    rightgraphcolor=Color.rgb(255,165,0);
+                    break;
+                case 3:
+                    rightgraphcolor=Color.YELLOW;
+                    break;
+                case 4:
+                    rightgraphcolor=Color.rgb(173,255,47);
+                    break;
+                case 5:
+                    rightgraphcolor=Color.GREEN;
+                    break;
             }
-            else if (postscore == 2) {
 
-                rightgraphcolor=Color.rgb(255,165,0);
-            } else if (postscore == 3) {
-
-                rightgraphcolor=Color.YELLOW;
-
-            } else if (postscore == 4) {
-
-                rightgraphcolor=Color.rgb(173,255,47);
-            }
-            else if (postscore == 5) {
-
-                rightgraphcolor=Color.GREEN;
-
-            }
             bardataset.setColors(leftgraphcolor,rightgraphcolor);
         }
 
