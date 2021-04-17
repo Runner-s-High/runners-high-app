@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import com.codepath.runnershigh.R;
 import com.codepath.runnershigh.services.RunnersHighLocationService;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ import java.util.List;
 
 public class RunningFragment extends Fragment {
     public static final String TAG=RunningFragment.class.getCanonicalName();
+    public static final double LBS_TO_KG = 0.4535924;
 
     ImageButton ibPauseResume;
     ImageButton ibStop;
@@ -182,7 +185,9 @@ public class RunningFragment extends Fragment {
 
                 stopLocationService();
 
-                double calories = calculateCalories(cmTime.getText().toString(), totalDistance);
+                int weight = ParseUser.getCurrentUser().getInt("weight");
+
+                double calories = calculateCalories(pauseOffset, totalDistance, weight);
 
                 runningFragmentInterface.runComplete(cmTime.getText().toString(),
                         totalDistance,
@@ -212,9 +217,45 @@ public class RunningFragment extends Fragment {
         }
     }
 
-    public double calculateCalories(String time, double distance) {
-        //TODO: Come back and actually calculate calories
-        return 0;
+    public double calculateCalories(long time, double distance, int weight) {
+        double minutes = (double)time / 600000;
+        int avgPace = (int)Math.round(minutes / distance);
+        double MET;
+
+        switch (avgPace) {
+            case 15:
+            case 14:
+                MET = 6.0;
+                break;
+            case 13:
+            case 12:
+                MET = 8.3;
+                break;
+            case 11:
+            case 10:
+                MET = 9.8;
+                break;
+            case 9:
+                MET = 10.5;
+                break;
+            case 8:
+                MET = 11.8;
+                break;
+            case 7:
+                MET = 12.3;
+                break;
+            case 6:
+                MET = 14.5;
+                break;
+            case 5:
+                MET = 19.0;
+                break;
+            default:
+                Log.e(TAG, "Uncovered MET value (calories will be 0)");
+                MET = 0;
+        }
+
+        return (MET * 3.5 * LBS_TO_KG * weight * minutes / 200);
     }
 
     public interface RunningFragmentInterface{

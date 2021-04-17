@@ -267,7 +267,6 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    //TODO: Rewrite runComplete to take in calories as parameter
     @Override
     public void runComplete(String runtime, double rundistance, double calories, List<LatLng> latLngList) {
 
