@@ -15,6 +15,7 @@ public class RunData extends ParseObject {          //keys are the names of the 
     public static final String KEY_RUN_DISTANCE="RunDistance";
     public static final String KEY_RUN_DATE="RunDate";
     public static final String KEY_RUN_CALORIES="Calories";
+    public static final String KEY_RUN_NOTE="RunNotes";
 
     public int getPreRunMood(){
         return getInt(KEY_PRERUNMOOD);
@@ -64,6 +65,14 @@ public class RunData extends ParseObject {          //keys are the names of the 
 
     public void setRunDate(String date){
         put(KEY_RUN_DATE,date);
+    }
+
+    public String getRunNote() {
+        return getString(KEY_RUN_NOTE);
+    }
+
+    public void setRunNote(String note) {
+        put(KEY_RUN_NOTE, note);
     }
 
     public double getRunDistance() {

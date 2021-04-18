@@ -19,6 +19,7 @@
     <string name="time_label">TIME</string>
     <string name="distance_label">DISTANCE</string>
     <string name="calories_label">CALORIES</string>
+    <string name="note_label">NOTE</string>
     <string name="btn_more_info">MORE INFO</string>
     <string name="nimh"><a href="https://www.nimh.nih.gov/index.shtml">National Institute of Mental Health</a></string>
     <string name="cdc"><a href="https://www.cdc.gov/mentalhealth/">Mental Health - CDC</a></string>

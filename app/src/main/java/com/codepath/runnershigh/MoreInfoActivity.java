@@ -28,7 +28,7 @@ public class MoreInfoActivity extends AppCompatActivity {
 
     ImageView preMood;
     ImageView postMood;
-    TextView FinishMessage, tvTimeMI, tvDistanceMI, tvCaloriesMI;
+    TextView FinishMessage, tvTimeMI, tvDistanceMI, tvCaloriesMI, tvDateMI, tvNoteMI;
 
     Button GoBackButton;
     RunData therun;
@@ -42,6 +42,7 @@ public class MoreInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_info);
+        getSupportActionBar().hide();
 
         GoBackButton=findViewById(R.id.nextbutton);
 
@@ -54,6 +55,8 @@ public class MoreInfoActivity extends AppCompatActivity {
         tvTimeMI = findViewById(R.id.tvTimeMI);
         tvDistanceMI = findViewById(R.id.tvDistanceMI);
         tvCaloriesMI = findViewById(R.id.tvCaloriesMI);
+        tvDateMI = findViewById(R.id.tvDateMI);
+        tvNoteMI = findViewById(R.id.tvNoteMI);
 
         therun = Parcels.unwrap(getIntent().getParcelableExtra("pizza"));
         int prescore = therun.getPreRunMood();
@@ -62,6 +65,8 @@ public class MoreInfoActivity extends AppCompatActivity {
         tvTimeMI.setText(therun.getRunTime());
         tvDistanceMI.setText(String.format("%.2f", therun.getRunDistance()));
         tvCaloriesMI.setText(String.format("%.1f", therun.getRunCalories()));
+        tvDateMI.setText(therun.getRunDate());
+        tvNoteMI.setText(therun.getRunNote());
 
         barEntryArrayList = new ArrayList<>();
 

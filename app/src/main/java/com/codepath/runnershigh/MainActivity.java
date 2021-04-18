@@ -206,6 +206,8 @@ public class MainActivity extends AppCompatActivity implements
 
         runData.setRunDistance(runBundle.getDouble(NEW_RUN_DISTANCE));
 
+        runData.setRunNote(runBundle.getString(NEW_RUN_NOTE));
+
         runData.setRunDate(runBundle.getString(NEW_RUN_DATE));
 
         runData.setRunCalories(runBundle.getDouble(NEW_RUN_CALORIES));
