@@ -79,14 +79,6 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         return fragment;
     }
 
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//
-//        if(mvPostRun != null)
-//            mvPostRun.onCreate(savedInstanceState);
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
