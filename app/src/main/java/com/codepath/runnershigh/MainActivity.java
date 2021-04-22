@@ -2,6 +2,7 @@ package com.codepath.runnershigh;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -9,6 +10,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 import com.codepath.runnershigh.fragments.HistoryFragment;
 import com.codepath.runnershigh.fragments.HomeFragment;
@@ -28,14 +31,19 @@ import com.codepath.runnershigh.fragments.SettingsFragment;
 import com.codepath.runnershigh.fragments.StartRunFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.FindCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements
         StartRunFragment.StartRunFragmentInterface,
@@ -76,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements
     SettingsFragment settingsFragment;
     ResourcesFragment resourcesFragment;
 
+    public static CircleImageView Menu_Profile_Pic;
+    public static ParseFile UserImage;
+    public static Uri uri_after_pic_change=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_running_at_finish_line);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("");
         context=this;
 
         flContainer=findViewById(R.id.flContainer);
@@ -149,6 +162,42 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        ///////////////////////////////////////////////////////   loading profile pic into menu bar
+
+        MenuItem menuitem=menu.findItem(R.id.icProfilePic);
+        View view= MenuItemCompat.getActionView(menuitem);
+        Menu_Profile_Pic=view.findViewById(R.id.menupic);
+
+        ParseQuery<RunData> query=ParseQuery.getQuery(RunData.class);
+        query.include(RunData.KEY_USER);
+        query.whereEqualTo(RunData.KEY_USER, ParseUser.getCurrentUser());
+        query.setLimit(1);
+        query.addDescendingOrder(RunData.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<RunData>() {
+            @Override
+            public void done(List<RunData> runs, ParseException e) {
+                UserImage=null;
+
+
+                if (e != null) {
+                    return;
+                }
+                if (runs.size()>0) {
+                    RunData TheRun = runs.get(0);
+                    UserImage = TheRun.getProfileImage();
+                }
+
+                if (UserImage != null) {
+                    Glide.with(getApplicationContext()).load(UserImage.getUrl()).into(Menu_Profile_Pic);
+                }
+                else
+                    Menu_Profile_Pic.setImageResource(R.drawable.trophy);
+            }
+        });
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -213,6 +262,10 @@ public class MainActivity extends AppCompatActivity implements
         runData.setRunCalories(runBundle.getDouble(NEW_RUN_CALORIES));
 
         runData.setUser(ParseUser.getCurrentUser());
+
+        if (SettingsFragment.ProfilePicture!=null)
+            runData.setProfileImage(SettingsFragment.ProfilePicture);
+
         return runData;
     }
 
@@ -327,4 +380,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
+
+
 }

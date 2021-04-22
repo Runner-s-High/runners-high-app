@@ -1,6 +1,7 @@
 package com.codepath.runnershigh;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -16,6 +17,7 @@ public class RunData extends ParseObject {          //keys are the names of the 
     public static final String KEY_RUN_DATE="RunDate";
     public static final String KEY_RUN_CALORIES="Calories";
     public static final String KEY_RUN_NOTE="RunNotes";
+    public static final String KEY_USER_IMAGE="ProfileImage";
 
     public int getPreRunMood(){
         return getInt(KEY_PRERUNMOOD);
@@ -90,4 +92,15 @@ public class RunData extends ParseObject {          //keys are the names of the 
     public void setRunCalories(double calories) {
         put(KEY_RUN_CALORIES, calories);
     }
+
+    public ParseFile getProfileImage(){
+
+        return getParseFile(KEY_USER_IMAGE);
+    }
+
+    public void setProfileImage(ParseFile parseFile){
+
+        put(KEY_USER_IMAGE,parseFile);
+    }
+
 }
