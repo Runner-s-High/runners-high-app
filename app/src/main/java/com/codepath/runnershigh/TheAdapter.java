@@ -70,6 +70,10 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
         ArrayList<BarEntry> barEntryArrayList;
         ArrayList<String> RunLabels;
 
+        BarChart StressBarChart;
+        ArrayList<BarEntry> StressbarEntryArrayList;
+        ArrayList<String> StressLabels;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TheDate=itemView.findViewById(R.id.tvDate);
@@ -79,6 +83,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
             TheBarChart = itemView.findViewById(R.id.thebargraph);
             infobutton = itemView.findViewById(R.id.infobutton);
+            StressBarChart=itemView.findViewById(R.id.stressbargraph);
 
         }
                         //when clicking on an item in recyclerview
@@ -146,6 +151,105 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             TheBarChart.animateY(1000);
             TheBarChart.invalidate();
             SetGraphColors(prescore,postscore,barDataSet);         //Greg-function defined below
+
+
+            //stress bargraph
+            int prestress = run.getPreRunStress();
+            int poststress = run.getPostRunStress();
+            StressLabels=new ArrayList<>();
+            StressbarEntryArrayList = new ArrayList<>();
+            StressbarEntryArrayList.add(new BarEntry(0,prestress));       //data goes here from cloud
+            StressbarEntryArrayList.add(new BarEntry(1,poststress));
+            StressLabels.add(" ");
+            StressLabels.add(" ");
+
+
+            BarDataSet barDataSet2=new BarDataSet(StressbarEntryArrayList,"STRESS LEVELS");
+            BarData barData2=new BarData(barDataSet2);
+            barData2.setDrawValues(false);
+            barData2.setBarWidth(0.4f);
+
+            StressBarChart.setData(barData2);
+
+            Description description2=StressBarChart.getDescription();
+            description2.setEnabled(false);
+            Legend legend2=StressBarChart.getLegend();
+            legend2.setEnabled(false);
+            YAxis leftAxis2 = StressBarChart.getAxisLeft();
+            YAxis rightAxis2 = StressBarChart.getAxisRight();
+            rightAxis2.setEnabled(false);
+
+            leftAxis2.setAxisMaximum(10);
+            leftAxis2.setAxisMinimum(0);
+            leftAxis2.setLabelCount(10, true);
+
+            leftAxis2.setDrawGridLines(false);
+            leftAxis2.setDrawZeroLine(false);
+            leftAxis2.setEnabled(false);
+
+            XAxis xAxis2=StressBarChart.getXAxis();
+            xAxis2.setValueFormatter(new IndexAxisValueFormatter(StressLabels));
+            xAxis2.setDrawGridLines(false);
+            xAxis2.setDrawAxisLine(false);
+            xAxis2.setGranularity(1f);
+            xAxis2.setLabelCount(2);
+
+            StressBarChart.setDrawValueAboveBar(false);
+            StressBarChart.setDrawGridBackground(true);
+            StressBarChart.animateY(1000);
+            StressBarChart.invalidate();
+
+            SetStressColors(prestress,poststress,barDataSet2);
+        }
+
+
+        public void SetStressColors(int prestress,int poststress,BarDataSet barDataSet2){
+            int topbarcolor,bottombarcolor;
+            topbarcolor=bottombarcolor=0;
+
+
+                if (prestress==10 || prestress==9){
+                    topbarcolor=Color.RED;
+                }
+
+                else if (prestress==8 || prestress==7){
+                    topbarcolor=Color.rgb(255,165,0);
+                }
+
+                else if (prestress==6 || prestress==5){
+                    topbarcolor=Color.YELLOW;
+                }
+
+                else if (prestress==4 || prestress==3){
+                    topbarcolor=Color.rgb(173,255,47);
+                }
+
+                else if (prestress==2 || prestress==1){
+                    topbarcolor=Color.GREEN;
+                }
+
+            if (poststress==10 || poststress==9){
+                bottombarcolor=Color.RED;
+            }
+
+            else if (poststress==8 || poststress==7){
+                bottombarcolor=Color.rgb(255,165,0);
+            }
+
+            else if (poststress==6 || poststress==5){
+                bottombarcolor=Color.YELLOW;
+            }
+
+            else if (poststress==4 || poststress==3){
+                bottombarcolor=Color.rgb(173,255,47);
+            }
+
+            else if (poststress==2 || poststress==1){
+                bottombarcolor=Color.GREEN;
+            }
+
+
+            barDataSet2.setColors(topbarcolor,bottombarcolor);
         }
 
         public void SetGraphColors(int prescore,int postscore,BarDataSet bardataset){

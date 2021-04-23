@@ -18,6 +18,8 @@ public class RunData extends ParseObject {          //keys are the names of the 
     public static final String KEY_RUN_CALORIES="Calories";
     public static final String KEY_RUN_NOTE="RunNotes";
     public static final String KEY_USER_IMAGE="ProfileImage";
+    public static final String KEY_PRE_RUN_STRESS="PreRunStress";
+    public static final String KEY_POST_RUN_STRESS="PostRunStress";
 
     public int getPreRunMood(){
         return getInt(KEY_PRERUNMOOD);
@@ -101,6 +103,22 @@ public class RunData extends ParseObject {          //keys are the names of the 
     public void setProfileImage(ParseFile parseFile){
 
         put(KEY_USER_IMAGE,parseFile);
+    }
+
+    public void setPreRunStress(int prerunstress){
+        put(KEY_PRE_RUN_STRESS,prerunstress);
+    }
+
+    public int getPreRunStress(){
+        return getInt(KEY_PRE_RUN_STRESS);
+    }
+
+    public void setPostRunStress(int postrunstress){
+        put(KEY_POST_RUN_STRESS,postrunstress);
+    }
+
+    public int getPostRunStress(){
+        return getInt(KEY_POST_RUN_STRESS);
     }
 
 }

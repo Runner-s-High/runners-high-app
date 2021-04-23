@@ -65,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements
             NEW_RUN_LNG_LIST="NEW_RUN_LNG_LIST",
             NEW_RUN_NOTE ="newrunnote",
             NEW_RUN_DATE ="newrundate",
-            NEW_RUN_CALORIES="newruncalories";
+            NEW_RUN_CALORIES="newruncalories",
+            NEW_RUN_PRE_STRESS="newrunprestress",
+            NEW_RUN_POST_STRESS="newrunpoststress";
 
     public static double LBS_TO_KG = 0.4535924;
 
@@ -266,6 +268,10 @@ public class MainActivity extends AppCompatActivity implements
         if (SettingsFragment.ProfilePicture!=null)
             runData.setProfileImage(SettingsFragment.ProfilePicture);
 
+        runData.setPreRunStress(runBundle.getInt(NEW_RUN_PRE_STRESS));
+
+        runData.setPostRunStress(runBundle.getInt(NEW_RUN_POST_STRESS));
+
         return runData;
     }
 
@@ -343,9 +349,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void surveyCompleted(int preRunMood) {
+    public void surveyCompleted(int preRunMood,int preRunStress) {      //new
         newRunBundle = new Bundle();
         newRunBundle.putInt(NEW_RUN_PRE_MOOD,preRunMood);
+        newRunBundle.putInt(NEW_RUN_PRE_STRESS,preRunStress);       //new
         openRunningFragment();
     }
 

@@ -16,10 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.codepath.runnershigh.R;
 import com.codepath.runnershigh.RunData;
+
+import static com.parse.Parse.getApplicationContext;
 
 
 //Todo: Copy Greg's code for preMood collection to here
@@ -28,10 +31,10 @@ public class PreRunMoodDialogFragment extends DialogFragment {
     Button btSubmit;
     ImageButton IB1,IB2,IB3,IB4,IB5;
     boolean moodSet=false;
-
-
     int preRunMoodRating;
+    int preRunStressRating;
 
+    SeekBar seekbar;
 
     public PreRunMoodDialogFragment() {
         // Required empty public constructor
@@ -63,12 +66,14 @@ public class PreRunMoodDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Finding Views
+        preRunStressRating=5;
         btSubmit = view.findViewById(R.id.btSubmit);
         IB1=view.findViewById(R.id.IB1);
         IB2=view.findViewById(R.id.IB2);
         IB3=view.findViewById(R.id.IB3);
         IB4=view.findViewById(R.id.IB4);
         IB5=view.findViewById(R.id.IB5);
+        seekbar=view.findViewById(R.id.seekBar);
 
         IB1.setOnClickListener(moodBtnListener);
         IB2.setOnClickListener(moodBtnListener);
@@ -76,12 +81,29 @@ public class PreRunMoodDialogFragment extends DialogFragment {
         IB4.setOnClickListener(moodBtnListener);
         IB5.setOnClickListener(moodBtnListener);
 
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                preRunStressRating=progress;
+                //Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(moodSet) {
-                    preRunMoodDialogFragmentInterface.surveyCompleted(preRunMoodRating);
+                    preRunMoodDialogFragmentInterface.surveyCompleted(preRunMoodRating,preRunStressRating);
                     dismiss();
                 }else{
                     Toast.makeText(getActivity(), "Must Select Mood", Toast.LENGTH_SHORT).show();
@@ -92,6 +114,8 @@ public class PreRunMoodDialogFragment extends DialogFragment {
 
 
     }
+
+
 
 
     View.OnClickListener moodBtnListener = new View.OnClickListener() {
@@ -148,7 +172,7 @@ public class PreRunMoodDialogFragment extends DialogFragment {
     }
 
     public interface PreRunMoodDialogFragmentInterface{
-        public void surveyCompleted(int preMoodScore);
+        public void surveyCompleted(int preMoodScore, int preRunStressRating);
 
         //Todo: change bundle mood to mood class object
         //public void surveyCompleted(Mood preRunMood);

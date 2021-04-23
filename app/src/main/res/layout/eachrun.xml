@@ -6,6 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/stressbargraph"
+        android:layout_width="148dp"
+        android:layout_height="162dp"
+        android:layout_marginTop="4dp"
+        android:rotation="90"
+        app:layout_constraintEnd_toStartOf="@+id/imageView12"
+        app:layout_constraintHorizontal_bias="0.588"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimeRV" />
+
     <ImageView
         android:id="@+id/imageView14"
         android:layout_width="21dp"
@@ -50,12 +61,12 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView12"
         app:srcCompat="@drawable/smallorangecropped" />
 
+
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,22 +75,22 @@
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/thebargraph"
-        android:layout_width="180dp"
-        android:layout_height="147dp"
+        android:layout_width="154dp"
+        android:layout_height="144dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTimeRV" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCaloriesRV" />
 
     <Button
         android:id="@+id/infobutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_width="102dp"
+        android:layout_height="40dp"
         android:text="@string/btn_more_info"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -88,7 +99,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infobutton" />
 
     <TextView
         android:id="@+id/tvTimeRV"
@@ -135,7 +147,7 @@
         android:id="@+id/tvCaloriesTitleRV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="28dp"
         android:text="@string/calories_label"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,6 +161,59 @@
         app:layout_constraintEnd_toEndOf="@+id/tvCaloriesTitleRV"
         app:layout_constraintTop_toBottomOf="@+id/tvCaloriesTitleRV"
         tools:text="CALORIES" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="110dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="28dp"
+        android:text="STRESS"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/textView8"
+        app:layout_constraintHorizontal_bias="0.267"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stressbargraph" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="42dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="1dp"
+        android:text="Pre\nRun"
+        android:textAlignment="textEnd"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toStartOf="@+id/stressbargraph"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/stressbargraph" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="41dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="32dp"
+        android:text="Post\nRun"
+        android:textAlignment="textEnd"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toStartOf="@+id/stressbargraph"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="102dp"
+        android:layout_height="23dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="16dp"
+        android:text="MOOD"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thebargraph"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

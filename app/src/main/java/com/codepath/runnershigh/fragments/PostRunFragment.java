@@ -12,12 +12,14 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +68,9 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     MapView mvPostRun;
     GoogleMap mMap;
 
+    SeekBar PreRunseekbar;
+    SeekBar PostRunseekbar;
+    int postRunStressRating;
 
     public PostRunFragment() {
         // Required empty public constructor
@@ -109,6 +114,10 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         tvRunTime = view.findViewById(R.id.tvRunTime);
         tvRunDistance = view.findViewById(R.id.tvRunDistance);
         mvPostRun = view.findViewById(R.id.mvPostRun);
+        PreRunseekbar=view.findViewById(R.id.PreseekBar);
+
+        postRunStressRating=5;
+        PostRunseekbar=view.findViewById(R.id.PostseekBar);
 
         tvRunTime.setText("Time: "+RunInfo.get(MainActivity.NEW_RUN_TIME));
         tvRunDistance.setText("Distance: " + String.format("%.2f",RunInfo.get(MainActivity.NEW_RUN_DISTANCE)));
@@ -130,6 +139,9 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
 
         //Setting up UI
         setPreMoodImage();
+
+        int prestressrating = RunInfo.getInt(MainActivity.NEW_RUN_PRE_STRESS);
+        PreRunseekbar.setProgress(prestressrating);
 
         //Setting up onClick Listeners
         btExit.setOnClickListener(new View.OnClickListener() {
@@ -158,9 +170,36 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
                     String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                     RunInfo.putString(MainActivity.NEW_RUN_NOTE, etNotes.getText().toString());
                     RunInfo.putString(MainActivity.NEW_RUN_DATE, currentDate);
+
+                    RunInfo.putInt(MainActivity.NEW_RUN_POST_STRESS,postRunStressRating);
+
                     postRunFragmentInterface.exitPostRun(true, RunInfo);
                 }else
                     Toast.makeText(getActivity(), "Finish the post run survey", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        PreRunseekbar.setOnTouchListener(new View.OnTouchListener() {       //user can't slide old seekbar with this
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+
+        PostRunseekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                postRunStressRating=progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 

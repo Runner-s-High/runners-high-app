@@ -27,12 +27,9 @@ import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
 import java.text.DateFormat;
 import java.util.Calendar;
 
-//Temporary setup just to test pre and post run moods-Greg
-    //visual could be improved by cropping whitespace around each circle and
-    //figuring out radiobox and radiobuttons instead of 5 buttons with click handlers
+
 
 public class StartRunFragment extends Fragment {
-
 
 
     Button btnStart;

@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.runnershigh.fragments.PostRunFragment;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -19,16 +21,29 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MoreInfoActivity extends AppCompatActivity {
+public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
+    public static final String TAG = MoreInfoActivity.class.getCanonicalName();
 
     ImageView preMood;
     ImageView postMood;
-    TextView FinishMessage, tvTimeMI, tvDistanceMI, tvCaloriesMI, tvDateMI, tvNoteMI;
+    TextView tvTimeMI, tvDistanceMI, tvCaloriesMI, tvDateMI, tvNoteMI;
+    MapView mvMoreInfo;
+    GoogleMap mMap;
 
     Button GoBackButton;
     RunData therun;
@@ -36,6 +51,7 @@ public class MoreInfoActivity extends AppCompatActivity {
     BarChart mybarchart;
     ArrayList<BarEntry> barEntryArrayList;
     ArrayList<String> RunLabels;
+    List<LatLng> latLngList;
 
 
     @Override
@@ -51,12 +67,14 @@ public class MoreInfoActivity extends AppCompatActivity {
         preMood = findViewById(R.id.ivpremood);
         postMood = findViewById(R.id.ivpostmood);
         mybarchart = findViewById(R.id.mybargraph);
-        FinishMessage=findViewById(R.id.tvFinish);
         tvTimeMI = findViewById(R.id.tvTimeMI);
         tvDistanceMI = findViewById(R.id.tvDistanceMI);
         tvCaloriesMI = findViewById(R.id.tvCaloriesMI);
         tvDateMI = findViewById(R.id.tvDateMI);
         tvNoteMI = findViewById(R.id.tvNoteMI);
+        mvMoreInfo = findViewById(R.id.mvMoreInfo);
+
+        mvMoreInfo.onCreate(savedInstanceState);
 
         therun = Parcels.unwrap(getIntent().getParcelableExtra("pizza"));
         int prescore = therun.getPreRunMood();
@@ -76,11 +94,9 @@ public class MoreInfoActivity extends AppCompatActivity {
         RunLabels.add("POST-RUN");
         BarDataSet barDataSet=new BarDataSet(barEntryArrayList,"Moods");
 
-
-        SetMessage(prescore,postscore);     //Greg- These functions were created and defined below
         SetFaces(prescore, postscore,barDataSet);      //
 
-       // barDataSet.setColors(Color.RED,Color.GREEN);
+        // barDataSet.setColors(Color.RED,Color.GREEN);
 
         BarData barData=new BarData(barDataSet);
         barData.setDrawValues(false);
@@ -133,7 +149,31 @@ public class MoreInfoActivity extends AppCompatActivity {
 
     }
 
-    public void SetFaces(int prescore,int postscore,BarDataSet bardataset){
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mvMoreInfo.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mvMoreInfo.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mvMoreInfo.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mvMoreInfo.onLowMemory();
+    }
+
+    public void SetFaces(int prescore, int postscore, BarDataSet bardataset){
         int leftgraphcolor = 0;
         int rightgraphcolor=0;
 
@@ -186,27 +226,39 @@ public class MoreInfoActivity extends AppCompatActivity {
         bardataset.setColors(leftgraphcolor,rightgraphcolor);
     }
 
-    public void SetMessage(int prescore,int postscore){
-        int result=postscore-prescore;
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        FinishMessage.setText("IMPROVEMENT");
+        if (latLngList.size() > 0) {
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLngList.get(0))
+                    .title("Start of Run"));
+            Log.d(TAG, latLngList.get(0).toString());
 
-        switch(result) {
-            case 1:
-                FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 1! Way to Go!");
-                break;
-            case 2:
-                FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 2! Nice Work!");
-                break;
-            case 3:
-                FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 3! Nice Job!");
-                break;
-            case 4:
-                FinishMessage.setText("Note:\n\nYour Mood Improved by a score of 4! Way to Go!");
-                break;
-            default:
-                FinishMessage.setText("Note:\n\nMood didn't improve this time. Don't give up!");
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLngList.get(latLngList.size() - 1))
+                    .title("End of Run"));
+
+            Log.d(TAG, latLngList.get(latLngList.size() - 1).toString());
+
+            PolylineOptions polylineOptions = new PolylineOptions();
+            polylineOptions.addAll(latLngList);
+            mMap.addPolyline(polylineOptions);
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (LatLng latLng : latLngList) {
+                builder.include(latLng);
+            }
+            mMap.moveCamera(CameraUpdateFactory
+                    .newCameraPosition
+                            (new CameraPosition
+                                    .Builder()
+                                    .tilt(0)
+                                    .target(builder.build().getCenter())
+                                    .build()));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100));
         }
     }
-
 }

@@ -61,6 +61,16 @@
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/ic_outline_sentiment_neutral_24" />
 
+            <SeekBar
+                android:id="@+id/PreseekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:max="10"
+                android:progress="5"
+                android:progressTint="#F44336" />
+
+
             <TextView
                 android:id="@+id/tvPostMoodQuery"
                 android:layout_width="wrap_content"
@@ -134,6 +144,19 @@
                     android:src="@drawable/mood5"
                     android:tint="#FFEE58" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <SeekBar
+                    android:id="@+id/PostseekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="10"
+                    android:progress="5"
+                    android:progressTint="#F44336" />
             </LinearLayout>
 
             <FrameLayout
