@@ -23,20 +23,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/runimage" />
 
-    <ImageButton
-        android:id="@+id/IB1"
-        android:layout_width="59dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="168dp"
-        android:backgroundTint="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/IB2"
-        app:layout_constraintTop_toBottomOf="@+id/message"
-        app:srcCompat="@drawable/angriestcropped" />
-
     <TextView
         android:id="@+id/message"
         android:layout_width="403dp"
