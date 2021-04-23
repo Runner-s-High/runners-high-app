@@ -46,7 +46,6 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements
-        StartRunFragment.StartRunFragmentInterface,
         RunningFragment.RunningFragmentInterface,
         HomeFragment.HomeFragmentInterface,
         PreRunMoodDialogFragment.PreRunMoodDialogFragmentInterface,

@@ -25,7 +25,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="api key here" />
+            android:value="api key" />
 
         <service
             android:name=".services.RunnersHighLocationService"
