@@ -13,7 +13,7 @@
         android:id="@+id/tvVibeCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vibe Check"
+        android:text="Rate Your Mood"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -93,7 +93,7 @@
         android:id="@+id/tvStress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="What's ya skress?"
+        android:text="Rate Your Stress Level"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 

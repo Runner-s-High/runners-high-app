@@ -47,7 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements
         RunningFragment.RunningFragmentInterface,
-        HomeFragment.HomeFragmentInterface,
+        StartRunFragment.StartRunFragmentInterface,
         PreRunMoodDialogFragment.PreRunMoodDialogFragmentInterface,
         PostRunFragment.PostRunFragmentInterface,
         SettingsFragment.SettingsFragmentInterface,
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements
 
                         break;
                     case R.id.itRun:
-                        fragment = startRunFragment;
+                        fragment = startRunFragment;        //new or no?
 
 
                         break;
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements
 
         //Setting default selection
         bottomNavigationView.setSelectedItemId(R.id.itHome);
-
+                                                                        //change above
 
     }
 

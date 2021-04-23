@@ -24,29 +24,37 @@ import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.codepath.runnershigh.R;
+import com.codepath.runnershigh.RunData;
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 
 public class HomeFragment extends Fragment {
-    public static final int REQUEST_CODE_LOCATION_PERMISSION=1;
+    TextView TotalDistance,TotalTime,LongestRun,CaloriesBurned,MoodIncrease,StressReduction,tvLongestTime,CaloriesAVG;
+    TextView TotalDistance2,TotalTime2,LongestRun2,CaloriesBurned2,MoodIncrease2,StressReduction2,
+            tvLongestTime2,CaloriesAVG2;
 
+    TextView RandomQuote;
     TextClock tcDate;
     TextClock tcTime;
 
-    TextView tvQuote;
+    ArrayList<Double> DistanceArray;
+    ArrayList<Double> CalorieArray;
+    ArrayList<String> RunTimeArray;
+    ArrayList<Integer> PreMoodArray;
+    ArrayList<Integer> PostMoodArray;
+    ArrayList<Integer> PreStressArray;
+    ArrayList<Integer> PostStressArray;
 
-    Button btStart;
 
-    ImageView ivBackground;
-
-    HomeFragmentInterface homeFragmentInterface;
-
-    boolean completedMoodSurvey=false;
-    PreRunMoodDialogFragment moodSurvey;
 
 
     public HomeFragment() {
@@ -73,98 +81,243 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tcDate = view.findViewById(R.id.tcDate);
-        tcTime = view.findViewById(R.id.tcTime);
-        tvQuote = view.findViewById(R.id.tvQuote);
-        btStart = view.findViewById(R.id.btSubmit);
-        ivBackground = view.findViewById(R.id.ivBackground);
 
-        //Set format for date and time
-        tcDate.setFormat12Hour("EEE, MMM d, ''yy");
-        tcTime.setFormat12Hour("h:mm a");
-
-        //Get quotes from resources and set text view to random quote
         Resources resources = getResources();
         List<String> Quotes = Arrays.asList(resources.getStringArray(R.array.Quotes));
         List<String> tips = Arrays.asList(resources.getStringArray(R.array.tips));
         Random random =new Random();
 
+
+        DistanceArray=new ArrayList<>();
+        CalorieArray=new ArrayList<>();
+        RunTimeArray=new ArrayList<>();
+        PreMoodArray=new ArrayList<>();
+        PostMoodArray=new ArrayList<>();
+        PreStressArray=new ArrayList<>();
+        PostStressArray=new ArrayList<>();
+
+
+        TotalDistance=view.findViewById(R.id.TVTotalDistance);
+        TotalTime=view.findViewById(R.id.TVTotalTime);
+        LongestRun=view.findViewById(R.id.TVLongestRun);
+        CaloriesBurned=view.findViewById(R.id.TVCaloriesBurned);
+        MoodIncrease=view.findViewById(R.id.TVMoodIncrease);
+        StressReduction=view.findViewById(R.id.TVStressDecrease);
+        tvLongestTime=view.findViewById(R.id.TVLongestTime);
+        CaloriesAVG=view.findViewById(R.id.TVCaloriesBurnedAVG);
+
+        TotalDistance2=view.findViewById(R.id.TVTotalDistance2);
+        TotalTime2=view.findViewById(R.id.TVTotalTime2);
+        LongestRun2=view.findViewById(R.id.TVLongestRun2);
+        CaloriesBurned2=view.findViewById(R.id.TVCaloriesBurned2);
+        MoodIncrease2=view.findViewById(R.id.TVMoodIncrease2);
+        StressReduction2=view.findViewById(R.id.TVStressDecrease2);
+        tvLongestTime2=view.findViewById(R.id.TVLongestTime2);
+        CaloriesAVG2=view.findViewById(R.id.TVCaloriesBurnedAVG2);
+
+        tcDate = view.findViewById(R.id.tcDate_startfragment);
+        tcTime = view.findViewById(R.id.tcTime_startfragment);
+
+        RandomQuote=view.findViewById(R.id.tvquote);
+
+
+        tcDate.setFormat12Hour("EEE, MMM d, ''yy");
+        tcTime.setFormat12Hour("h:mm a");
+
         if(random.nextInt() % 2 == 0) {
-            tvQuote.setText(Quotes.get(
+            RandomQuote.setText(Quotes.get(
                     random.nextInt(
                             Quotes.size())));
         }
         else {
-            tvQuote.setText(tips.get(random.nextInt(tips.size())));
+            RandomQuote.setText(tips.get(random.nextInt(tips.size())));
+
         }
 
-        //Todo: set random background
 
-        //TODO: set up navigation to start run
-        btStart.setOnClickListener(new View.OnClickListener() {
+        ParseQuery<RunData> query=ParseQuery.getQuery(RunData.class);
+        query.include(RunData.KEY_USER);
+        query.setLimit(10);
+        query.whereEqualTo(RunData.KEY_USER, ParseUser.getCurrentUser());
+        query.addDescendingOrder(RunData.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<RunData>() {
             @Override
-            public void onClick(View v) {
+            public void done(List<RunData> runs, ParseException e) {
+                if (e != null) {
+                    return;
+                }
 
-                if(ContextCompat.checkSelfPermission(
-                        getActivity().getApplicationContext(),
-                        Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(
-                            getActivity(),
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION},
-                            REQUEST_CODE_LOCATION_PERMISSION);
-                }else {
+                if (runs.size()>=5) {
+                    for (int i=0;i<runs.size();i++){
+                        DistanceArray.add(runs.get(i).getRunDistance());
+                        CalorieArray.add(runs.get(i).getRunCalories());
+                        RunTimeArray.add(runs.get(i).getRunTime());
+                        PreMoodArray.add(runs.get(i).getPreRunMood());
+                        PostMoodArray.add(runs.get(i).getPostRunMood());
+                        PreStressArray.add(runs.get(i).getPreRunStress());
+                        PostStressArray.add(runs.get(i).getPostRunStress());
 
-                    if (completedMoodSurvey) {
-                        completedMoodSurvey = false;
-                        homeFragmentInterface.openRunningFragment();
-                    } else {
-                        FragmentManager fm = HomeFragment.this.getChildFragmentManager();
-                        moodSurvey = new PreRunMoodDialogFragment();
-                        moodSurvey.show(fm, "Survey");
+
+                    }
+                    CalculateDistances(5);
+                    CalculateRunTimes(5);
+                    CalculatePsychological(5);
+                    CalculateCalories(5);
+
+                    if (runs.size()==10) {
+                        CalculateDistances(10);
+                        CalculateRunTimes(10);
+                        CalculatePsychological(10);
+                        CalculateCalories(10);
                     }
                 }
+
+                else
+                    return;
             }
         });
 
-        //TODO: set up most recent run
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==REQUEST_CODE_LOCATION_PERMISSION){
-            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                if (completedMoodSurvey) {
-                    completedMoodSurvey = false;
-                    homeFragmentInterface.openRunningFragment();
-                } else {
-                    FragmentManager fm = HomeFragment.this.getChildFragmentManager();
-                    moodSurvey = new PreRunMoodDialogFragment();
-                    moodSurvey.show(fm, "Survey");
-                }
+    public void CalculatePsychological(int amount){
+        double PreMood,PostMood,PreStress,PostStress;
+        PreMood=PostMood=PreStress=PostStress=0;
+
+        for (int i=0;i<amount;i++){
+            PreMood+=PreMoodArray.get(i);
+            PostMood+=PostMoodArray.get(i);
+            PreStress+=PreStressArray.get(i);
+            PostStress+=PostStressArray.get(i);
+        }
+
+        double moodIncrease=(PostMood-PreMood)/PreMood*100;
+        double stressReduction=(PreStress-PostStress)/PreStress*100;
+
+        if (amount==5) {
+            MoodIncrease.setText(String.valueOf((int) moodIncrease).toString() + " %");
+            StressReduction.setText(String.valueOf((int) stressReduction).toString() + " %");
+        }
+
+        else{
+            MoodIncrease2.setText(String.valueOf((int) moodIncrease).toString() + " %");
+            StressReduction2.setText(String.valueOf((int) stressReduction).toString() + " %");
+
+        }
+
+    }
+
+    public void CalculateCalories(int amount){
+        double calories=0;
+        for (int i=0;i<amount;i++){
+            calories+=CalorieArray.get(i);
+            double sauce=CalorieArray.get(i);
+            double ignore=CalorieArray.get(i);
+        }
+
+        int RoundedCalories=(int)calories;
+        int avg=(int)(calories/amount);
+
+        if (amount==5) {
+            CaloriesBurned.setText(String.valueOf(RoundedCalories).toString() + " Cal");
+            CaloriesAVG.setText(String.valueOf(avg).toString() + " Cal");
+        }
+        else {
+            CaloriesBurned2.setText(String.valueOf(RoundedCalories).toString() + " Cal");
+            CaloriesAVG2.setText(String.valueOf(avg).toString() + " Cal");
+        }
+    }
+
+    public void CalculateRunTimes(int amount){
+        int totalseconds=0;
+        int LongestRunSeconds=0;
+        String CurrentTime;
+
+        int value;
+        int TheLongestRun= Integer.parseInt(RunTimeArray.get(0).replaceAll("[^0-9]", ""));
+
+        for (int i=0;i<amount;i++){
+            CurrentTime=RunTimeArray.get(i);
+            value = Integer.parseInt(CurrentTime.replaceAll("[^0-9]", ""));
+
+
+            if (value>TheLongestRun) {
+                TheLongestRun=value;
             }
+            for (int j=0;j<4;j++){
+                if (j==0)
+                    totalseconds+=value%10;
+                else if (j==1)
+                    totalseconds+=value%10 * 10;
+                else if (j==2)
+                    totalseconds+=value%10 *60;
+                else if (j==3)
+                    totalseconds+=value%10 * 60 * 10;
+
+                value=value/10;
+
+            }
+
+        }
+
+        int total_min=totalseconds/60;
+        int seconds=totalseconds-(60*total_min);
+        int hours=total_min/60;
+        int minutes=total_min-(60*hours);
+
+        for (int j=0;j<4;j++){
+            if (j==0)
+                LongestRunSeconds+=TheLongestRun%10;
+            else if (j==1)
+                LongestRunSeconds+=TheLongestRun%10 * 10;
+            else if (j==2)
+                LongestRunSeconds+=TheLongestRun%10 *60;
+            else if (j==3)
+                LongestRunSeconds+=TheLongestRun%10 * 60 * 10;
+
+            TheLongestRun=TheLongestRun/10;
+
+        }
+
+        int total_min2=LongestRunSeconds/60;
+        int seconds2=LongestRunSeconds-(60*total_min2);
+        int hours2=total_min2/60;
+        int minutes2=total_min2-(60*hours2);
+
+
+        if (amount==5) {
+            TotalTime.setText(hours + " hrs " + minutes + " min " + seconds + " sec ");
+            tvLongestTime.setText(hours2 + " hrs " + minutes2 + " min " + seconds2 + " sec ");
+        }
+        else {
+            TotalTime2.setText(hours + " hrs " + minutes + " min " + seconds + " sec ");
+            tvLongestTime2.setText(hours2 + " hrs " + minutes2 + " min " + seconds2 + " sec ");
         }
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if(context instanceof HomeFragmentInterface){
-            homeFragmentInterface=(HomeFragmentInterface) context;
-        }else{
-            throw new RuntimeException(context.toString()+
-                    "must implement HomeFragmentInterface");
+
+    public void CalculateDistances(int amount){
+        double weeklydistance=0;
+        double longestdistance=DistanceArray.get(0);
+
+        for (int i=0;i<amount;i++){
+            weeklydistance+=DistanceArray.get(i);
+
+            if (DistanceArray.get(i)>longestdistance )
+                longestdistance=DistanceArray.get(i);
+        }
+
+        if (amount==5) {
+            TotalDistance.setText(String.valueOf(weeklydistance) + " miles");
+            LongestRun.setText(String.valueOf(longestdistance) + " miles");
+        }
+        else{
+            TotalDistance2.setText(String.valueOf(weeklydistance) + " miles");
+            LongestRun2.setText(String.valueOf(longestdistance) + " miles");
         }
     }
 
-    public interface HomeFragmentInterface{
-        public void startRun();
-        public void openRunningFragment();
 
-    }
 
 
 }
