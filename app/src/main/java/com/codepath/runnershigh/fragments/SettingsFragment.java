@@ -49,7 +49,8 @@ public class SettingsFragment extends Fragment {
     CircleImageView MenuBarProfilePic;
     public static ParseFile ProfilePicture=null;
 
-
+    String UserName;
+    TextView tvusername;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -80,13 +81,15 @@ public class SettingsFragment extends Fragment {
         Button btnLogOut;
         Button btnChangeProfilePic;
 
+        UserName=ParseUser.getCurrentUser().getUsername().toString();
 
         //Initialize views
         btnLogOut = view.findViewById(R.id.btnLogOut);
         btnChangeProfilePic=view.findViewById(R.id.btnchangepic);
         MenuBarProfilePic= MainActivity.Menu_Profile_Pic;
         SettingsProfilePic=view.findViewById(R.id.SettingsProfileImage);
-
+        tvusername=view.findViewById(R.id.tvUserName);
+        tvusername.setText(UserName);
 
            if (MainActivity.UserImage == null)                               //static variables is key
                SettingsProfilePic.setImageResource(R.drawable.trophy);

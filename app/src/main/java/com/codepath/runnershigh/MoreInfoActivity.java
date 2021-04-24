@@ -100,6 +100,7 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
         BarData barData=new BarData(barDataSet);
         barData.setDrawValues(false);
+        barData.setHighlightEnabled(false);
         mybarchart.setData(barData);
 
         Description description=mybarchart.getDescription();
@@ -180,22 +181,27 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         switch(prescore) {
             case 1:
                 preMood.setImageResource(R.drawable.mood1);
+                preMood.setColorFilter(Color.parseColor("#F44336"));
                 leftgraphcolor=Color.RED;
                 break;
             case 2:
                 preMood.setImageResource(R.drawable.mood2);
+                preMood.setColorFilter(Color.parseColor("#FF9800"));
                 leftgraphcolor=Color.rgb(255,165,0);
                 break;
             case 3:
                 preMood.setImageResource(R.drawable.mood3);
+                preMood.setColorFilter(Color.parseColor("#FFEB3B"));
                 leftgraphcolor=Color.YELLOW;
                 break;
             case 4:
                 preMood.setImageResource(R.drawable.mood4);
+                preMood.setColorFilter(Color.parseColor("#8BC34A"));
                 leftgraphcolor=Color.rgb(173,255,47);
                 break;
             case 5:
                 preMood.setImageResource(R.drawable.mood5);
+                preMood.setColorFilter(Color.parseColor("#4CAF50"));
                 leftgraphcolor=Color.GREEN;
                 break;
         }
@@ -203,22 +209,27 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         switch(postscore) {
             case 1:
                 postMood.setImageResource(R.drawable.mood1);
+                postMood.setColorFilter(Color.parseColor("#F44336"));
                 rightgraphcolor=Color.RED;
                 break;
             case 2:
                 postMood.setImageResource(R.drawable.mood2);
+                postMood.setColorFilter(Color.parseColor("#FF9800"));
                 rightgraphcolor=Color.rgb(255,165,0);
                 break;
             case 3:
                 postMood.setImageResource(R.drawable.mood3);
+                postMood.setColorFilter(Color.parseColor("#FFEB3B"));
                 rightgraphcolor=Color.YELLOW;
                 break;
             case 4:
                 postMood.setImageResource(R.drawable.mood4);
+                postMood.setColorFilter(Color.parseColor("#8BC34A"));
                 rightgraphcolor=Color.rgb(173,255,47);
                 break;
             case 5:
                 postMood.setImageResource(R.drawable.mood5);
+                postMood.setColorFilter(Color.parseColor("#4CAF50"));
                 rightgraphcolor=Color.GREEN;
                 break;
         }

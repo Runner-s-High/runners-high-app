@@ -120,8 +120,10 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
             BarData barData=new BarData(barDataSet);
             barData.setDrawValues(false);
+            barData.setHighlightEnabled(false);
 
             TheBarChart.setData(barData);
+
 
             Description description=TheBarChart.getDescription();
             description.setEnabled(false);
@@ -150,6 +152,8 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             TheBarChart.setDrawGridBackground(true);
             TheBarChart.animateY(1000);
             TheBarChart.invalidate();
+
+
             SetGraphColors(prescore,postscore,barDataSet);         //Greg-function defined below
 
 
@@ -168,6 +172,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             BarData barData2=new BarData(barDataSet2);
             barData2.setDrawValues(false);
             barData2.setBarWidth(0.4f);
+            barData2.setHighlightEnabled(false);
 
             StressBarChart.setData(barData2);
 

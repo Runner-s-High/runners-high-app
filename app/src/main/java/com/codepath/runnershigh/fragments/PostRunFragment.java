@@ -240,23 +240,23 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         switch(premood){
             case 1:
                 ivPreMood.setImageResource(R.drawable.mood1);
-                ivPreMood.setColorFilter(Color.parseColor("#FF99C9"));
+                ivPreMood.setColorFilter(Color.parseColor("#F44336"));
                 break;
             case 2:
                 ivPreMood.setImageResource(R.drawable.mood2);
-                ivPreMood.setColorFilter(Color.parseColor("#6A9DB8"));
+                ivPreMood.setColorFilter(Color.parseColor("#FF9800"));
                 break;
             case 3:
                 ivPreMood.setImageResource(R.drawable.mood3);
-                ivPreMood.setColorFilter(Color.parseColor("#87DBA8"));
+                ivPreMood.setColorFilter(Color.parseColor("#FFEB3B"));
                 break;
             case 4:
                 ivPreMood.setImageResource(R.drawable.mood4);
-                ivPreMood.setColorFilter(Color.parseColor("#C288E5"));
+                ivPreMood.setColorFilter(Color.parseColor("#8BC34A"));
                 break;
             case 5:
                 ivPreMood.setImageResource(R.drawable.mood5);
-                ivPreMood.setColorFilter(Color.parseColor("#FFEE58"));
+                ivPreMood.setColorFilter(Color.parseColor("#4CAF50"));
                 break;
         }
 

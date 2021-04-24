@@ -62,6 +62,9 @@ public class StartRunFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btStart = view.findViewById(R.id.btSubmit);
 
+
+
+
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
