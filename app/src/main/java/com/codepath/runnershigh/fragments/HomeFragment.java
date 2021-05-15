@@ -308,12 +308,12 @@ public class HomeFragment extends Fragment {
         }
 
         if (amount==5) {
-            TotalDistance.setText(String.valueOf(weeklydistance) + " miles");
-            LongestRun.setText(String.valueOf(longestdistance) + " miles");
+            TotalDistance.setText(String.format("%.2f miles", weeklydistance));
+            LongestRun.setText(String.format("%.2f miles", longestdistance));
         }
         else{
-            TotalDistance2.setText(String.valueOf(weeklydistance) + " miles");
-            LongestRun2.setText(String.valueOf(longestdistance) + " miles");
+            TotalDistance2.setText(String.format("%.2f miles", weeklydistance));
+            LongestRun2.setText(String.format("%.2f miles", longestdistance));
         }
     }
 
