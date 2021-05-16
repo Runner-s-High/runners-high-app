@@ -20,44 +20,84 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/SettingsProfileImage"
-        android:layout_width="191dp"
-        android:layout_height="192dp"
-        android:layout_marginTop="112dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName"
+        tools:src="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/btnchangepic"
-        android:layout_width="217dp"
-        android:layout_height="58dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Change Profile Image"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogOut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SettingsProfileImage"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintTop_toBottomOf="@+id/SettingsProfileImage" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="246dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Logged in as"
-        android:textSize="35sp"
+        android:text="@string/logged_in_as"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvUserName"
-        android:layout_width="244dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:text="USERNAME" />
+
+    <RadioGroup
+        android:id="@+id/rgUnits"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <RadioButton
+            android:id="@+id/rbMiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/miles_expanded"
+            android:textColorLink="@color/primaryColor" />
+
+        <RadioButton
+            android:id="@+id/rbKilometers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kilometers_expanded"
+            android:textColorLink="@color/primaryColor" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/distance_units"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnchangepic" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

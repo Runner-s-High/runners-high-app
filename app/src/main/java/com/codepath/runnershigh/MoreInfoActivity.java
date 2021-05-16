@@ -2,7 +2,9 @@ package com.codepath.runnershigh;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,12 +38,14 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: Implement a viewpager to switch between stats and graph, rather than ScrollView
+
 public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final String TAG = MoreInfoActivity.class.getCanonicalName();
 
     ImageView preMood;
     ImageView postMood;
-    TextView tvTimeMI, tvDistanceMI, tvCaloriesMI, tvDateMI, tvNoteMI;
+    TextView tvTimeMI, tvDistanceMI, tvCaloriesMI, tvDateMI, tvNoteMI, tvDistanceLabelMI;
     MapView mvMoreInfo;
     GoogleMap mMap;
 
@@ -53,12 +57,27 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
     ArrayList<String> RunLabels;
     List<LatLng> latLngList;
 
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_info);
         getSupportActionBar().hide();
+
+        double multiplier;
+        String units;
+
+        prefs = getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS) {
+            multiplier = MainActivity.MI_TO_KM;
+            units = "KM";
+        }
+        else {
+            multiplier = 1;
+            units = "MI";
+        }
 
         GoBackButton=findViewById(R.id.nextbutton);
 
@@ -72,6 +91,7 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         tvCaloriesMI = findViewById(R.id.tvCaloriesMI);
         tvDateMI = findViewById(R.id.tvDateMI);
         tvNoteMI = findViewById(R.id.tvNoteMI);
+        tvDistanceLabelMI = findViewById(R.id.tvDistanceLabelMI);
         mvMoreInfo = findViewById(R.id.mvMoreInfo);
 
         mvMoreInfo.onCreate(savedInstanceState);
@@ -81,10 +101,11 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         int postscore = therun.getPostRunMood();
 
         tvTimeMI.setText(therun.getRunTime());
-        tvDistanceMI.setText(String.format("%.2f", therun.getRunDistance()));
-        tvCaloriesMI.setText(String.format("%.1f", therun.getRunCalories()));
+        tvDistanceMI.setText(String.format("%.2f", therun.getRunDistance() * multiplier));
+        tvCaloriesMI.setText(String.format("%.1f", therun.getRunCalories() * multiplier));
         tvDateMI.setText(therun.getRunDate());
         tvNoteMI.setText(therun.getRunNote());
+        tvDistanceLabelMI.setText(String.format("%s (%s)", getString(R.string.distance_label), units));
 
         barEntryArrayList = new ArrayList<>();
 

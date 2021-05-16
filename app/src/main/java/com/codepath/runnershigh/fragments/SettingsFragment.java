@@ -2,6 +2,7 @@ package com.codepath.runnershigh.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 import static com.parse.Parse.getApplicationContext;
 
+
+//TODO: Why is the profile picture associated with runs and not users?
+
 public class SettingsFragment extends Fragment {
     public static final String TAG = "SettingsFragment";
     SettingsFragmentInterface settingsFragmentInterface;
@@ -51,6 +57,8 @@ public class SettingsFragment extends Fragment {
 
     String UserName;
     TextView tvusername;
+    RadioGroup rgUnits;
+    SharedPreferences prefs;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -66,6 +74,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -89,15 +98,24 @@ public class SettingsFragment extends Fragment {
         MenuBarProfilePic= MainActivity.Menu_Profile_Pic;
         SettingsProfilePic=view.findViewById(R.id.SettingsProfileImage);
         tvusername=view.findViewById(R.id.tvUserName);
+        rgUnits = view.findViewById(R.id.rgUnits);
+
+        if(prefs.getInt("units", MainActivity.DISTANCE_MILES) == MainActivity.DISTANCE_KILOMETERS)
+            rgUnits.check(R.id.rbKilometers);
+        else
+            rgUnits.check(R.id.rbMiles);
+
         tvusername.setText(UserName);
 
-           if (MainActivity.UserImage == null)                               //static variables is key
-               SettingsProfilePic.setImageResource(R.drawable.trophy);
-            else
-               Glide.with(getApplicationContext()).load(MainActivity.UserImage.getUrl()).into(SettingsProfilePic);
+       if (MainActivity.UserImage == null)                               //static variables is key
+           SettingsProfilePic.setImageResource(R.drawable.trophy);
+       else
+           Glide.with(getApplicationContext()).load(MainActivity.UserImage.getUrl()).into(SettingsProfilePic);
 
-            if (MainActivity.uri_after_pic_change!=null)
-                Glide.with(getContext()).load(MainActivity.uri_after_pic_change).into(SettingsProfilePic);
+       if (MainActivity.uri_after_pic_change!=null)
+            Glide.with(getContext()).load(MainActivity.uri_after_pic_change).into(SettingsProfilePic);
+
+
 
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +136,24 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        rgUnits.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = prefs.edit();
+
+                switch(checkedId) {
+                    case R.id.rbMiles:
+                        prefsEditor.putInt("units", MainActivity.DISTANCE_MILES);
+                        break;
+                    case R.id.rbKilometers:
+                        prefsEditor.putInt("units", MainActivity.DISTANCE_KILOMETERS);
+                        break;
+                }
+
+                prefsEditor.apply();
+            }
+        });
     }
 
     @Override

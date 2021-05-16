@@ -3,6 +3,7 @@ package com.codepath.runnershigh.fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
 import com.codepath.runnershigh.services.RunnersHighLocationService;
 import com.google.android.gms.maps.model.LatLng;
@@ -35,7 +37,7 @@ import java.util.List;
 
 public class RunningFragment extends Fragment {
     public static final String TAG=RunningFragment.class.getCanonicalName();
-    public static final double LBS_TO_KG = 0.4535924;
+//    public static final double LBS_TO_KG = 0.4535924;
 
     ImageButton ibPauseResume;
     ImageButton ibStop;
@@ -47,8 +49,9 @@ public class RunningFragment extends Fragment {
 
     RunningFragmentInterface runningFragmentInterface;
 
-    TextView tvDistance;
-    TextView tvPace;
+    TextView tvDistance, tvPace, tvDistanceLabel, tvPaceLabel;
+
+    SharedPreferences prefs;
 
     Handler handler = new Handler(Looper.getMainLooper()){
         @Override
@@ -59,11 +62,18 @@ public class RunningFragment extends Fragment {
                 Location location = data.getParcelable(RunnersHighLocationService.LOCATION_PARCELABLE);
                 totalDistance=data.getFloat(RunnersHighLocationService.TOTAL_DISTANCE);
                 if (ticking) {
-                    tvDistance.setText(String.format("%.2f", totalDistance));
+                    double multiplier;
+                    SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+                    if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS)
+                        multiplier = MainActivity.MI_TO_KM;
+                    else
+                        multiplier = 1;
+
+                    tvDistance.setText(String.format("%.2f", totalDistance * multiplier));
                     //Pace acts a little wonky but I think that has to do with testing
                     //on an emulator
                     Float pace = location.getSpeed() * 2.23694f;
-                    tvPace.setText(String.format("%.2f", pace));
+                    tvPace.setText(String.format("%.2f", pace * multiplier));
                 }
                 LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                 latLngList.add(latLng);
@@ -92,6 +102,7 @@ public class RunningFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         latLngList = new ArrayList<>();
+        prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState); }
 
     @Override
@@ -110,6 +121,19 @@ public class RunningFragment extends Fragment {
         ibStop=view.findViewById(R.id.ibStop);
         tvDistance=view.findViewById(R.id.tvDistance);
         tvPace=view.findViewById(R.id.tvPace);
+        tvDistanceLabel = view.findViewById(R.id.tvDistanceLabel);
+        tvPaceLabel = view.findViewById(R.id.tvPaceLabel);
+
+        if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS)
+        {
+            tvDistanceLabel.setText(R.string.kilometers);
+            tvPaceLabel.setText(R.string.pace_kph);
+        }
+        else
+        {
+            tvDistanceLabel.setText(R.string.miles);
+            tvPaceLabel.setText(R.string.pace_mph);
+        }
 
         //Setting onClickListeners
         ibPauseResume.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +153,6 @@ public class RunningFragment extends Fragment {
                 stop();
             }
         });
-
 
         play();
 
@@ -255,7 +278,7 @@ public class RunningFragment extends Fragment {
                 MET = 0;
         }
 
-        return (MET * 3.5 * LBS_TO_KG * weight * minutes / 200);
+        return (MET * 3.5 * MainActivity.LBS_TO_KG * weight * minutes / 200);
     }
 
     public interface RunningFragmentInterface{

@@ -3,6 +3,7 @@ package com.codepath.runnershigh.fragments;
 import android.Manifest;
 import android.app.Instrumentation;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Build;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
 import com.codepath.runnershigh.RunData;
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
@@ -300,6 +302,9 @@ public class HomeFragment extends Fragment {
         double weeklydistance=0;
         double longestdistance=DistanceArray.get(0);
 
+        SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        String units;
+
         for (int i=0;i<amount;i++){
             weeklydistance+=DistanceArray.get(i);
 
@@ -307,13 +312,21 @@ public class HomeFragment extends Fragment {
                 longestdistance=DistanceArray.get(i);
         }
 
+        if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS) {
+            weeklydistance *= MainActivity.MI_TO_KM;
+            longestdistance *= MainActivity.MI_TO_KM;
+            units = "kilometers";
+        }
+        else
+            units = "miles";
+
         if (amount==5) {
-            TotalDistance.setText(String.format("%.2f miles", weeklydistance));
-            LongestRun.setText(String.format("%.2f miles", longestdistance));
+            TotalDistance.setText(String.format("%.2f %s", weeklydistance, units));
+            LongestRun.setText(String.format("%.2f %s", longestdistance, units));
         }
         else{
-            TotalDistance2.setText(String.format("%.2f miles", weeklydistance));
-            LongestRun2.setText(String.format("%.2f miles", longestdistance));
+            TotalDistance2.setText(String.format("%.2f %s", weeklydistance, units));
+            LongestRun2.setText(String.format("%.2f %s", longestdistance, units));
         }
     }
 

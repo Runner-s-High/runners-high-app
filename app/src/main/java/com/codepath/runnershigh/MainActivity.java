@@ -10,6 +10,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -45,6 +46,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//TODO: Speak to group about creating social tab with ability to add friends
+
 public class MainActivity extends AppCompatActivity implements
         RunningFragment.RunningFragmentInterface,
         StartRunFragment.StartRunFragmentInterface,
@@ -69,8 +72,12 @@ public class MainActivity extends AppCompatActivity implements
             NEW_RUN_POST_STRESS="newrunpoststress";
 
     public static double LBS_TO_KG = 0.4535924;
+    public static double MI_TO_KM = 1.609344;
+    public static int DISTANCE_MILES = 122;
+    public static int DISTANCE_KILOMETERS = 123;
 
     Context context;
+    SharedPreferences prefs;
 
     //Declaring bottom nav Bar
     BottomNavigationView bottomNavigationView;
@@ -115,11 +122,6 @@ public class MainActivity extends AppCompatActivity implements
         if(resourcesFragment==null)
             resourcesFragment=new ResourcesFragment();
 
-
-
-
-
-
         bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -151,7 +153,14 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        prefs = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor;
 
+        if(prefs.getInt("units", DISTANCE_MILES) == DISTANCE_MILES) {
+            prefsEditor = prefs.edit();
+            prefsEditor.putInt("units", DISTANCE_MILES);
+            prefsEditor.apply();
+        }
 
         //Setting default selection
         bottomNavigationView.setSelectedItemId(R.id.itHome);
@@ -210,6 +219,9 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.icResources:
                 openResourcesFragment();
+                break;
+            case R.id.icProfilePic:
+                openSettingsFragment();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -361,7 +373,6 @@ public class MainActivity extends AppCompatActivity implements
     public void exitPostRun(boolean save, Bundle completeRunInfo) {
         if(save){
             saveRunData(runDataFromBundle(completeRunInfo));
-            //Todo: Make a new RunData object with all the info from the complete run and upload it
         }
         showBottomNav();
         bottomNavigationView.setSelectedItemId(R.id.itHistory);

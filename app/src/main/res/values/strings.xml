@@ -10,7 +10,7 @@
     <string name="main_name">Runner\'s High</string>
     <string name="btn_proceed">Let\'s Get Started!</string>
     <string name="btn_submit_profile">Submit Profile</string>
-    <string name="profile_setup">About Me</string>
+    <string name="profile_setup">My Profile</string>
     <string name="learn_more">Learn More</string>
     <string name="help">Immediate Help</string>
     <string name="et_firstname">First Name</string>
@@ -43,12 +43,14 @@ We hope this app treats you well, and enjoy your runs!
 
 - Development Team"
     </string>
-    <string name="setup_description">
-We use your weight to track how many calories you burn when you run, so please try to answer as accurately as possible!
-    </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="miles">MILES</string>
+    <string name="kilometers">KILOMETERS</string>
+    <string name="miles_expanded">Miles (mi)</string>
+    <string name="kilometers_expanded">Kilometers (km)</string>
+    <string name="pace_mph">PACE (MPH)</string>
+    <string name="pace_kph">PACE (KPH)</string>
+    <string name="logged_in_as">Logged In As</string>
+    <string name="distance_units">DISTANCE UNITS</string>
     <!-- TODO: Add more Quotes -->
     <array name="Quotes">
         <item>\"Shoot for the moon; if you miss you will die in outerspace,

@@ -2,6 +2,7 @@ package com.codepath.runnershigh.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -72,6 +73,8 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     SeekBar PostRunseekbar;
     int postRunStressRating;
 
+    SharedPreferences prefs;
+
     public PostRunFragment() {
         // Required empty public constructor
     }
@@ -93,6 +96,8 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
             RunInfo = getArguments();
             latLngList=RunInfo.getParcelableArrayList(MainActivity.NEW_RUN_LATLNG_LIST);
         }
+
+        prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -105,6 +110,8 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         moodSet=false;
+        double multiplier;
+        String units;
         super.onViewCreated(view, savedInstanceState);
         //Getting Views
         btExit = view.findViewById(R.id.btExit);
@@ -119,8 +126,18 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         postRunStressRating=5;
         PostRunseekbar=view.findViewById(R.id.PostseekBar);
 
-        tvRunTime.setText("Time: "+RunInfo.get(MainActivity.NEW_RUN_TIME));
-        tvRunDistance.setText("Distance: " + String.format("%.2f",RunInfo.get(MainActivity.NEW_RUN_DISTANCE)));
+        tvRunTime.setText(String.format("Time: %s", RunInfo.get(MainActivity.NEW_RUN_TIME)));
+
+        if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS) {
+            multiplier = MainActivity.MI_TO_KM;
+            units = "km";
+        }
+        else {
+            multiplier = 1;
+            units = "mi";
+        }
+
+        tvRunDistance.setText(String.format("Distance: %.2f %s", (double)RunInfo.get(MainActivity.NEW_RUN_DISTANCE) * multiplier, units));
 
         IB1=view.findViewById(R.id.IB1);
         IB2=view.findViewById(R.id.IB2);

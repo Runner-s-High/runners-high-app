@@ -2,6 +2,7 @@ package com.codepath.runnershigh;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,8 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
     private Context context;
     private List<RunData> runs;
 
+    SharedPreferences prefs;
+
 
     public TheAdapter(Context context, List<RunData> runs) {
         this.context = context;
@@ -45,6 +48,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.eachrun, parent, false);
+        prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         return new ViewHolder(view);
     }
 
@@ -62,7 +66,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TheDate, tvTimeRV, tvDistanceRV, tvCaloriesRV;
+        TextView TheDate, tvTimeRV, tvDistanceRV, tvCaloriesRV, tvDistanceTitleRV;
 
         Button infobutton;
 
@@ -80,6 +84,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             tvTimeRV=itemView.findViewById(R.id.tvTimeRV);
             tvDistanceRV=itemView.findViewById(R.id.tvDistanceRV);
             tvCaloriesRV=itemView.findViewById(R.id.tvCaloriesRV);
+            tvDistanceTitleRV = itemView.findViewById(R.id.tvDistanceTitleRV);
 
             TheBarChart = itemView.findViewById(R.id.thebargraph);
             infobutton = itemView.findViewById(R.id.infobutton);
@@ -88,6 +93,18 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
         }
                         //when clicking on an item in recyclerview
         public void bind(RunData run) {
+            double multiplier;
+            String units;
+
+            if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS) {
+                multiplier = MainActivity.MI_TO_KM;
+                units = "KM";
+            }
+            else {
+                multiplier = 1;
+                units = "MI";
+            }
+
             infobutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,10 +114,10 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
                 }
             });
 
-                            // Greg 3/24 removed scores and swapped with date
             TheDate.setText(run.getRunDate());
             tvTimeRV.setText(run.getRunTime());
-            tvDistanceRV.setText(String.format("%.2f", run.getRunDistance()));
+            tvDistanceTitleRV.setText(String.format("%s (%s)", context.getString(R.string.distance_label), units));
+            tvDistanceRV.setText(String.format("%.2f", run.getRunDistance() * multiplier));
             tvCaloriesRV.setText(String.format("%.1f", run.getRunCalories()));
 
             String a= String.valueOf(run.getPreRunMood());

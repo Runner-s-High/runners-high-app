@@ -148,7 +148,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvTimeLabelMI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -159,7 +159,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ivpremood" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvDistanceLabelMI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/distance_label"
@@ -167,17 +167,17 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView2" />
+                app:layout_constraintTop_toTopOf="@+id/tvTimeLabelMI" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tvCaloriesLabelMI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/calories_label"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/ivpostmood"
-                app:layout_constraintTop_toTopOf="@+id/textView3" />
+                app:layout_constraintTop_toTopOf="@+id/tvDistanceLabelMI" />
 
             <TextView
                 android:id="@+id/tvTimeMI"
@@ -185,8 +185,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="38sp"
                 app:layout_constraintBottom_toTopOf="@+id/mybargraph"
-                app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="@+id/tvTimeLabelMI"
+                app:layout_constraintTop_toBottomOf="@+id/tvTimeLabelMI"
                 app:layout_constraintVertical_bias="0.0"
                 tools:text="TIME" />
 
@@ -205,7 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="38sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView4"
+                app:layout_constraintEnd_toEndOf="@+id/tvCaloriesLabelMI"
                 app:layout_constraintTop_toTopOf="@+id/tvDistanceMI"
                 tools:text="CALORIES" />
 
