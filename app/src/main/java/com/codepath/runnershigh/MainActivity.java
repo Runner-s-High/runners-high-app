@@ -47,6 +47,13 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 //TODO: Speak to group about creating social tab with ability to add friends
+/*
+Currently experiencing trouble trying to get the ViewPager for the MoreInfoActivity set up.
+I've made StatsFragment and GraphsFragment to divvy up the stuff. Layout seems to be fine right now.
+I've also made a ResultsFragment that will hold the page that I want to display at any given time.
+It uses Bundles to manage all the arguments. Currently getting an exception saying that there is an
+issue initializing ResultsFragment with a constructor.
+ */
 
 public class MainActivity extends AppCompatActivity implements
         RunningFragment.RunningFragmentInterface,

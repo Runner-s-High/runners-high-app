@@ -88,7 +88,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
             TheBarChart = itemView.findViewById(R.id.thebargraph);
             infobutton = itemView.findViewById(R.id.infobutton);
-            StressBarChart=itemView.findViewById(R.id.stressbargraph);
+            StressBarChart=itemView.findViewById(R.id.mystressgraph);
 
         }
                         //when clicking on an item in recyclerview

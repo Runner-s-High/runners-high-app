@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/stressbargraph"
+        android:id="@+id/mystressgraph"
         android:layout_width="148dp"
         android:layout_height="162dp"
         android:layout_marginTop="4dp"
@@ -83,12 +83,10 @@
 
     <Button
         android:id="@+id/infobutton"
-        android:layout_width="102dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="@string/btn_more_info"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.003"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -172,7 +170,7 @@
         app:layout_constraintEnd_toStartOf="@+id/textView8"
         app:layout_constraintHorizontal_bias="0.267"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stressbargraph" />
+        app:layout_constraintTop_toBottomOf="@+id/mystressgraph" />
 
     <TextView
         android:id="@+id/textView6"
@@ -183,10 +181,10 @@
         android:text="Pre\nRun"
         android:textAlignment="textEnd"
         android:textSize="10sp"
-        app:layout_constraintEnd_toStartOf="@+id/stressbargraph"
+        app:layout_constraintEnd_toStartOf="@+id/mystressgraph"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/stressbargraph" />
+        app:layout_constraintTop_toTopOf="@+id/mystressgraph" />
 
     <TextView
         android:id="@+id/textView7"
@@ -198,7 +196,7 @@
         android:textAlignment="textEnd"
         android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintEnd_toStartOf="@+id/stressbargraph"
+        app:layout_constraintEnd_toStartOf="@+id/mystressgraph"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
