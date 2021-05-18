@@ -37,7 +37,6 @@ import java.util.List;
 
 public class RunningFragment extends Fragment {
     public static final String TAG=RunningFragment.class.getCanonicalName();
-//    public static final double LBS_TO_KG = 0.4535924;
 
     ImageButton ibPauseResume;
     ImageButton ibStop;
@@ -64,6 +63,8 @@ public class RunningFragment extends Fragment {
                 if (ticking) {
                     double multiplier;
                     SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+                    //If kilometer setting
                     if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS)
                         multiplier = MainActivity.MI_TO_KM;
                     else
@@ -240,11 +241,13 @@ public class RunningFragment extends Fragment {
         }
     }
 
+    //Calculate approximate calories burned based on average pace
     public double calculateCalories(long time, double distance, int weight) {
-        double minutes = (double)time / 600000;
+        double minutes = (double)time / 60000;  //Convert ms to min
         int avgPace = (int)Math.round(minutes / distance);
         double MET;
 
+        //Rounds the average pace to nearest whole number to get MET value
         switch (avgPace) {
             case 15:
             case 14:
@@ -274,7 +277,7 @@ public class RunningFragment extends Fragment {
                 MET = 19.0;
                 break;
             default:
-                Log.e(TAG, "Uncovered MET value (calories will be 0)");
+                Toast.makeText(getActivity(),"No MET value", Toast.LENGTH_SHORT).show();
                 MET = 0;
         }
 
@@ -282,6 +285,6 @@ public class RunningFragment extends Fragment {
     }
 
     public interface RunningFragmentInterface{
-        public void runComplete(String runtime,double distance,double calories, List<LatLng> latLngList);
+        void runComplete(String runtime,double distance,double calories, List<LatLng> latLngList);
     }
 }

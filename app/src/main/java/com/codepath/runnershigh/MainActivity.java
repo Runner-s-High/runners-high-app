@@ -42,6 +42,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -60,11 +61,11 @@ public class MainActivity extends AppCompatActivity implements
             NEW_RUN_POST_MOOD ="newrunpostmood",
             NEW_RUN_TIME ="newruntime",
             NEW_RUN_DISTANCE="newrundistance",
-            NEW_RUN_LATLNG_LIST="NEW_RUN_LATLNG_LIST",
             NEW_RUN_LAT_LIST="NEW_RUN_LAT_LIST",
             NEW_RUN_LNG_LIST="NEW_RUN_LNG_LIST",
             NEW_RUN_NOTE ="newrunnote",
             NEW_RUN_DATE ="newrundate",
+            NEW_RUN_ROUTE="newrunroute",
             NEW_RUN_CALORIES="newruncalories",
             NEW_RUN_PRE_STRESS="newrunprestress",
             NEW_RUN_POST_STRESS="newrunpoststress";
@@ -258,28 +259,24 @@ public class MainActivity extends AppCompatActivity implements
 
     public RunData runDataFromBundle(Bundle runBundle){
         RunData runData= new RunData();
+
         runData.setPreRunMood(runBundle.getInt(NEW_RUN_PRE_MOOD));
-
         runData.setPostRunMood(runBundle.getInt(NEW_RUN_POST_MOOD));
-
         runData.setRunTime(runBundle.getString(NEW_RUN_TIME));
-
         runData.setRunDistance(runBundle.getDouble(NEW_RUN_DISTANCE));
-
         runData.setRunNote(runBundle.getString(NEW_RUN_NOTE));
-
         runData.setRunDate(runBundle.getString(NEW_RUN_DATE));
-
         runData.setRunCalories(runBundle.getDouble(NEW_RUN_CALORIES));
-
         runData.setUser(ParseUser.getCurrentUser());
 
         if (SettingsFragment.ProfilePicture!=null)
             runData.setProfileImage(SettingsFragment.ProfilePicture);
 
         runData.setPreRunStress(runBundle.getInt(NEW_RUN_PRE_STRESS));
-
         runData.setPostRunStress(runBundle.getInt(NEW_RUN_POST_STRESS));
+
+        runData.setRunLatList(runBundle.getStringArrayList(NEW_RUN_LAT_LIST));
+        runData.setRunLngList(runBundle.getStringArrayList(NEW_RUN_LNG_LIST));
 
         return runData;
     }
@@ -343,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements
         newRunBundle.putString(NEW_RUN_TIME,runtime);
         newRunBundle.putDouble(NEW_RUN_DISTANCE, rundistance);
         newRunBundle.putDouble(NEW_RUN_CALORIES, calories);
-        newRunBundle.putParcelableArrayList(NEW_RUN_LATLNG_LIST, (ArrayList<? extends Parcelable>) latLngList);
+        newRunBundle.putParcelableArrayList(NEW_RUN_ROUTE, (ArrayList<? extends Parcelable>) latLngList);
         PostRunFragment postRunFragment = PostRunFragment.newInstance(newRunBundle);
         getSupportFragmentManager()
                 .beginTransaction()

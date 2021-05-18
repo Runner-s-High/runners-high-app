@@ -26,7 +26,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
-
 public class RunnersHighLocationService extends Service {
     public static final String TAG = RunnersHighLocationService.class.getCanonicalName();
     public static final String START_LOCATION_UPDATE = "START_LOCATION_UPDATE";
@@ -34,9 +33,9 @@ public class RunnersHighLocationService extends Service {
     public static final String STOP_LOCATION_SERVICE = "STOP_LOCATION_SERVICE";
     public static final String LOCATION_PARCELABLE = "LOCATION_PARCELABLE";
     public static final String TOTAL_DISTANCE = "TOTAL_DISTANCE";
-    public static final int LOCATION_INTERVAL = 8000;       //Get location every x miliseconds, probably gotta change
-    public static final int LOCATION_FAST_INTERVAL = 4000;       //if location is available get it as early as x miliseconds
-    public static final int LOCATION_SMALLEST_DISPLACEMENT = 5;     //update location every x meters
+    public static final int LOCATION_INTERVAL = 4000;       //Get location every x miliseconds, probably gotta change
+    public static final int LOCATION_FAST_INTERVAL = 2000;       //if location is available get it as early as x miliseconds
+    public static final int LOCATION_SMALLEST_DISPLACEMENT = 4;     //update location every x meters
 
     Messenger messenger;
 

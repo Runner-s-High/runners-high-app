@@ -24,6 +24,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codepath.runnershigh.RunData;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -42,7 +43,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.parceler.MapsUtil;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -94,7 +97,7 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
             mvPostRun.onCreate(savedInstanceState);
         if (getArguments() != null){
             RunInfo = getArguments();
-            latLngList=RunInfo.getParcelableArrayList(MainActivity.NEW_RUN_LATLNG_LIST);
+            latLngList=RunInfo.getParcelableArrayList(MainActivity.NEW_RUN_ROUTE);
         }
 
         prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
@@ -189,6 +192,18 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
                     RunInfo.putString(MainActivity.NEW_RUN_DATE, currentDate);
 
                     RunInfo.putInt(MainActivity.NEW_RUN_POST_STRESS,postRunStressRating);
+
+                    ArrayList<String> lats = new ArrayList<>();
+                    ArrayList<String> longs = new ArrayList<>();
+
+                    for(LatLng point : latLngList){
+                        lats.add(String.valueOf(point.latitude));
+                        longs.add(String.valueOf(point.longitude));
+                    }
+
+                    RunInfo.putStringArrayList(MainActivity.NEW_RUN_LAT_LIST, lats);
+                    RunInfo.putStringArrayList(MainActivity.NEW_RUN_LNG_LIST, longs);
+
 
                     postRunFragmentInterface.exitPostRun(true, RunInfo);
                 }else

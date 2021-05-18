@@ -1,9 +1,12 @@
 package com.codepath.runnershigh;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 @ParseClassName("RunData")                  //needs to match what object is called on back4app
 public class RunData extends ParseObject {          //keys are the names of the columns on back4app
@@ -20,6 +23,8 @@ public class RunData extends ParseObject {          //keys are the names of the 
     public static final String KEY_USER_IMAGE="ProfileImage";
     public static final String KEY_PRE_RUN_STRESS="PreRunStress";
     public static final String KEY_POST_RUN_STRESS="PostRunStress";
+    public static final String KEY_RUN_LAT_LIST="RunLatList";
+    public static final String KEY_RUN_LNG_LIST="RunLngList";
 
     public int getPreRunMood(){
         return getInt(KEY_PRERUNMOOD);
@@ -121,4 +126,19 @@ public class RunData extends ParseObject {          //keys are the names of the 
         return getInt(KEY_POST_RUN_STRESS);
     }
 
+    public List<String> getRunLatList() {
+        return getList(KEY_RUN_LAT_LIST);
+    }
+
+    public void setRunLatList(List<String> lats) {
+        put(KEY_RUN_LAT_LIST, lats);
+    }
+
+    public List<String> getRunLngList() {
+        return getList(KEY_RUN_LNG_LIST);
+    }
+
+    public void setRunLngList(List<String> longs) {
+        put(KEY_RUN_LNG_LIST, longs);
+    }
 }
