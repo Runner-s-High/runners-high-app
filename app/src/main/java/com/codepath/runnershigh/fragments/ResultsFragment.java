@@ -19,9 +19,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
 
+//This fragment holds the TabLayout and ViewPager to switch b/w StatsFragment and GraphsFragment
+
 public class ResultsFragment extends Fragment {
-    ViewPager2 viewPager;
-    TabLayout tabLayout;
+    ViewPager2 viewPager;   //Viewpager that will facilitate switching b/w graphs/stats
+    TabLayout tabLayout;    //Tab layout to switch b/w fragments
     PagerAdapter pagerAdapter;
 
     public ResultsFragment() {
@@ -36,21 +38,18 @@ public class ResultsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        therun = Parcels.unwrap(getArguments().getParcelable("run"));
-
         pagerAdapter = new PagerAdapter(this);
+
         viewPager = view.findViewById(R.id.vpMI);
         tabLayout = view.findViewById(R.id.tlMI);
-        viewPager.setAdapter(pagerAdapter);
 
-        //IDK WHAT THIS DOES
-//        new TabLayoutMediator(tabLayout, viewPager,
-//                (tab, position) -> tab.setText("OBJECT " + (position + 1))
-//        ).attach();
+        viewPager.setAdapter(pagerAdapter);
 
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull @NotNull TabLayout.Tab tab, int position) {
+
+                //Set up the tab titles
                 switch (position) {
                     case 0:
                         tab.setText("Stats");
@@ -64,26 +63,4 @@ public class ResultsFragment extends Fragment {
             }
         }).attach();
     }
-
-//    public Bundle getStatsBundle() {
-//        Bundle statsBundle = new Bundle();
-//
-//        statsBundle.putString("time", therun.getRunTime());
-//        statsBundle.putDouble("distance", therun.getRunDistance());
-//        statsBundle.putDouble("calories", therun.getRunCalories());
-//        statsBundle.putString("note", therun.getRunNote());
-//        statsBundle.putInt("premood", therun.getPreRunMood());
-//        statsBundle.putInt("postmood", therun.getPostRunMood());
-//
-//        return statsBundle;
-//    }
-//
-//    public Bundle getGraphsBundle() {
-//        Bundle graphsBundle = new Bundle();
-//
-//        graphsBundle.putInt("premood", therun.getPreRunMood());
-//        graphsBundle.putInt("postmood", therun.getPostRunMood());
-//
-//        return graphsBundle;
-//    }
 }

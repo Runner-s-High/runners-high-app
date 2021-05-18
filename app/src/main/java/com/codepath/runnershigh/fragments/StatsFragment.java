@@ -4,22 +4,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
-import com.github.mikephil.charting.charts.BarChart;
 
-import org.jetbrains.annotations.NotNull;
+//This fragment holds the stats from the run (e.g. time, distance, calories)
 
 public class StatsFragment extends Fragment {
     ImageView preMood, postMood;
@@ -44,19 +42,18 @@ public class StatsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_stats, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        double multiplier;
-        String units;
+        double multiplier;  //Multiplier for distance unit conversions
+        String units;   //String holding distance units name
 
+        //Check distance units setting
         if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS) {
             multiplier = MainActivity.MI_TO_KM;
             units = "KM";
@@ -77,14 +74,15 @@ public class StatsFragment extends Fragment {
         tvTimeMI.setText(getArguments().getString("time"));
         tvDistanceMI.setText(String.format("%.2f", getArguments().getDouble("distance") * multiplier));
         tvCaloriesMI.setText(String.format("%.1f", getArguments().getDouble("calories") * multiplier));
-
         tvNoteMI.setText(getArguments().getString("note"));
         tvDistanceLabelMI.setText(String.format("%s (%s)", getString(R.string.distance_label), units));
 
+        //Assign face colors
         SetFace(getArguments().getInt("premood"), preMood);
         SetFace(getArguments().getInt("postmood"), postMood);
     }
 
+    //Assigns correct colors to faces in this fragment
     public void SetFace(int score, ImageView ivMood){
         switch(score) {
             case 1:

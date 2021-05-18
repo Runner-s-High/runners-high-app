@@ -1,19 +1,14 @@
 package com.codepath.runnershigh;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.codepath.runnershigh.fragments.GraphsFragment;
 import com.codepath.runnershigh.fragments.ResultsFragment;
 import com.codepath.runnershigh.fragments.StatsFragment;
-
-import org.jetbrains.annotations.NotNull;
 
 public class PagerAdapter extends FragmentStateAdapter {
     private static final int NUM_TABS = 2;
@@ -28,10 +23,11 @@ public class PagerAdapter extends FragmentStateAdapter {
         args = parentFragment.getArguments();
     }
 
-
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+
+        //Get fragment with factory method
         switch (position) {
             case 0:
                 return StatsFragment.newInstance(args);
@@ -46,6 +42,4 @@ public class PagerAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return NUM_TABS;
     }
-
-
 }

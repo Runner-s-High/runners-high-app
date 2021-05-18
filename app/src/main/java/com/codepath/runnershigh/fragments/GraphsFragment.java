@@ -22,8 +22,6 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class GraphsFragment extends Fragment {
@@ -51,28 +49,29 @@ public class GraphsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_graphs, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mybarchart = view.findViewById(R.id.mybargraph);
         mystresschart = view.findViewById(R.id.mystressgraph);
 
+        //Get values of pre/post mood and pre/post stress
         int prescore = getArguments().getInt("premood");
         int postscore = getArguments().getInt("postmood");
         int prestress = getArguments().getInt("prestress");
         int poststress = getArguments().getInt("poststress");
 
-        setupBarGraph(prescore, postscore);
+        //Handle all graph parameters for display
+        setupMoodGraph(prescore, postscore);
         setupStressGraph(prestress, poststress);
     }
 
-    public void setupBarGraph(int prescore, int postscore) {
+    //Specifies parameters for the mood graph
+    public void setupMoodGraph(int prescore, int postscore) {
         barEntryArrayList = new ArrayList<>();
         RunLabels=new ArrayList<>();
 
@@ -121,6 +120,7 @@ public class GraphsFragment extends Fragment {
         mybarchart.setScrollContainer(false);
     }
 
+    //Specifies parameters for the stress graph
     public void setupStressGraph(int prestress, int poststress) {
         StressLabels=new ArrayList<>();
         StressbarEntryArrayList = new ArrayList<>();

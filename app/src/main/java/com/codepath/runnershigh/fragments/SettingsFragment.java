@@ -43,7 +43,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.parse.Parse.getApplicationContext;
 
 
-//TODO: Why is the profile picture associated with runs and not users?
+//TODO: Associate profile picture with user and not the run itself
 
 public class SettingsFragment extends Fragment {
     public static final String TAG = "SettingsFragment";

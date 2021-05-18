@@ -1,21 +1,14 @@
 package com.codepath.runnershigh;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.codepath.runnershigh.fragments.PostRunFragment;
 import com.codepath.runnershigh.fragments.ResultsFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,14 +19,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.parceler.Parcels;
 
 import java.util.List;
-
-//TODO: Implement a viewpager to switch between stats and graph, rather than ScrollView
 
 public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final String TAG = MoreInfoActivity.class.getCanonicalName();
@@ -53,12 +42,13 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         getSupportActionBar().hide();
 
         GoBackButton=findViewById(R.id.nextbutton);
-
         tvDateMI = findViewById(R.id.tvDateMI);
         mvMoreInfo = findViewById(R.id.mvMoreInfo);
 
+        //Call onCreate for MapView
         mvMoreInfo.onCreate(savedInstanceState);
 
+        //Get the Parcelable run
         therun = Parcels.unwrap(getIntent().getParcelableExtra("pizza"));
 
         tvDateMI.setText(therun.getRunDate());
@@ -74,12 +64,10 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         });
 
         Bundle args = setupArgs(new Bundle());
-
-//        args.putParcelable("run", getIntent().getParcelableExtra("pizza"));
-
         ResultsFragment resultsFragment = new ResultsFragment();
         resultsFragment.setArguments(args);
 
+        //Setup ResultsFragment
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragmentPrimary, resultsFragment)
@@ -146,6 +134,7 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
+    //Assigns key-value args for Bundle to give to ResultsFragment
     public Bundle setupArgs(Bundle args) {
         args.putString("time", therun.getRunTime());
         args.putDouble("distance", therun.getRunDistance());
