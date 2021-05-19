@@ -127,7 +127,7 @@ public class RunData extends ParseObject {          //keys are the names of the 
     }
 
     public List<String> getRunLatList() {
-        return getList(KEY_RUN_LAT_LIST);
+        return (List<String>) get(KEY_RUN_LAT_LIST);
     }
 
     public void setRunLatList(List<String> lats) {
@@ -135,7 +135,8 @@ public class RunData extends ParseObject {          //keys are the names of the 
     }
 
     public List<String> getRunLngList() {
-        return getList(KEY_RUN_LNG_LIST);
+        return (List<String>) get(KEY_RUN_LNG_LIST);
+
     }
 
     public void setRunLngList(List<String> longs) {

@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -46,10 +47,25 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         mvMoreInfo = findViewById(R.id.mvMoreInfo);
 
         //Call onCreate for MapView
-        mvMoreInfo.onCreate(savedInstanceState);
+        if(mvMoreInfo != null)
+            mvMoreInfo.onCreate(savedInstanceState);
+        mvMoreInfo.getMapAsync(this);
 
         //Get the Parcelable run
         therun = Parcels.unwrap(getIntent().getParcelableExtra("pizza"));
+
+        List<String> lats = therun.getRunLatList();
+        List<String> longs = therun.getRunLngList();
+
+        latLngList = new ArrayList<>();
+
+        if(lats != null && longs != null)
+            for(int i = 0; i < lats.size(); ++i) {
+                double lat = Double.parseDouble(lats.get(i));
+                double lng = Double.parseDouble(longs.get(i));
+
+                latLngList.add(new LatLng(lat, lng));
+            }
 
         tvDateMI.setText(therun.getRunDate());
 
