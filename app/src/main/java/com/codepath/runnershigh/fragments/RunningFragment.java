@@ -11,7 +11,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,24 +33,29 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
+This is the fragment that the user sees while they are in the process of running. It has a timer,
+distance counter and pace counter. The user can pause, resume and stop the run.
+ */
 public class RunningFragment extends Fragment {
-    public static final String TAG=RunningFragment.class.getCanonicalName();
+    RunningFragmentInterface runningFragmentInterface;
 
-    ImageButton ibPauseResume;
-    ImageButton ibStop;
+    //Layout element references
+    ImageButton ibPauseResume, ibStop;
+    TextView tvDistance, tvPace, tvDistanceLabel, tvPaceLabel;
 
     Chronometer cmTime;
     //true if chronometer is ticking, false if paused
     boolean ticking;
     long pauseOffset=0;
 
-    RunningFragmentInterface runningFragmentInterface;
-
-    TextView tvDistance, tvPace, tvDistanceLabel, tvPaceLabel;
+    Float totalDistance=0f;
+    Location lastLocation;
+    List<LatLng> latLngList;
 
     SharedPreferences prefs;
 
+    //Used for location updates
     Handler handler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -64,7 +68,7 @@ public class RunningFragment extends Fragment {
                     double multiplier;
                     SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
 
-                    //If kilometer setting
+                    //If kilometer setting, use appropriate multiplier for distance
                     if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS)
                         multiplier = MainActivity.MI_TO_KM;
                     else
@@ -73,7 +77,7 @@ public class RunningFragment extends Fragment {
                     tvDistance.setText(String.format("%.2f", totalDistance * multiplier));
                     //Pace acts a little wonky but I think that has to do with testing
                     //on an emulator
-                    Float pace = location.getSpeed() * 2.23694f;
+                    float pace = location.getSpeed() * 2.23694f;
                     tvPace.setText(String.format("%.2f", pace * multiplier));
                 }
                 LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
@@ -84,20 +88,8 @@ public class RunningFragment extends Fragment {
         }
     };
 
-    Float totalDistance=0f;
-    Location lastLocation;
-
-    List<LatLng> latLngList;
-
     public RunningFragment() {
         // Required empty public constructor
-    }
-
-    public static RunningFragment newInstance(String param1, String param2) {
-        RunningFragment fragment = new RunningFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -125,6 +117,10 @@ public class RunningFragment extends Fragment {
         tvDistanceLabel = view.findViewById(R.id.tvDistanceLabel);
         tvPaceLabel = view.findViewById(R.id.tvPaceLabel);
 
+        tvDistance.setText(getString(R.string.blank_value));
+        tvPace.setText(getString(R.string.blank_value));
+
+        //Depending on units used, get correct label string
         if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS)
         {
             tvDistanceLabel.setText(R.string.kilometers);
@@ -156,9 +152,7 @@ public class RunningFragment extends Fragment {
         });
 
         play();
-
     }
-
 
     private void startLocationUpdates(){
         Intent i =new Intent(getActivity(),RunnersHighLocationService.class);
@@ -166,12 +160,14 @@ public class RunningFragment extends Fragment {
         i.setAction(RunnersHighLocationService.START_LOCATION_UPDATE);
         getActivity().startService(i);
     }
+
     private void stopLocationUpdates(){
         Intent i =new Intent(getActivity(),RunnersHighLocationService.class);
         i.putExtra("messenger",new Messenger(handler));
         i.setAction(RunnersHighLocationService.STOP_LOCATION_UPDATE);
         getActivity().startService(i);
     }
+
     private void stopLocationService(){
         Intent i =new Intent(getActivity(),RunnersHighLocationService.class);
         i.putExtra("messenger",new Messenger(handler));
@@ -201,31 +197,24 @@ public class RunningFragment extends Fragment {
         //display dialog "are you sure you want to end your run"
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
         builder.setMessage("Are you sure you want to end this run?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), "user clicks yes, move to post run screen", Toast.LENGTH_SHORT).show();
-                //TODO: build a post run class for all post run info
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            Toast.makeText(getContext(), "user clicks yes, move to post run screen", Toast.LENGTH_SHORT).show();
+            //TODO: build a post run class for all post run info
 
-                stopLocationService();
+            stopLocationService();
 
-                int weight = ParseUser.getCurrentUser().getInt("weight");
+            //Calculate calories based on pace
+            int weight = ParseUser.getCurrentUser().getInt("weight");
+            double calories = calculateCalories(pauseOffset, totalDistance, weight);
 
-                double calories = calculateCalories(pauseOffset, totalDistance, weight);
-
-                runningFragmentInterface.runComplete(cmTime.getText().toString(),
-                        totalDistance,
-                        calories,
-                        latLngList);
-            }
+            //Finish the run and head to PostRunFragment
+            runningFragmentInterface.runComplete(cmTime.getText().toString(),
+                    totalDistance,
+                    calories,
+                    latLngList);
         });
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), "if the user clicks no the run continues", Toast.LENGTH_SHORT).show();
-            }
-        });
+        builder.setNegativeButton("No", (dialog, which) -> Toast.makeText(getContext(), "if the user clicks no the run continues", Toast.LENGTH_SHORT).show());
         builder.create().show();
     }
 

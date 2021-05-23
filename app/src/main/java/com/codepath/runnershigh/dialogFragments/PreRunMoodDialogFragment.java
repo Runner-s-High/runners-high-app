@@ -1,16 +1,7 @@
 package com.codepath.runnershigh.dialogFragments;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-
-
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +10,18 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import com.codepath.runnershigh.R;
-import com.codepath.runnershigh.RunData;
-
-import static com.parse.Parse.getApplicationContext;
-
 
 //Todo: Copy Greg's code for preMood collection to here
+
+/*
+This fragment is shown before the run begins to get the pre-run survey from the user on their mood and
+stress level. After completion, the run will begin.
+ */
 public class PreRunMoodDialogFragment extends DialogFragment {
     PreRunMoodDialogFragmentInterface preRunMoodDialogFragmentInterface;
     Button btSubmit;
@@ -40,19 +36,9 @@ public class PreRunMoodDialogFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static PreRunMoodDialogFragment newInstance() {
-        PreRunMoodDialogFragment fragment = new PreRunMoodDialogFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
 
     @Override
@@ -89,34 +75,21 @@ public class PreRunMoodDialogFragment extends DialogFragment {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        btSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(moodSet) {
-                    preRunMoodDialogFragmentInterface.surveyCompleted(preRunMoodRating,preRunStressRating);
-                    dismiss();
-                }else{
-                    Toast.makeText(getActivity(), "Must Select Mood", Toast.LENGTH_SHORT).show();
-                }
+        btSubmit.setOnClickListener(v -> {
+            if(moodSet) {
+                preRunMoodDialogFragmentInterface.surveyCompleted(preRunMoodRating,preRunStressRating);
+                dismiss();
+            }else{
+                Toast.makeText(getActivity(), "Must Select Mood", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
     }
-
-
-
 
     View.OnClickListener moodBtnListener = new View.OnClickListener() {
         @Override
@@ -143,6 +116,7 @@ public class PreRunMoodDialogFragment extends DialogFragment {
         }
     };
 
+    //Toggles off all mood buttons to ensure a maximum of one button is selected at a time
     public void unselectMoodButtons(){
         IB1.setSelected(false);
         IB2.setSelected(false);
@@ -151,8 +125,6 @@ public class PreRunMoodDialogFragment extends DialogFragment {
         IB5.setSelected(false);
 
     }
-
-
 
     //////////////////////////////////////////////////////////////////////
     //                           INTERFACE
@@ -172,10 +144,9 @@ public class PreRunMoodDialogFragment extends DialogFragment {
     }
 
     public interface PreRunMoodDialogFragmentInterface{
-        public void surveyCompleted(int preMoodScore, int preRunStressRating);
+        void surveyCompleted(int preMoodScore, int preRunStressRating);
 
         //Todo: change bundle mood to mood class object
         //public void surveyCompleted(Mood preRunMood);
-
     }
 }

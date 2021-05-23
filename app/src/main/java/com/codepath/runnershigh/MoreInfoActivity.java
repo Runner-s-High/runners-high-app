@@ -1,13 +1,12 @@
 package com.codepath.runnershigh;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.codepath.runnershigh.fragments.ResultsFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,13 +24,19 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+This activity holds a detailed view of an individual run that was saved to the Parse backend.
+The user can see their route on the map, statistics about their run, and graphs of their pre- and post-
+mood/stress surveys.
+ */
 public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final String TAG = MoreInfoActivity.class.getCanonicalName();
+    //Layout element references
     TextView tvDateMI;
     MapView mvMoreInfo;
     GoogleMap mMap;
-
     Button GoBackButton;
+
     RunData therun;
 
     List<LatLng> latLngList;
@@ -54,6 +59,7 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         //Get the Parcelable run
         therun = Parcels.unwrap(getIntent().getParcelableExtra("pizza"));
 
+        //Setting up the latLngList used in onMapReady
         List<String> lats = therun.getRunLatList();
         List<String> longs = therun.getRunLngList();
 
@@ -69,21 +75,18 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
         tvDateMI.setText(therun.getRunDate());
 
-        GoBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        GoBackButton.setOnClickListener(v -> {
 
-                Intent intent=new Intent();
-                setResult(RESULT_OK,intent);
-                finish();
-            }
+            Intent intent=new Intent();
+            setResult(RESULT_OK,intent);
+            finish();
         });
 
         Bundle args = setupArgs(new Bundle());
         ResultsFragment resultsFragment = new ResultsFragment();
         resultsFragment.setArguments(args);
 
-        //Setup ResultsFragment
+        //Setup ResultsFragment used to hold ViewPager and TabLayout
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragmentPrimary, resultsFragment)
@@ -119,6 +122,7 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
+        //Mark waypoints for beginning and end of run
         if (latLngList.size() > 0) {
             mMap.addMarker(new MarkerOptions()
                     .position(latLngList.get(0))
@@ -131,6 +135,7 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
             Log.d(TAG, latLngList.get(latLngList.size() - 1).toString());
 
+            //Create polyline to map the running route
             PolylineOptions polylineOptions = new PolylineOptions();
             polylineOptions.addAll(latLngList);
             mMap.addPolyline(polylineOptions);

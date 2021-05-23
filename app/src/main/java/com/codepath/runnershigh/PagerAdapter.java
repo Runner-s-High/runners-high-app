@@ -10,6 +10,7 @@ import com.codepath.runnershigh.fragments.GraphsFragment;
 import com.codepath.runnershigh.fragments.ResultsFragment;
 import com.codepath.runnershigh.fragments.StatsFragment;
 
+//Adapter for ViewPager used in ResultsFragment in MoreInfoActivity
 public class PagerAdapter extends FragmentStateAdapter {
     private static final int NUM_TABS = 2;
 
@@ -27,7 +28,7 @@ public class PagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
 
-        //Get fragment with factory method
+        //Get appropriate fragment with factory method
         switch (position) {
             case 0:
                 return StatsFragment.newInstance(args);

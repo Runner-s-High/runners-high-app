@@ -1,6 +1,5 @@
 package com.codepath.runnershigh;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -8,9 +7,13 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+/*
+This java class represents the RunData class stored on the Parse backend. Setters and getters
+defined within
+ */
 @ParseClassName("RunData")                  //needs to match what object is called on back4app
-public class RunData extends ParseObject {          //keys are the names of the columns on back4app
-
+public class RunData extends ParseObject {
+    //keys are the names of the columns on back4app
     public static final String KEY_PRERUNMOOD="PreRunMood";
     public static final String KEY_POSTRUNMOOD="PostRunMood";
     public static final String KEY_USER="TheUser";

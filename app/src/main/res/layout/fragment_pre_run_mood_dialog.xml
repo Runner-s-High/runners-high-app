@@ -13,7 +13,7 @@
         android:id="@+id/tvVibeCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rate Your Mood"
+        android:text="@string/rate_your_mood"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -98,7 +98,7 @@
         android:id="@+id/tvStress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rate Your Stress Level"
+        android:text="@string/rate_your_stress_level"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -118,7 +118,7 @@
         android:id="@+id/btSubmit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Submit" />
+        android:text="@string/submit" />
 
 
 </LinearLayout>

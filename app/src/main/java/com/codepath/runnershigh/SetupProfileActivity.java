@@ -13,8 +13,14 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+/*
+This activity is seen when a user signs up for the application for the first time. It gathers some
+basic information, like the user's name and weight and then transitions into MainActivity
+ */
 public class SetupProfileActivity extends AppCompatActivity {
     public static final String TAG = "SetupProfileActivity";
+
+    //Layout element references
     EditText etFirstName;
     EditText etLastName;
     EditText etWeight;
@@ -30,22 +36,20 @@ public class SetupProfileActivity extends AppCompatActivity {
         etWeight = findViewById(R.id.etWeight);
     }
 
+    //onClick method for submission button; saves user data to Parse backend
     public void submitProfile(View v) {
         ParseUser parseUser = ParseUser.getCurrentUser();
         parseUser.put("firstName", etFirstName.getText().toString());
         parseUser.put("lastName", etLastName.getText().toString());
         parseUser.put("weight", Integer.parseInt(etWeight.getText().toString()));
-        parseUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e == null) {
-                    Log.d(TAG, "Successful user update");
-                    startActivity(new Intent(SetupProfileActivity.this, MainActivity.class));
-                    finish();
-                }
-                else {
-                    Toast.makeText(SetupProfileActivity.this, "Error. Try again", Toast.LENGTH_SHORT);
-                }
+        parseUser.saveInBackground(e -> {
+            if(e == null) {
+                Log.d(TAG, "Successful user update");
+                startActivity(new Intent(SetupProfileActivity.this, MainActivity.class));
+                finish();
+            }
+            else {
+                Toast.makeText(SetupProfileActivity.this, "Error. Try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -14,7 +14,7 @@
         android:id="@+id/btSubmit"
         android:layout_width="202dp"
         android:layout_height="86dp"
-        android:text="Start Run"
+        android:text="@string/start_run"
         app:icon="@drawable/ic_baseline_directions_run_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -42,14 +42,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 import static com.parse.Parse.getApplicationContext;
 
-
 //TODO: Associate profile picture with user and not the run itself
 
+/*
+This fragment holds the ability for the user to change their profile pic, as well as for them to
+change units from miles to kilometers.
+ */
 public class SettingsFragment extends Fragment {
     public static final String TAG = "SettingsFragment";
     SettingsFragmentInterface settingsFragmentInterface;
 
-    MenuItem ProfileIcon;
     Uri imageuri;
     CircleImageView SettingsProfilePic;
     CircleImageView MenuBarProfilePic;
@@ -62,13 +64,6 @@ public class SettingsFragment extends Fragment {
 
     public SettingsFragment() {
         // Required empty public constructor
-    }
-
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -90,7 +85,7 @@ public class SettingsFragment extends Fragment {
         Button btnLogOut;
         Button btnChangeProfilePic;
 
-        UserName=ParseUser.getCurrentUser().getUsername().toString();
+        UserName=ParseUser.getCurrentUser().getUsername();
 
         //Initialize views
         btnLogOut = view.findViewById(R.id.btnLogOut);
@@ -100,6 +95,7 @@ public class SettingsFragment extends Fragment {
         tvusername=view.findViewById(R.id.tvUserName);
         rgUnits = view.findViewById(R.id.rgUnits);
 
+        //Make sure that appropriate unit button checked, based on what is saved
         if(prefs.getInt("units", MainActivity.DISTANCE_MILES) == MainActivity.DISTANCE_KILOMETERS)
             rgUnits.check(R.id.rbKilometers);
         else
@@ -107,52 +103,42 @@ public class SettingsFragment extends Fragment {
 
         tvusername.setText(UserName);
 
-       if (MainActivity.UserImage == null)                               //static variables is key
+        //Load in user profile image
+        if (MainActivity.UserImage == null)                               //static variables is key
            SettingsProfilePic.setImageResource(R.drawable.trophy);
-       else
+        else
            Glide.with(getApplicationContext()).load(MainActivity.UserImage.getUrl()).into(SettingsProfilePic);
 
-       if (MainActivity.uri_after_pic_change!=null)
+        if (MainActivity.uri_after_pic_change!=null)
             Glide.with(getContext()).load(MainActivity.uri_after_pic_change).into(SettingsProfilePic);
 
-
-
-
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "User clicked btnLogOut");
-                settingsFragmentInterface.logOut();
-            }
+        btnLogOut.setOnClickListener(v -> {
+            Log.i(TAG, "User clicked btnLogOut");
+            settingsFragmentInterface.logOut();
         });
 
-        btnChangeProfilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photogallery=new Intent();
-                photogallery.setType("image/*");
-                photogallery.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(photogallery,"choose picture"),754);
-            }
+        btnChangeProfilePic.setOnClickListener(v -> {
+            Intent photogallery=new Intent();
+            photogallery.setType("image/*");
+            photogallery.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(photogallery,"choose picture"),754);
         });
 
-        rgUnits.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor = prefs.edit();
+        rgUnits.setOnCheckedChangeListener((group, checkedId) -> {
+            SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = prefs.edit();
 
-                switch(checkedId) {
-                    case R.id.rbMiles:
-                        prefsEditor.putInt("units", MainActivity.DISTANCE_MILES);
-                        break;
-                    case R.id.rbKilometers:
-                        prefsEditor.putInt("units", MainActivity.DISTANCE_KILOMETERS);
-                        break;
-                }
-
-                prefsEditor.apply();
+            //Save appropriate unit setting for next time
+            switch(checkedId) {
+                case R.id.rbMiles:
+                    prefsEditor.putInt("units", MainActivity.DISTANCE_MILES);
+                    break;
+                case R.id.rbKilometers:
+                    prefsEditor.putInt("units", MainActivity.DISTANCE_KILOMETERS);
+                    break;
             }
+
+            prefsEditor.apply();
         });
     }
 
@@ -164,12 +150,10 @@ public class SettingsFragment extends Fragment {
             imageuri=data.getData();
             InputStream inputstream=null;
 
-
             Glide.with(getContext()).load(imageuri).into(SettingsProfilePic);
             Glide.with(getContext()).load(imageuri).into(MenuBarProfilePic);
             String filename=getFileName(imageuri);
             MainActivity.uri_after_pic_change=imageuri;             //persists newly chosen image while using app
-
 
             try {
                 inputstream = getContext().getContentResolver().openInputStream(imageuri);
@@ -201,13 +185,6 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    public interface SettingsFragmentInterface {
-        public void logOut();
-        public void openSettingsFragment();
-
-    }
-
-
     public String getFileName(Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {
@@ -228,5 +205,10 @@ public class SettingsFragment extends Fragment {
             }
         }
         return result;
+    }
+
+    public interface SettingsFragmentInterface {
+        void logOut();
+        void openSettingsFragment();
     }
 }

@@ -41,9 +41,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-
+/*
+This fragment features a button to begin a run. Upon clicking, the RunningFragment is launched.
+ */
 public class StartRunFragment extends Fragment {
-
     public static final int REQUEST_CODE_LOCATION_PERMISSION=1;
 
     Button btStart;
@@ -51,51 +52,38 @@ public class StartRunFragment extends Fragment {
     boolean completedMoodSurvey=false;
     PreRunMoodDialogFragment moodSurvey;
 
-
     public StartRunFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         super.onViewCreated(view, savedInstanceState);
         btStart = view.findViewById(R.id.btSubmit);
 
+        btStart.setOnClickListener(v -> {
+            if(ContextCompat.checkSelfPermission(
+                    getActivity().getApplicationContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(
+                        getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION},
+                        REQUEST_CODE_LOCATION_PERMISSION);
+            }else {
 
-
-
-        btStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(ContextCompat.checkSelfPermission(
-                        getActivity().getApplicationContext(),
-                        Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(
-                            getActivity(),
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION},
-                            REQUEST_CODE_LOCATION_PERMISSION);
-                }else {
-
-                    if (completedMoodSurvey) {
-                        completedMoodSurvey = false;
-                        startRunFragmentInterface.openRunningFragment();
-                    } else {
-                        FragmentManager fm = StartRunFragment.this.getChildFragmentManager();
-                        moodSurvey = new PreRunMoodDialogFragment();
-                        moodSurvey.show(fm, "Survey");
-                    }
+                if (completedMoodSurvey) {
+                    completedMoodSurvey = false;
+                    startRunFragmentInterface.openRunningFragment();
+                } else {
+                    FragmentManager fm = StartRunFragment.this.getChildFragmentManager();
+                    moodSurvey = new PreRunMoodDialogFragment();
+                    moodSurvey.show(fm, "Survey");
                 }
             }
         });
-
-
-
     }//end onviewcreated
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -132,9 +120,7 @@ public class StartRunFragment extends Fragment {
     }
 
     public interface StartRunFragmentInterface{
-        public void startRun();
-        public void openRunningFragment();
-
+        void openRunningFragment();
+        void startRun();
     }
-
 }

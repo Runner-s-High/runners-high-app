@@ -18,7 +18,6 @@ import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
 
 //This fragment holds the stats from the run (e.g. time, distance, calories)
-
 public class StatsFragment extends Fragment {
     ImageView preMood, postMood;
     TextView tvTimeMI, tvDistanceMI, tvCaloriesMI, tvNoteMI, tvDistanceLabelMI;

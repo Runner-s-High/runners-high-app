@@ -71,4 +71,40 @@ We hope this app treats you well, and enjoy your runs!
     </array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go_back">Go Back</string>
+    <string name="stress">STRESS</string>
+    <string name="pre_run">Pre\nRun</string>
+    <string name="post_run">Post\nRun</string>
+    <string name="mood">MOOD</string>
+    <string name="pre_run2">Pre-Run</string>
+    <string name="post_run2">Post-Run</string>
+    <string name="need_more_runs">Need More Runs</string>
+    <string name="avg_stress_decrease">Avg. Stress Decrease</string>
+    <string name="avg_mood_increase">Avg. Mood Increase</string>
+    <string name="avg_calories_per_run">Avg. Calories per Run</string>
+    <string name="calories_burned">Calories Burned</string>
+    <string name="longest_run">Longest Run</string>
+    <string name="total_time">Total Time</string>
+    <string name="farthest_run">Farthest Run</string>
+    <string name="total_distance">Total Distance</string>
+    <string name="past_10_runs">Past 10 Runs</string>
+    <string name="past_5_runs">Past 5 Runs</string>
+    <string name="advice_of_the_day">ADVICE OF THE DAY</string>
+    <string name="before_i_felt">Before I felt:\t</string>
+    <string name="now_i_feel">Now I feel:\t</string>
+    <string name="save">Save</string>
+    <string name="exit_without_saving">Exit without saving</string>
+    <string name="notes">Notes…</string>
+    <string name="rate_your_mood">Rate Your Mood</string>
+    <string name="rate_your_stress_level">Rate Your Stress Level</string>
+    <string name="submit">Submit</string>
+    <string name="change_profile_image">Change Profile Image</string>
+    <string name="start_run">Start Run</string>
+    <string name="post_run_mood">Post-Run Mood</string>
+    <string name="pre_run_mood">Pre-Run Mood</string>
+    <string name="home">Home</string>
+    <string name="run">Run</string>
+    <string name="history">History</string>
+    <string name="profilepic">profilepic</string>
+    <string name="blank_value">0.00</string>
 </resources>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--
-<LinearLayout
--->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,9 +9,6 @@
     android:background="#ffffff"
     android:orientation="vertical"
     tools:context=".fragments.StartRunFragment">
-
-
-    <!-- new -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +33,6 @@
             android:id="@+id/tcTime_startfragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tcDate_startfragment"
             android:layout_marginTop="0dp"
             android:autoSizeTextType="uniform"
             android:maxLines="1"
@@ -56,7 +49,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ADVICE OF THE DAY"
+            android:text="@string/advice_of_the_day"
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold">
@@ -67,10 +60,10 @@
             android:id="@+id/tvquote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="quote here"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textStyle="bold|italic">
+            android:textStyle="bold|italic"
+            tools:text="Quote/Advice Here">
 
         </TextView>
 
@@ -80,23 +73,10 @@
             android:layout_width="match_parent"
             android:layout_height="45dp" />
 
-        <!--
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fillViewport="true">
-        -->
-        <!--
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-    -->
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Past 5 Runs"
+            android:text="@string/past_5_runs"
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold">
@@ -117,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Total Distance"
+                    android:text="@string/total_distance"
                     android:textStyle="bold"
 
                     />
@@ -127,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Farthest Run"
+                    android:text="@string/farthest_run"
                     android:textStyle="bold" />
 
 
@@ -145,19 +125,19 @@
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/TVLongestRun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -183,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Total Time"
+                    android:text="@string/total_time"
                     android:textStyle="bold" />
 
                 <TextView
@@ -191,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Longest Run"
+                    android:text="@string/longest_run"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -203,12 +183,12 @@
                     android:id="@+id/TVTotalTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
                 <TextView
@@ -216,12 +196,12 @@
                     android:id="@+id/TVLongestTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -247,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Calories Burned"
+                    android:text="@string/calories_burned"
                     android:textStyle="bold" />
 
                 <TextView
@@ -255,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Avg. Calories per Run"
+                    android:text="@string/avg_calories_per_run"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -267,24 +247,24 @@
                     android:id="@+id/TVCaloriesBurned"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/TVCaloriesBurnedAVG"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -311,7 +291,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Avg. Mood Increase"
+                    android:text="@string/avg_mood_increase"
                     android:textStyle="bold" />
 
                 <TextView
@@ -319,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Avg. Stress Decrease"
+                    android:text="@string/avg_stress_decrease"
                     android:textStyle="bold"
 
                     />
@@ -339,19 +319,19 @@
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/TVStressDecrease"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
 
@@ -369,10 +349,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Past 10 Runs"
+            android:text="@string/past_10_runs"
             android:textAlignment="center"
             android:textSize="30sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
 
         <TableLayout
@@ -388,7 +368,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Total Distance"
+                    android:text="@string/total_distance"
                     android:textStyle="bold"
 
                     />
@@ -398,7 +378,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Farthest Run"
+                    android:text="@string/farthest_run"
                     android:textStyle="bold" />
 
 
@@ -416,19 +396,19 @@
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/TVLongestRun2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -454,7 +434,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Total Time"
+                    android:text="@string/total_time"
                     android:textStyle="bold" />
 
                 <TextView
@@ -462,7 +442,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Longest Run"
+                    android:text="@string/longest_run"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -474,12 +454,12 @@
                     android:id="@+id/TVTotalTime2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
                 <TextView
@@ -487,12 +467,12 @@
                     android:id="@+id/TVLongestTime2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -518,7 +498,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Calories Burned"
+                    android:text="@string/calories_burned"
                     android:textStyle="bold" />
 
                 <TextView
@@ -526,7 +506,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Avg. Calories per Run"
+                    android:text="@string/avg_calories_per_run"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -538,24 +518,24 @@
                     android:id="@+id/TVCaloriesBurned2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/TVCaloriesBurnedAVG2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -582,7 +562,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Avg. Mood Increase"
+                    android:text="@string/avg_mood_increase"
                     android:textStyle="bold" />
 
                 <TextView
@@ -590,7 +570,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Avg. Stress Decrease"
+                    android:text="@string/avg_stress_decrease"
                     android:textStyle="bold"
 
                     />
@@ -610,19 +590,19 @@
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/TVStressDecrease2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Need More Runs"
+                    android:text="@string/need_more_runs"
                     android:textStyle="bold" />
 
 
@@ -637,9 +617,3 @@
     </LinearLayout>
 
 </ScrollView>
-
-
-
-    <!--
-    </LinearLayout>
-    -->

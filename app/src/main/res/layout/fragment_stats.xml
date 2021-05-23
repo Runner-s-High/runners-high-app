@@ -11,7 +11,7 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:text="Post-Run Mood"
+        android:text="@string/post_run_mood"
         android:textAlignment="textEnd"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:text="Pre-Run Mood"
+        android:text="@string/pre_run_mood"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

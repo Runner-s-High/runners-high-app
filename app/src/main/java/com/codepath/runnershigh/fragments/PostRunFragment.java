@@ -1,19 +1,11 @@
 package com.codepath.runnershigh.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,47 +16,43 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codepath.runnershigh.RunData;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+import com.codepath.runnershigh.MainActivity;
+import com.codepath.runnershigh.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import com.codepath.runnershigh.MainActivity;
-import com.codepath.runnershigh.R;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.parceler.MapsUtil;
-
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/*
+This fragment displays after a user ends their run. It features the run route, statistics about the run,
+and the post-run survey used to gauge progress.
+ */
 public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = PostRunFragment.class.getCanonicalName();
     PostRunFragmentInterface postRunFragmentInterface;
 
-    Button btSave;
-    Button btExit;
-
+    //Layout element references
+    Button btSave, btExit;
     ImageView ivPreMood;
-
     ImageButton IB1,IB2,IB3,IB4,IB5;
-    boolean moodSet=false;
-    int postRunMoodRating;
-
-    TextView tvRunTime;
-    TextView tvRunDistance;
+    TextView tvRunTime, tvRunDistance;
     EditText etNotes;
+    SeekBar PreRunseekbar, PostRunseekbar;
 
     Bundle RunInfo;
     List<LatLng> latLngList;
@@ -72,8 +60,8 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
     MapView mvPostRun;
     GoogleMap mMap;
 
-    SeekBar PreRunseekbar;
-    SeekBar PostRunseekbar;
+    boolean moodSet=false;
+    int postRunMoodRating;
     int postRunStressRating;
 
     SharedPreferences prefs;
@@ -112,10 +100,12 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         moodSet=false;
         double multiplier;
         String units;
-        super.onViewCreated(view, savedInstanceState);
+
         //Getting Views
         btExit = view.findViewById(R.id.btExit);
         btSave = view.findViewById(R.id.btSave);
@@ -125,12 +115,18 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         tvRunDistance = view.findViewById(R.id.tvRunDistance);
         mvPostRun = view.findViewById(R.id.mvPostRun);
         PreRunseekbar=view.findViewById(R.id.PreseekBar);
+        IB1=view.findViewById(R.id.IB1);
+        IB2=view.findViewById(R.id.IB2);
+        IB3=view.findViewById(R.id.IB3);
+        IB4=view.findViewById(R.id.IB4);
+        IB5=view.findViewById(R.id.IB5);
+        PostRunseekbar=view.findViewById(R.id.PostseekBar);
 
         postRunStressRating=5;
-        PostRunseekbar=view.findViewById(R.id.PostseekBar);
 
         tvRunTime.setText(String.format("Time: %s", RunInfo.get(MainActivity.NEW_RUN_TIME)));
 
+        //Set appropriate distance multipliers based on units
         if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS) {
             multiplier = MainActivity.MI_TO_KM;
             units = "km";
@@ -142,81 +138,62 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
 
         tvRunDistance.setText(String.format("Distance: %.2f %s", (double)RunInfo.get(MainActivity.NEW_RUN_DISTANCE) * multiplier, units));
 
-        IB1=view.findViewById(R.id.IB1);
-        IB2=view.findViewById(R.id.IB2);
-        IB3=view.findViewById(R.id.IB3);
-        IB4=view.findViewById(R.id.IB4);
-        IB5=view.findViewById(R.id.IB5);
-
         IB1.setOnClickListener(moodBtnListener);
         IB2.setOnClickListener(moodBtnListener);
         IB3.setOnClickListener(moodBtnListener);
         IB4.setOnClickListener(moodBtnListener);
         IB5.setOnClickListener(moodBtnListener);
 
+        //Setup mapview
         mvPostRun.onCreate(savedInstanceState);
         mvPostRun.getMapAsync(this);
 
         //Setting up UI
-        setPreMoodImage();
+        int premood = RunInfo.getInt(MainActivity.NEW_RUN_PRE_MOOD);
+        setFace(premood, ivPreMood);
 
         int prestressrating = RunInfo.getInt(MainActivity.NEW_RUN_PRE_STRESS);
         PreRunseekbar.setProgress(prestressrating);
 
         //Setting up onClick Listeners
-        btExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
-                builder.setMessage("Are you sure you don't want to log this run?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        postRunFragmentInterface.exitPostRun(false,RunInfo);
-                    }
-                });
+        btExit.setOnClickListener(v -> {
+            AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
+            builder.setMessage("Are you sure you don't want to log this run?");
+            builder.setPositiveButton("Yes", (dialog, which) -> postRunFragmentInterface.exitPostRun(false,RunInfo));
 
-                builder.setNegativeButton("No",null);
+            builder.setNegativeButton("No",null);
 
-                builder.create().show();
-            }
+            builder.create().show();
         });
 
-        btSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(moodSet) {
-                    Calendar calendar = Calendar.getInstance();
-                    String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-                    RunInfo.putString(MainActivity.NEW_RUN_NOTE, etNotes.getText().toString());
-                    RunInfo.putString(MainActivity.NEW_RUN_DATE, currentDate);
+        btSave.setOnClickListener(v -> {
+            if(moodSet) {
+                Calendar calendar = Calendar.getInstance();
+                String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                RunInfo.putString(MainActivity.NEW_RUN_NOTE, etNotes.getText().toString());
+                RunInfo.putString(MainActivity.NEW_RUN_DATE, currentDate);
 
-                    RunInfo.putInt(MainActivity.NEW_RUN_POST_STRESS,postRunStressRating);
+                RunInfo.putInt(MainActivity.NEW_RUN_POST_STRESS,postRunStressRating);
 
-                    ArrayList<String> lats = new ArrayList<>();
-                    ArrayList<String> longs = new ArrayList<>();
+                ArrayList<String> lats = new ArrayList<>();
+                ArrayList<String> longs = new ArrayList<>();
 
-                    for(LatLng point : latLngList){
-                        lats.add(String.valueOf(point.latitude));
-                        longs.add(String.valueOf(point.longitude));
-                    }
+                for(LatLng point : latLngList){
+                    lats.add(String.valueOf(point.latitude));
+                    longs.add(String.valueOf(point.longitude));
+                }
 
-                    RunInfo.putStringArrayList(MainActivity.NEW_RUN_LAT_LIST, lats);
-                    RunInfo.putStringArrayList(MainActivity.NEW_RUN_LNG_LIST, longs);
+                RunInfo.putStringArrayList(MainActivity.NEW_RUN_LAT_LIST, lats);
+                RunInfo.putStringArrayList(MainActivity.NEW_RUN_LNG_LIST, longs);
 
 
-                    postRunFragmentInterface.exitPostRun(true, RunInfo);
-                }else
-                    Toast.makeText(getActivity(), "Finish the post run survey", Toast.LENGTH_SHORT).show();
-            }
+                postRunFragmentInterface.exitPostRun(true, RunInfo);
+            }else
+                Toast.makeText(getActivity(), "Finish the post run survey", Toast.LENGTH_SHORT).show();
         });
 
-        PreRunseekbar.setOnTouchListener(new View.OnTouchListener() {       //user can't slide old seekbar with this
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return true;
-            }
-        });
+        //user can't slide old seekbar with this
+        PreRunseekbar.setOnTouchListener((view1, motionEvent) -> true);
 
         PostRunseekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -267,28 +244,28 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
         mvPostRun.onLowMemory();
     }
 
-    public void setPreMoodImage(){
-        int premood = RunInfo.getInt(MainActivity.NEW_RUN_PRE_MOOD);
-        switch(premood){
+
+    public void setFace(int score, ImageView ivMood){
+        switch(score){
             case 1:
-                ivPreMood.setImageResource(R.drawable.mood1);
-                ivPreMood.setColorFilter(Color.parseColor("#F44336"));
+                ivMood.setImageResource(R.drawable.mood1);
+                ivMood.setColorFilter(Color.parseColor("#F44336"));
                 break;
             case 2:
-                ivPreMood.setImageResource(R.drawable.mood2);
-                ivPreMood.setColorFilter(Color.parseColor("#FF9800"));
+                ivMood.setImageResource(R.drawable.mood2);
+                ivMood.setColorFilter(Color.parseColor("#FF9800"));
                 break;
             case 3:
-                ivPreMood.setImageResource(R.drawable.mood3);
-                ivPreMood.setColorFilter(Color.parseColor("#FFEB3B"));
+                ivMood.setImageResource(R.drawable.mood3);
+                ivMood.setColorFilter(Color.parseColor("#FFEB3B"));
                 break;
             case 4:
-                ivPreMood.setImageResource(R.drawable.mood4);
-                ivPreMood.setColorFilter(Color.parseColor("#8BC34A"));
+                ivMood.setImageResource(R.drawable.mood4);
+                ivMood.setColorFilter(Color.parseColor("#8BC34A"));
                 break;
             case 5:
-                ivPreMood.setImageResource(R.drawable.mood5);
-                ivPreMood.setColorFilter(Color.parseColor("#4CAF50"));
+                ivMood.setImageResource(R.drawable.mood5);
+                ivMood.setColorFilter(Color.parseColor("#4CAF50"));
                 break;
         }
 
@@ -361,6 +338,7 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
 
             Log.d(TAG, latLngList.get(latLngList.size() - 1).toString());
 
+            //Map route of the run
             PolylineOptions polylineOptions = new PolylineOptions();
             polylineOptions.addAll(latLngList);
             mMap.addPolyline(polylineOptions);
@@ -382,7 +360,6 @@ public class PostRunFragment extends Fragment implements OnMapReadyCallback {
 
 
     public interface PostRunFragmentInterface{
-        public void exitPostRun(boolean save,Bundle postRunInfo);
+        void exitPostRun(boolean save,Bundle postRunInfo);
     }
-
 }

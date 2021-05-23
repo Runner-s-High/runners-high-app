@@ -1,6 +1,5 @@
 package com.codepath.runnershigh.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -24,14 +24,18 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 
+/*
+Fragment used to represent graphs page in ResultsFragment in MoreInfoActivity. It contains both a
+mood graph and a stress graph filled with the pre- and post-survey parameters
+ */
 public class GraphsFragment extends Fragment {
+    //Layout element references
+    BarChart mybarchart, mystresschart;
+
     ArrayList<BarEntry> barEntryArrayList;
     ArrayList<String> RunLabels;
-
     ArrayList<BarEntry> StressbarEntryArrayList;
     ArrayList<String> StressLabels;
-
-    BarChart mybarchart, mystresschart;
 
     public GraphsFragment() {
     }
@@ -81,7 +85,7 @@ public class GraphsFragment extends Fragment {
         RunLabels.add("POST-RUN");
         BarDataSet barDataSet=new BarDataSet(barEntryArrayList,"Moods");
 
-        barDataSet.setColors(getBarColor(prescore), getBarColor(postscore));
+        barDataSet.setColors(MainActivity.getMoodColor(prescore), MainActivity.getMoodColor(postscore));
 
         BarData barData=new BarData(barDataSet);
         barData.setDrawValues(false);
@@ -113,7 +117,7 @@ public class GraphsFragment extends Fragment {
 
         mybarchart.setDrawValueAboveBar(false);
         mybarchart.setDrawGridBackground(true);
-        mybarchart.animateY(2000);      //makes bargraphs grow
+        mybarchart.animateY(1000);      //makes bargraphs grow
         mybarchart.invalidate();
 
         //set to non scrollable
@@ -165,59 +169,6 @@ public class GraphsFragment extends Fragment {
         mystresschart.animateY(1000);
         mystresschart.invalidate();
 
-        barDataSet2.setColors(getStressColor(prestress), getStressColor(poststress));
-    }
-
-    public int getBarColor(int score) {
-        int graphcolor = 0;
-
-        switch(score) {
-            case 1:
-                graphcolor=Color.RED;
-                break;
-            case 2:
-                graphcolor=Color.rgb(255,165,0);
-                break;
-            case 3:
-                graphcolor=Color.YELLOW;
-                break;
-            case 4:
-                graphcolor=Color.rgb(173,255,47);
-                break;
-            case 5:
-                graphcolor=Color.GREEN;
-                break;
-        }
-
-        return graphcolor;
-    }
-
-    public int getStressColor(int score) {
-        int graphcolor = 0;
-
-        switch(score) {
-            case 10:
-            case 9:
-                graphcolor=Color.RED;
-                break;
-            case 8:
-            case 7:
-                graphcolor=Color.rgb(255,165,0);
-                break;
-            case 6:
-            case 5:
-                graphcolor=Color.YELLOW;
-                break;
-            case 4:
-            case 3:
-                graphcolor=Color.rgb(173,255,47);
-                break;
-            case 2:
-            case 1:
-                graphcolor=Color.GREEN;
-                break;
-        }
-
-        return graphcolor;
+        barDataSet2.setColors(MainActivity.getStressColor(prestress), MainActivity.getStressColor(poststress));
     }
 }

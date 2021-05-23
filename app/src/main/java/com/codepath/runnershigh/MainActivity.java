@@ -11,6 +11,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -32,20 +33,21 @@ import com.codepath.runnershigh.fragments.SettingsFragment;
 import com.codepath.runnershigh.fragments.StartRunFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.FindCallback;
-import com.parse.LogOutCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import com.parse.SaveCallback;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+/*
+This MainActivity is the landing area after a successful sign in. From here, the user can access
+a number of fragments through the BottomNavigation and ActionBar at the top. This activity implements
+interfaces defined for these fragments in order to centralize the key methods involved with logging
+runs.
+ */
 
 public class MainActivity extends AppCompatActivity implements
         RunningFragment.RunningFragmentInterface,
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements
 
     //Bundle for storing new run info until submission
     Bundle newRunBundle;
+
+    //String constants used as keys for Bundles
     public static final String NEW_RUN_PRE_MOOD ="newrunpremood",
             NEW_RUN_POST_MOOD ="newrunpostmood",
             NEW_RUN_TIME ="newruntime",
@@ -70,8 +74,11 @@ public class MainActivity extends AppCompatActivity implements
             NEW_RUN_PRE_STRESS="newrunprestress",
             NEW_RUN_POST_STRESS="newrunpoststress";
 
+    //Conversion factors
     public static double LBS_TO_KG = 0.4535924;
     public static double MI_TO_KM = 1.609344;
+
+    //Constant codes for
     public static int DISTANCE_MILES = 122;
     public static int DISTANCE_KILOMETERS = 123;
 
@@ -91,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements
     SettingsFragment settingsFragment;
     ResourcesFragment resourcesFragment;
 
+    //Necessary to support profile pics
     public static CircleImageView Menu_Profile_Pic;
     public static ParseFile UserImage;
     public static Uri uri_after_pic_change=null;
@@ -110,51 +118,49 @@ public class MainActivity extends AppCompatActivity implements
         //Initializing Fragments
         if(homeFragment==null)
             homeFragment = new HomeFragment();
-
         if(startRunFragment==null)
             startRunFragment = new StartRunFragment();
-
-
+        if(historyFragment==null)
+            historyFragment = new HistoryFragment();
         if(settingsFragment==null)
             settingsFragment=new SettingsFragment();
-
         if(resourcesFragment==null)
             resourcesFragment=new ResourcesFragment();
 
+        //Setting up BottomNavigation response to clicks
         bottomNavigationView=findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment;
-                switch(item.getItemId()){
-                    case R.id.itHistory:
-                        fragment = new HistoryFragment();
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Fragment fragment;
+            switch(item.getItemId()){
+                case R.id.itHistory:
+                    fragment = new HistoryFragment();
 
-                        break;
-                    case R.id.itHome:
-                        fragment = new HomeFragment();
+                    break;
+                case R.id.itHome:
+                    fragment = new HomeFragment();
 
-                        break;
-                    case R.id.itRun:
-                        fragment = startRunFragment;        //new or no?
+                    break;
+                case R.id.itRun:
+                    fragment = startRunFragment;        //new or no?
 
 
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + item.getItemId());
-                }
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.flContainer,fragment)
-                        .commit();
-                return true;
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + item.getItemId());
             }
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.flContainer,fragment)
+                    .commit();
+            return true;
         });
 
+        //Retrieve the shared preferences saved for user
         prefs = getSharedPreferences("settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor;
 
+        //If units are not explicitly in kilometers, use units of miles
         if(prefs.getInt("units", DISTANCE_MILES) == DISTANCE_MILES) {
             prefsEditor = prefs.edit();
             prefsEditor.putInt("units", DISTANCE_MILES);
@@ -183,26 +189,23 @@ public class MainActivity extends AppCompatActivity implements
         query.whereEqualTo(RunData.KEY_USER, ParseUser.getCurrentUser());
         query.setLimit(1);
         query.addDescendingOrder(RunData.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<RunData>() {
-            @Override
-            public void done(List<RunData> runs, ParseException e) {
-                UserImage=null;
+        query.findInBackground((runs, e) -> {
+            UserImage=null;
 
 
-                if (e != null) {
-                    return;
-                }
-                if (runs.size()>0) {
-                    RunData TheRun = runs.get(0);
-                    UserImage = TheRun.getProfileImage();
-                }
-
-                if (UserImage != null) {
-                    Glide.with(getApplicationContext()).load(UserImage.getUrl()).into(Menu_Profile_Pic);
-                }
-                else
-                    Menu_Profile_Pic.setImageResource(R.drawable.trophy);
+            if (e != null) {
+                return;
             }
+            if (runs.size()>0) {
+                RunData TheRun = runs.get(0);
+                UserImage = TheRun.getProfileImage();
+            }
+
+            if (UserImage != null) {
+                Glide.with(getApplicationContext()).load(UserImage.getUrl()).into(Menu_Profile_Pic);
+            }
+            else
+                Menu_Profile_Pic.setImageResource(R.drawable.trophy);
         });
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -210,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements
         return super.onCreateOptionsMenu(menu);
     }
 
+    //Handling clicks on icons in the top menu bar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
@@ -219,9 +223,6 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.icResources:
                 openResourcesFragment();
                 break;
-            case R.id.icProfilePic:
-                openSettingsFragment();
-                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -229,6 +230,7 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
+    //Hides BottomNavigation for any fragment where it isn't necessary
     public void hideBottomNav(){
         bottomNavigationView.animate()
                 .translationY(bottomNavigationView.getHeight())
@@ -243,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements
                 });
     }
 
+    //Shows BottomNavigation again if currently hidden
     public void showBottomNav(){
         bottomNavigationView.animate()
                 .translationY(0)
@@ -257,40 +260,41 @@ public class MainActivity extends AppCompatActivity implements
                 });
     }
 
+    //Takes values from Bundle passed in and returns RunData object with appropriate fields
     public RunData runDataFromBundle(Bundle runBundle){
         RunData runData= new RunData();
 
+        //Survey parameters
         runData.setPreRunMood(runBundle.getInt(NEW_RUN_PRE_MOOD));
         runData.setPostRunMood(runBundle.getInt(NEW_RUN_POST_MOOD));
+        runData.setPreRunStress(runBundle.getInt(NEW_RUN_PRE_STRESS));
+        runData.setPostRunStress(runBundle.getInt(NEW_RUN_POST_STRESS));
+
+        //Run parameters
         runData.setRunTime(runBundle.getString(NEW_RUN_TIME));
         runData.setRunDistance(runBundle.getDouble(NEW_RUN_DISTANCE));
         runData.setRunNote(runBundle.getString(NEW_RUN_NOTE));
         runData.setRunDate(runBundle.getString(NEW_RUN_DATE));
         runData.setRunCalories(runBundle.getDouble(NEW_RUN_CALORIES));
         runData.setUser(ParseUser.getCurrentUser());
-
-        if (SettingsFragment.ProfilePicture!=null)
-            runData.setProfileImage(SettingsFragment.ProfilePicture);
-
-        runData.setPreRunStress(runBundle.getInt(NEW_RUN_PRE_STRESS));
-        runData.setPostRunStress(runBundle.getInt(NEW_RUN_POST_STRESS));
-
         runData.setRunLatList(runBundle.getStringArrayList(NEW_RUN_LAT_LIST));
         runData.setRunLngList(runBundle.getStringArrayList(NEW_RUN_LNG_LIST));
+
+        //Profile picture check
+        if (SettingsFragment.ProfilePicture!=null)
+            runData.setProfileImage(SettingsFragment.ProfilePicture);
 
         return runData;
     }
 
+    //Saves data wrapped in RunData object to Parse backend
     public void saveRunData(RunData runData){
-        runData.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e!=null) {
-                    Toast.makeText(context, "Error Saving Run", Toast.LENGTH_SHORT).show();
-                }
-                else
-                    Toast.makeText(context, "Run Saved", Toast.LENGTH_SHORT).show();
+        runData.saveInBackground(e -> {
+            if(e!=null) {
+                Toast.makeText(context, "Error Saving Run", Toast.LENGTH_SHORT).show();
             }
+            else
+                Toast.makeText(context, "Run Saved", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -376,22 +380,72 @@ public class MainActivity extends AppCompatActivity implements
     //Logs user out of Parse account, sends back to LoginActivity
     @Override
     public void logOut() {
-        ParseUser.logOutInBackground(new LogOutCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e == null) {
-                    Log.i(SettingsFragment.TAG, "Successfully logged out Parse User");
-                    Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
-                }
-                else {
-                    Log.e(SettingsFragment.TAG, e.getMessage());
-                    Toast.makeText(MainActivity.this, "Error logging out", Toast.LENGTH_SHORT).show();
-                }
+        ParseUser.logOutInBackground(e -> {
+            if(e == null) {
+                Log.i(SettingsFragment.TAG, "Successfully logged out Parse User");
+                Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+            }
+            else {
+                Log.e(SettingsFragment.TAG, e.getMessage());
+                Toast.makeText(MainActivity.this, "Error logging out", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    //Gets appropriate color for mood graph
+    public static int getMoodColor(int score) {
+        int graphcolor = 0;
 
+        switch(score) {
+            case 1:
+                graphcolor= Color.RED;
+                break;
+            case 2:
+                graphcolor=Color.rgb(255,165,0);
+                break;
+            case 3:
+                graphcolor=Color.YELLOW;
+                break;
+            case 4:
+                graphcolor=Color.rgb(173,255,47);
+                break;
+            case 5:
+                graphcolor=Color.GREEN;
+                break;
+        }
+
+        return graphcolor;
+    }
+
+    //Gets appropriate color for stress graph
+    public static int getStressColor(int score) {
+        int graphcolor = 0;
+
+        switch(score) {
+            case 10:
+            case 9:
+                graphcolor=Color.RED;
+                break;
+            case 8:
+            case 7:
+                graphcolor=Color.rgb(255,165,0);
+                break;
+            case 6:
+            case 5:
+                graphcolor=Color.YELLOW;
+                break;
+            case 4:
+            case 3:
+                graphcolor=Color.rgb(173,255,47);
+                break;
+            case 2:
+            case 1:
+                graphcolor=Color.GREEN;
+                break;
+        }
+
+        return graphcolor;
+    }
 }

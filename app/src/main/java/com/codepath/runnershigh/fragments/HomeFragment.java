@@ -1,35 +1,22 @@
 package com.codepath.runnershigh.fragments;
 
-import android.Manifest;
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
 import com.codepath.runnershigh.RunData;
-import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -38,12 +25,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-
+/*
+The default fragment for MainActivity which shows a motivational quote/tip and charts on data from
+the last 5 and 10 runs
+ */
 public class HomeFragment extends Fragment {
+    //Layout element references
     TextView TotalDistance,TotalTime,LongestRun,CaloriesBurned,MoodIncrease,StressReduction,tvLongestTime,CaloriesAVG;
     TextView TotalDistance2,TotalTime2,LongestRun2,CaloriesBurned2,MoodIncrease2,StressReduction2,
             tvLongestTime2,CaloriesAVG2;
-
     TextView RandomQuote;
     TextClock tcDate;
     TextClock tcTime;
@@ -56,16 +46,8 @@ public class HomeFragment extends Fragment {
     ArrayList<Integer> PreStressArray;
     ArrayList<Integer> PostStressArray;
 
-
-
-
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        return fragment;
     }
 
     @Override
@@ -84,11 +66,11 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Gather string resources for quotes and tips
         Resources resources = getResources();
         List<String> Quotes = Arrays.asList(resources.getStringArray(R.array.Quotes));
         List<String> tips = Arrays.asList(resources.getStringArray(R.array.tips));
         Random random =new Random();
-
 
         DistanceArray=new ArrayList<>();
         CalorieArray=new ArrayList<>();
@@ -122,7 +104,6 @@ public class HomeFragment extends Fragment {
 
         RandomQuote=view.findViewById(R.id.tvquote);
 
-
         tcDate.setFormat12Hour("EEE, MMM d, ''yy");
         tcTime.setFormat12Hour("h:mm a");
 
@@ -136,46 +117,41 @@ public class HomeFragment extends Fragment {
 
         }
 
-
+        //Query the last 10 runs the user completed
         ParseQuery<RunData> query=ParseQuery.getQuery(RunData.class);
         query.include(RunData.KEY_USER);
         query.setLimit(10);
         query.whereEqualTo(RunData.KEY_USER, ParseUser.getCurrentUser());
         query.addDescendingOrder(RunData.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<RunData>() {
-            @Override
-            public void done(List<RunData> runs, ParseException e) {
-                if (e != null) {
-                    return;
+        query.findInBackground((runs, e) -> {
+            if (e != null) {
+                return;
+            }
+
+            //Perform math operations on these runs
+            if (runs.size()>=5) {
+                for (int i=0;i<runs.size();i++){
+                    DistanceArray.add(runs.get(i).getRunDistance());
+                    CalorieArray.add(runs.get(i).getRunCalories());
+                    RunTimeArray.add(runs.get(i).getRunTime());
+                    PreMoodArray.add(runs.get(i).getPreRunMood());
+                    PostMoodArray.add(runs.get(i).getPostRunMood());
+                    PreStressArray.add(runs.get(i).getPreRunStress());
+                    PostStressArray.add(runs.get(i).getPostRunStress());
+
+
                 }
+                CalculateDistances(5);
+                CalculateRunTimes(5);
+                CalculatePsychological(5);
+                CalculateCalories(5);
 
-                if (runs.size()>=5) {
-                    for (int i=0;i<runs.size();i++){
-                        DistanceArray.add(runs.get(i).getRunDistance());
-                        CalorieArray.add(runs.get(i).getRunCalories());
-                        RunTimeArray.add(runs.get(i).getRunTime());
-                        PreMoodArray.add(runs.get(i).getPreRunMood());
-                        PostMoodArray.add(runs.get(i).getPostRunMood());
-                        PreStressArray.add(runs.get(i).getPreRunStress());
-                        PostStressArray.add(runs.get(i).getPostRunStress());
-
-
-                    }
-                    CalculateDistances(5);
-                    CalculateRunTimes(5);
-                    CalculatePsychological(5);
-                    CalculateCalories(5);
-
-                    if (runs.size()==10) {
-                        CalculateDistances(10);
-                        CalculateRunTimes(10);
-                        CalculatePsychological(10);
-                        CalculateCalories(10);
-                    }
+                if (runs.size()==10) {
+                    CalculateDistances(10);
+                    CalculateRunTimes(10);
+                    CalculatePsychological(10);
+                    CalculateCalories(10);
                 }
-
-                else
-                    return;
             }
         });
 
@@ -197,13 +173,13 @@ public class HomeFragment extends Fragment {
         double stressReduction=(PreStress-PostStress)/PreStress*100;
 
         if (amount==5) {
-            MoodIncrease.setText(String.valueOf((int) moodIncrease).toString() + " %");
-            StressReduction.setText(String.valueOf((int) stressReduction).toString() + " %");
+            MoodIncrease.setText((int) moodIncrease + " %");
+            StressReduction.setText((int) stressReduction + " %");
         }
 
         else{
-            MoodIncrease2.setText(String.valueOf((int) moodIncrease).toString() + " %");
-            StressReduction2.setText(String.valueOf((int) stressReduction).toString() + " %");
+            MoodIncrease2.setText((int) moodIncrease + " %");
+            StressReduction2.setText((int) stressReduction + " %");
 
         }
 
@@ -221,12 +197,12 @@ public class HomeFragment extends Fragment {
         int avg=(int)(calories/amount);
 
         if (amount==5) {
-            CaloriesBurned.setText(String.valueOf(RoundedCalories).toString() + " Cal");
-            CaloriesAVG.setText(String.valueOf(avg).toString() + " Cal");
+            CaloriesBurned.setText(RoundedCalories + " Cal");
+            CaloriesAVG.setText(avg + " Cal");
         }
         else {
-            CaloriesBurned2.setText(String.valueOf(RoundedCalories).toString() + " Cal");
-            CaloriesAVG2.setText(String.valueOf(avg).toString() + " Cal");
+            CaloriesBurned2.setText(RoundedCalories + " Cal");
+            CaloriesAVG2.setText(avg + " Cal");
         }
     }
 
@@ -253,7 +229,7 @@ public class HomeFragment extends Fragment {
                     totalseconds+=value%10 * 10;
                 else if (j==2)
                     totalseconds+=value%10 *60;
-                else if (j==3)
+                else
                     totalseconds+=value%10 * 60 * 10;
 
                 value=value/10;
@@ -274,7 +250,7 @@ public class HomeFragment extends Fragment {
                 LongestRunSeconds+=TheLongestRun%10 * 10;
             else if (j==2)
                 LongestRunSeconds+=TheLongestRun%10 *60;
-            else if (j==3)
+            else
                 LongestRunSeconds+=TheLongestRun%10 * 60 * 10;
 
             TheLongestRun=TheLongestRun/10;

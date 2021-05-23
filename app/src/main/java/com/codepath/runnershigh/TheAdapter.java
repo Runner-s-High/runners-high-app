@@ -28,21 +28,18 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-    //layout resource file "eachrun" defines the layout for each view in recyclerview
-
+//layout resource file "eachrun" defines the layout for each view in recyclerview
+//Adapter for RecyclerView of past runs in HistoryFragment in MainActivity
 public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
-
-    private Context context;
-    private List<RunData> runs;
+    private final Context context;
+    private final List<RunData> runs;
 
     SharedPreferences prefs;
-
 
     public TheAdapter(Context context, List<RunData> runs) {
         this.context = context;
         this.runs = runs;
     }
-
 
     @NonNull
     @Override
@@ -65,16 +62,14 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        //Layout element references
         TextView TheDate, tvTimeRV, tvDistanceRV, tvCaloriesRV, tvDistanceTitleRV;
-
         Button infobutton;
-
         BarChart TheBarChart;
+        BarChart StressBarChart;
+
         ArrayList<BarEntry> barEntryArrayList;
         ArrayList<String> RunLabels;
-
-        BarChart StressBarChart;
         ArrayList<BarEntry> StressbarEntryArrayList;
         ArrayList<String> StressLabels;
 
@@ -91,44 +86,47 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             StressBarChart=itemView.findViewById(R.id.mystressgraph);
 
         }
-                        //when clicking on an item in recyclerview
+
+        //when clicking on an item in recyclerview
         public void bind(RunData run) {
             double multiplier;
             String units;
 
-            if(prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS) {
+            //Set appropriate unit strings based on saved settings
+            if (prefs.getInt("units", -1) == MainActivity.DISTANCE_KILOMETERS) {
                 multiplier = MainActivity.MI_TO_KM;
                 units = "KM";
-            }
-            else {
+            } else {
                 multiplier = 1;
                 units = "MI";
             }
 
-            infobutton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, MoreInfoActivity.class);
-                    intent.putExtra("pizza", Parcels.wrap(run));
-                    context.startActivity(intent);
-                }
+            infobutton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, MoreInfoActivity.class);
+                intent.putExtra("pizza", Parcels.wrap(run));
+                context.startActivity(intent);
             });
 
+            //Initializing fields with data from run
             TheDate.setText(run.getRunDate());
             tvTimeRV.setText(run.getRunTime());
             tvDistanceTitleRV.setText(String.format("%s (%s)", context.getString(R.string.distance_label), units));
             tvDistanceRV.setText(String.format("%.2f", run.getRunDistance() * multiplier));
             tvCaloriesRV.setText(String.format("%.1f", run.getRunCalories()));
 
-            String a= String.valueOf(run.getPreRunMood());
-            String b=String.valueOf(run.getPostRunMood());
-
-
-            RunLabels=new ArrayList<>();
             int prescore = run.getPreRunMood();
             int postscore = run.getPostRunMood();
+            int prestress = run.getPreRunStress();
+            int poststress = run.getPostRunStress();
 
+            setupMoodGraph(prescore, postscore);
+            setupStressGraph(prestress, poststress);
+        }
+
+        public void setupMoodGraph(int prescore, int postscore) {
             barEntryArrayList = new ArrayList<>();
+            RunLabels=new ArrayList<>();
+
             barEntryArrayList.add(new BarEntry(0,prescore));
             barEntryArrayList.add(new BarEntry(1,postscore));
             RunLabels.add("PRE-RUN");
@@ -138,9 +136,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             BarData barData=new BarData(barDataSet);
             barData.setDrawValues(false);
             barData.setHighlightEnabled(false);
-
             TheBarChart.setData(barData);
-
 
             Description description=TheBarChart.getDescription();
             description.setEnabled(false);
@@ -170,13 +166,12 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             TheBarChart.animateY(1000);
             TheBarChart.invalidate();
 
+            barDataSet.setColors(MainActivity.getMoodColor(prescore), MainActivity.getMoodColor(postscore));
 
-            SetGraphColors(prescore,postscore,barDataSet);         //Greg-function defined below
+        }
 
-
+        public void setupStressGraph(int prestress, int poststress) {
             //stress bargraph
-            int prestress = run.getPreRunStress();
-            int poststress = run.getPostRunStress();
             StressLabels=new ArrayList<>();
             StressbarEntryArrayList = new ArrayList<>();
             StressbarEntryArrayList.add(new BarEntry(0,prestress));       //data goes here from cloud
@@ -221,105 +216,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             StressBarChart.animateY(1000);
             StressBarChart.invalidate();
 
-            SetStressColors(prestress,poststress,barDataSet2);
+            barDataSet2.setColors(MainActivity.getStressColor(prestress), MainActivity.getStressColor(poststress));
         }
-
-
-        public void SetStressColors(int prestress,int poststress,BarDataSet barDataSet2){
-            int topbarcolor,bottombarcolor;
-            topbarcolor=bottombarcolor=0;
-
-
-                if (prestress==10 || prestress==9){
-                    topbarcolor=Color.RED;
-                }
-
-                else if (prestress==8 || prestress==7){
-                    topbarcolor=Color.rgb(255,165,0);
-                }
-
-                else if (prestress==6 || prestress==5){
-                    topbarcolor=Color.YELLOW;
-                }
-
-                else if (prestress==4 || prestress==3){
-                    topbarcolor=Color.rgb(173,255,47);
-                }
-
-                else if (prestress==2 || prestress==1){
-                    topbarcolor=Color.GREEN;
-                }
-
-            if (poststress==10 || poststress==9){
-                bottombarcolor=Color.RED;
-            }
-
-            else if (poststress==8 || poststress==7){
-                bottombarcolor=Color.rgb(255,165,0);
-            }
-
-            else if (poststress==6 || poststress==5){
-                bottombarcolor=Color.YELLOW;
-            }
-
-            else if (poststress==4 || poststress==3){
-                bottombarcolor=Color.rgb(173,255,47);
-            }
-
-            else if (poststress==2 || poststress==1){
-                bottombarcolor=Color.GREEN;
-            }
-
-
-            barDataSet2.setColors(topbarcolor,bottombarcolor);
-        }
-
-        public void SetGraphColors(int prescore,int postscore,BarDataSet bardataset){
-            int leftgraphcolor,rightgraphcolor;
-            leftgraphcolor=rightgraphcolor=0;
-
-            switch(prescore) {
-                case 1:
-                    leftgraphcolor= Color.RED;
-                    break;
-                case 2:
-                    leftgraphcolor=Color.rgb(255,165,0);
-                    break;
-                case 3:
-                    leftgraphcolor=Color.YELLOW;
-                    break;
-                case 4:
-                    leftgraphcolor=Color.rgb(173,255,47);
-                    break;
-                case 5:
-                    leftgraphcolor=Color.GREEN;
-                    break;
-            }
-
-            switch(postscore) {
-                case 1:
-                    rightgraphcolor=Color.RED;
-                    break;
-                case 2:
-                    rightgraphcolor=Color.rgb(255,165,0);
-                    break;
-                case 3:
-                    rightgraphcolor=Color.YELLOW;
-                    break;
-                case 4:
-                    rightgraphcolor=Color.rgb(173,255,47);
-                    break;
-                case 5:
-                    rightgraphcolor=Color.GREEN;
-                    break;
-            }
-
-            bardataset.setColors(leftgraphcolor,rightgraphcolor);
-        }
-
     }
-
-
-
-
 }

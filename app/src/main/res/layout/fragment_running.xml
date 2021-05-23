@@ -50,7 +50,6 @@
         android:layout_below="@+id/tvTimeLabel"
         android:layout_marginTop="16dp"
         android:maxLines="1"
-        android:text="0.00"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="128sp"
@@ -64,7 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDistanceLabel"
         android:layout_marginTop="16dp"
-        android:text="0.00"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -96,7 +94,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="0dp"
-        android:text="MILES"
+        android:text="@string/miles"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textStyle="bold" />
@@ -107,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvPace"
         android:layout_marginTop="5dp"
-        android:text="PACE (MPH)"
+        android:text="@string/pace_mph"
         android:textAlignment="center"
         android:textStyle="bold" />
 

@@ -16,16 +16,15 @@ import android.widget.TextView;
 
 import com.codepath.runnershigh.R;
 
+/*
+This fragment has multiple mental health resources in the form of website hyperlinks and phone
+numbers that the user can access from within the app.
+ */
 public class ResourcesFragment extends Fragment {
     ResourcesFragmentInterface resourcesFragmentInterface;
 
     public ResourcesFragment() {
         // Required empty public constructor
-    }
-
-    public static ResourcesFragment newInstance(String param1, String param2) {
-        ResourcesFragment fragment = new ResourcesFragment();
-        return fragment;
     }
 
     @Override
@@ -43,16 +42,15 @@ public class ResourcesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView tvLearn, tvHelp, tvPhone1, tvPhone2, tvRes1, tvRes2, tvRes3;
+        TextView tvPhone1, tvPhone2, tvRes1, tvRes2, tvRes3;
 
-        tvLearn = view.findViewById(R.id.tvLearn);
-        tvHelp = view.findViewById(R.id.tvHelp);
         tvPhone1 = view.findViewById(R.id.tvPhone1);
         tvPhone2 = view.findViewById(R.id.tvPhone2);
         tvRes1 = view.findViewById(R.id.tvRes1);
         tvRes2 = view.findViewById(R.id.tvRes2);
         tvRes3 = view.findViewById(R.id.tvRes3);
 
+        //Setting up links for web browser and phone app
         tvRes1.setMovementMethod(LinkMovementMethod.getInstance());
         tvRes2.setMovementMethod(LinkMovementMethod.getInstance());
         tvRes3.setMovementMethod(LinkMovementMethod.getInstance());
@@ -74,6 +72,6 @@ public class ResourcesFragment extends Fragment {
     }
 
     public interface ResourcesFragmentInterface {
-        public void openResourcesFragment();
+        void openResourcesFragment();
     }
 }

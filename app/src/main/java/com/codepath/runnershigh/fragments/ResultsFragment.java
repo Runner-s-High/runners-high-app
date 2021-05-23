@@ -12,12 +12,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.codepath.runnershigh.PagerAdapter;
 import com.codepath.runnershigh.R;
-import com.codepath.runnershigh.RunData;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
-import org.jetbrains.annotations.NotNull;
-import org.parceler.Parcels;
 
 //This fragment holds the TabLayout and ViewPager to switch b/w StatsFragment and GraphsFragment
 
@@ -45,21 +41,18 @@ public class ResultsFragment extends Fragment {
 
         viewPager.setAdapter(pagerAdapter);
 
-        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull @NotNull TabLayout.Tab tab, int position) {
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
 
-                //Set up the tab titles
-                switch (position) {
-                    case 0:
-                        tab.setText("Stats");
-                        break;
-                    case 1:
-                        tab.setText("Graphs");
-                        break;
-                    default:
-                        tab.setText("X-AE-12");
-                }
+            //Set up the tab titles
+            switch (position) {
+                case 0:
+                    tab.setText("Stats");
+                    break;
+                case 1:
+                    tab.setText("Graphs");
+                    break;
+                default:
+                    tab.setText("X-AE-12");
             }
         }).attach();
     }
