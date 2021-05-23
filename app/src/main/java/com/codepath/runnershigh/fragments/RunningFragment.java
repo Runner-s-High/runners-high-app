@@ -133,23 +133,15 @@ public class RunningFragment extends Fragment {
         }
 
         //Setting onClickListeners
-        ibPauseResume.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(ticking){
-                    pause();
-                }else{
-                    play();
-                }
+        ibPauseResume.setOnClickListener(v -> {
+            if(ticking){
+                pause();
+            }else{
+                play();
             }
         });
 
-        ibStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stop();
-            }
-        });
+        ibStop.setOnClickListener(v -> stop());
 
         play();
     }
