@@ -11,7 +11,12 @@ CodePath App Development Project
 
 ## Overview
 ### Description
-Runner's High is a mood-tracking and run-tracking app that allows users to log their mood both before and after they go running. It also logs the user's run through location services and provides information on their pace and route. User will be able to look back at data from previous runs and see how their mood has changed over time.
+Runner's High is a mood-tracking and run-tracking app that allows users to log their mood both before and after they go running. It also logs the user's run through location services and provides information on their pace and route. User will be able to look back at data from previous runs and see how their mood and stress levels have changed over time.
+
+### Rationale
+The CDC estimates that more than 60% of U.S. adults don’t get enough exercise and that 25% of U.S. adults don’t exercise at all. Our goal was to create a full fitness app that also had a psychological component in that users would rate their mood and level of stress before and after each run.Users would be able to see not only the physical benefits of exercising (calories burned), but also the psychological benefits of exercise first hand. The end goal is that more people would ultimately start exercising and continue exercising because of this app.
+“Has technology made us lazier?” They ask….not this time.
+
 
 ### App Evaluation
 - **Category:** Health and Fitness.
@@ -41,16 +46,16 @@ Runner's High is a mood-tracking and run-tracking app that allows users to log t
 - [ ] Implement map so user can see live position while running
 - [x] Implement links to mental health links/phone numbers
 
-### First App Walkthough GIF
+### First Sprint Walkthough GIF (March 22, 2021)
 <img src="https://github.com/Runner-s-High/runners-high-app/blob/main/first%20walkthrough.gif" width=250><br>
 
-### Second App Walkthough GIF
+### Second Sprint Walkthough GIF (March 24, 2021)
 <img src="https://github.com/Runner-s-High/runners-high-app/blob/main/2nd%20walkthrouhg.gif" width=250><br>
 
-### Third App Walkthough GIF
+### Third Sprint Walkthough GIF (March 29, 2021)
 <img src="https://github.com/Runner-s-High/runners-high-app/blob/main/walkthrough%203.gif" width=250><br>
 
-### Fourth App Walkthrough GIF
+### Fourth Sprint Walkthrough GIF (April 5, 2021)
 <img src="https://github.com/Runner-s-High/runners-high-app/blob/main/walkthrough4.gif" width=250><br>
 
 
@@ -68,59 +73,61 @@ Runner's High is a mood-tracking and run-tracking app that allows users to log t
 
 **Tab Navigation** (Tab to Screen)
 
-* Login Screen
-* Home Screen
-* Data visuals screen. Graphs etc
-* Mood Logging Screen
-* Map/Running Screen
+* MainActivity
+  - HomeFragment (Welcome and Past Runs Summary)
+  - StartRunFragment (Starting runs)
+  - HistoryFragment (List of past runs)
+  - ResourcesFragment (Mental health resources)
+  - SettingsFragment (Distance units, profile picture)
+* MoreInfoActivity: ResultsFragment
+  - StatsFragment
+  - GraphsFragment
 
 **Flow Navigation** (Screen to Screen)
 
-* Login Screen
-    * => Home Screen (successful login/sign up)
-* Settings Screen
-   * => Back to Homescreen
-* Home Screen
-   * => Maps/Running Screen (Go for run button) 
-   * => Settings Screen (Settings button in action bar)
-* Running Screen
-    * => Mood Screen (when starting and ending run)
-* Settings Screen
-    * => Back button to home screen
+* LoginActivity
+    * => MainActivity: HomeFragment (successful login)
+    * => SetupProfileActivity (successful sign-up)
+* SetupProfileActivity
+    * => MainActivity: HomeFragment (Submit Profile button) 
+* MainActivity: StartRunFragment
+    * => PreRunMoodDialogFragment (Start Run button)
+    * => RunningFragment (after finishing dialogfragment) 
+* MainActivity: HistoryFragment
+    * => MoreInfoActivity (More Info button)
+* MainActivity: SettingsFragment
+    * => Intent to Photo Gallery (Change Profile Image button)
+    * => LoginActivity (Log Out button)  
+* MainActivity: RunningFragment
+    * => PostRunFragment (Stop button)
+* MainActivity: PostRunFragment
+    * => HistoryFragment (Save Run, Exit Without Saving buttons)
+* MoreInfoActivity
+    * => MainActivity: HistoryFragment (Go Back button)
 
 ## Wireframes
+### Original Wireframe (March 15, 2021)
 <img src="https://i.imgur.com/I8yV65c.jpg" width=600>
+
+### Current Wireframe (May 29, 2021)
 
 ## Schema
 ### Models
 
-**RunLog**
+**RunData (stored in Parse backend)**
 | Property | Type         | Description                    |
 | -------- | ------------ | ------------------------------ |
 | objectId | String       | ObjectId stored in Parse       |
-| preMood  | Mood         | Mood before the run            |
-| postMood | Mood         | Mood after the run             |
-| Path     | List<LatLng> | Path of the run                |
-| Time     | int          | Text                           |
-| Date     | int          | Date of run                    |
-| Distance | double       | Distance of run                |
-| Note     | String       | Extra notes about the run/mood |
-
-**Mood**
-| Property | Type   | Description        |
-| -------- | ------ | ------------------ |
-| objectId | String | ObjectId for Parse |
-| Anxiety  | int    | level of anxiety   |
-| Stress   | int    | level of stress    |
-| Overall  | int    | overall vibes      |
-
-**LatLng**
-| Property  | Type   | Description          |
-| --------- | ------ | -------------------- |
-| Latitude  | double | a point of latitude  |
-| Longitude | double | a point of longitude |
-
-
+| PreRunMood  | int        | Mood before the run            |
+| PostRunMood | int         | Mood after the run             |
+| PreRunStress | int       | Stress level before run        |
+| PostRunStress | int      | Stress level after run        |
+| RunDate     | String         | Date of run (e.g Monday, May 24, 2021) |
+| RunTime     | String          | Time of run in mm:ss format |
+| RunDistance | double       | Distance of run (in miles)  |
+| RunNotes    | String       | Extra notes about the run/mood/stress |
+| RunLatList  | double[]    | Array of latitude values defining path coordinates |
+| RunLngList  | double[]    | Array of longitude values defining path coordinates |
 
 ### Networking
 - Login Screen-requests to sign up, log in, check if logged in
