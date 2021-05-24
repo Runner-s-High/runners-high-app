@@ -1,11 +1,5 @@
 package com.codepath.runnershigh;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
@@ -22,8 +16,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bumptech.glide.Glide;
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
+import com.codepath.runnershigh.fragments.FeedFragment;
 import com.codepath.runnershigh.fragments.HistoryFragment;
 import com.codepath.runnershigh.fragments.HomeFragment;
 import com.codepath.runnershigh.fragments.PostRunFragment;
@@ -39,6 +40,7 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements
     HistoryFragment historyFragment;
     SettingsFragment settingsFragment;
     ResourcesFragment resourcesFragment;
+    FeedFragment feedFragment;
 
     //Necessary to support profile pics
     public static CircleImageView Menu_Profile_Pic;
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_running_at_finish_line);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle("");
@@ -118,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements
         //Initializing Fragments
         if(homeFragment==null)
             homeFragment = new HomeFragment();
+        if(feedFragment==null)
+            feedFragment = new FeedFragment();
         if(startRunFragment==null)
             startRunFragment = new StartRunFragment();
         if(historyFragment==null)
@@ -131,28 +136,25 @@ public class MainActivity extends AppCompatActivity implements
         bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment fragment;
-            switch(item.getItemId()){
-                case R.id.itHistory:
-                    fragment = new HistoryFragment();
+            int itemID = item.getItemId();
 
-                    break;
-                case R.id.itHome:
-                    fragment = new HomeFragment();
+            if(itemID == R.id.itHistory)
+                fragment = new HistoryFragment();
+            else if(itemID == R.id.itHome)
+                fragment = new HomeFragment();
+            else if(itemID == R.id.itRun)
+                fragment = startRunFragment;        //new or no?
+            else if(itemID == R.id.itFeed)
+                fragment = new FeedFragment();
+            else
+                throw new IllegalStateException("Unexpected value: " + item.getItemId());
 
-                    break;
-                case R.id.itRun:
-                    fragment = startRunFragment;        //new or no?
-
-
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + item.getItemId());
-            }
             getSupportFragmentManager()
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .replace(R.id.flContainer,fragment)
                     .commit();
+
             return true;
         });
 
@@ -216,16 +218,14 @@ public class MainActivity extends AppCompatActivity implements
     //Handling clicks on icons in the top menu bar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.icSettings:
-                openSettingsFragment();
-                break;
-            case R.id.icResources:
-                openResourcesFragment();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        int itemID = item.getItemId();
+
+        if(itemID == R.id.icSettings)
+            openSettingsFragment();
+        else if(itemID == R.id.icResources)
+            openResourcesFragment();
+        else
+            return super.onOptionsItemSelected(item);
 
         return true;
     }

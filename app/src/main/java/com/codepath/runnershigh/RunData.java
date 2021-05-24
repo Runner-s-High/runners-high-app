@@ -5,6 +5,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -144,5 +145,9 @@ public class RunData extends ParseObject {
 
     public void setRunLngList(List<String> longs) {
         put(KEY_RUN_LNG_LIST, longs);
+    }
+
+    public Date getDateObject() {
+        return getCreatedAt();
     }
 }

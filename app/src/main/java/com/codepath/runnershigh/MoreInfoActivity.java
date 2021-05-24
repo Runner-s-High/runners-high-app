@@ -23,6 +23,7 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /*
 This activity holds a detailed view of an individual run that was saved to the Parse backend.
@@ -32,12 +33,13 @@ mood/stress surveys.
 public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final String TAG = MoreInfoActivity.class.getCanonicalName();
     //Layout element references
-    TextView tvDateMI;
+    TextView tvDateMI, tvUserMI;
     MapView mvMoreInfo;
     GoogleMap mMap;
     Button GoBackButton;
 
     RunData therun;
+    String userString;
 
     List<LatLng> latLngList;
 
@@ -45,19 +47,22 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_info);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         GoBackButton=findViewById(R.id.nextbutton);
         tvDateMI = findViewById(R.id.tvDateMI);
+        tvUserMI = findViewById(R.id.tvUserMI);
         mvMoreInfo = findViewById(R.id.mvMoreInfo);
 
         //Call onCreate for MapView
-        if(mvMoreInfo != null)
+        if(mvMoreInfo != null) {
             mvMoreInfo.onCreate(savedInstanceState);
-        mvMoreInfo.getMapAsync(this);
+            mvMoreInfo.getMapAsync(this);
+        }
 
         //Get the Parcelable run
         therun = Parcels.unwrap(getIntent().getParcelableExtra("pizza"));
+        userString = getIntent().getStringExtra("user");
 
         //Setting up the latLngList used in onMapReady
         List<String> lats = therun.getRunLatList();
@@ -73,6 +78,7 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
                 latLngList.add(new LatLng(lat, lng));
             }
 
+        tvUserMI.setText(userString);
         tvDateMI.setText(therun.getRunDate());
 
         GoBackButton.setOnClickListener(v -> {

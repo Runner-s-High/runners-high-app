@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.codepath.runnershigh.MyRunsAdapter;
 import com.codepath.runnershigh.R;
 import com.codepath.runnershigh.RunData;
-import com.codepath.runnershigh.TheAdapter;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -26,7 +26,7 @@ Fragment that holds a RecyclerView of past runs completed by the current user.
 public class HistoryFragment extends Fragment {
     protected List<RunData> runs;
     private RecyclerView rvruns;
-    protected TheAdapter RunAdapter;
+    protected MyRunsAdapter RunAdapter;
 
 
     public HistoryFragment() {
@@ -48,7 +48,7 @@ public class HistoryFragment extends Fragment {
 
         //Set up RecyclerView adapter
         runs = new ArrayList<>();
-        RunAdapter = new TheAdapter(getContext(), runs);
+        RunAdapter = new MyRunsAdapter(getContext(), runs);
         rvruns.setAdapter(RunAdapter);
         rvruns.setLayoutManager(new LinearLayoutManager(getContext()));
 

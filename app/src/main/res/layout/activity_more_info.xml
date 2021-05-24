@@ -9,15 +9,15 @@
 
     <TextView
         android:id="@+id/tvDateMI"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:textAlignment="center"
-        android:textSize="40sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvUserMI"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="CURRENT DATE" />
 
@@ -31,7 +31,7 @@
         android:apiKey="${MAPS_API_KEY}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDateMI" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUserMI" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentPrimary"
@@ -55,4 +55,15 @@
         android:text="@string/go_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUserMI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="USER NAME" />
 </androidx.constraintlayout.widget.ConstraintLayout>

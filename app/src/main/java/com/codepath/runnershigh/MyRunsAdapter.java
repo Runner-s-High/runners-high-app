@@ -3,7 +3,6 @@ package com.codepath.runnershigh;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,21 +21,23 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 //layout resource file "eachrun" defines the layout for each view in recyclerview
 //Adapter for RecyclerView of past runs in HistoryFragment in MainActivity
-public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
+public class MyRunsAdapter extends RecyclerView.Adapter<MyRunsAdapter.ViewHolder> {
     private final Context context;
     private final List<RunData> runs;
 
     SharedPreferences prefs;
 
-    public TheAdapter(Context context, List<RunData> runs) {
+    public MyRunsAdapter(Context context, List<RunData> runs) {
         this.context = context;
         this.runs = runs;
     }
@@ -65,8 +66,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
         //Layout element references
         TextView TheDate, tvTimeRV, tvDistanceRV, tvCaloriesRV, tvDistanceTitleRV;
         Button infobutton;
-        BarChart TheBarChart;
-        BarChart StressBarChart;
+        BarChart TheBarChart, StressBarChart;
 
         ArrayList<BarEntry> barEntryArrayList;
         ArrayList<String> RunLabels;
@@ -104,6 +104,7 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             infobutton.setOnClickListener(v -> {
                 Intent intent = new Intent(context, MoreInfoActivity.class);
                 intent.putExtra("pizza", Parcels.wrap(run));
+                intent.putExtra("user", ParseUser.getCurrentUser().getUsername());
                 context.startActivity(intent);
             });
 
@@ -111,8 +112,8 @@ public class TheAdapter extends RecyclerView.Adapter<TheAdapter.ViewHolder> {
             TheDate.setText(run.getRunDate());
             tvTimeRV.setText(run.getRunTime());
             tvDistanceTitleRV.setText(String.format("%s (%s)", context.getString(R.string.distance_label), units));
-            tvDistanceRV.setText(String.format("%.2f", run.getRunDistance() * multiplier));
-            tvCaloriesRV.setText(String.format("%.1f", run.getRunCalories()));
+            tvDistanceRV.setText(String.format(Locale.ENGLISH,"%.2f", run.getRunDistance() * multiplier));
+            tvCaloriesRV.setText(String.format(Locale.ENGLISH, "%.1f", run.getRunCalories()));
 
             int prescore = run.getPreRunMood();
             int postscore = run.getPostRunMood();
