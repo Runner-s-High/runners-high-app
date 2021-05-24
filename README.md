@@ -32,17 +32,19 @@ The CDC estimates that more than 60% of U.S. adults don’t get enough exercise 
 
 **Required Must-have Stories**
 
-- [x] User will report their mood before and after the run using radiobuttons that quantify various emotions-stress,anxiety etc. 
+- [x] User will be able to report their mood/stress before and after the run
 - [x] User will be able to track their run live and review it after finishing
-- [x] User will be able to log in/sign up into their account
+- [x] User will be able to log in/sign up into their account through querying the backend
 
 **Optional Nice-to-have Stories**
 
-- [ ] Directions while running
+- [ ] Achievement system
+- [x] Allowing users to share progress
+- [x] Changing units between miles (mi) and Kilometers (km)
+- [ ] Allowing user to set end destination and get directions while running
 - [ ] Announcements of running stats (text-to-speech)
-- [ ] Setting end destination
 - [ ] Being able to see graph of emotional progress over time
-- [x] Being able to see relationship between pre-run mood and run performance or mood post-run and run performance.-definitely optional for now
+- [x] Being able to see relationship between pre-run mood and run performance or mood post-run and run performance.
 - [ ] Implement map so user can see live position while running
 - [x] Implement links to mental health links/phone numbers
 
@@ -58,16 +60,25 @@ The CDC estimates that more than 60% of U.S. adults don’t get enough exercise 
 ### Fourth Sprint Walkthrough GIF (April 5, 2021)
 <img src="https://github.com/Runner-s-High/runners-high-app/blob/main/walkthrough4.gif" width=250><br>
 
-
 ### 2. Screen Archetypes
 
+* Splash Screen
+    * Briefly shown while app is loading 
+* Login/Register Screen
+    * Login/registration fields 
 * Home Screen/Start Screen
-   * Display data on past run and mood
-   * Display a button to start a new run
-* Mood Logging Screen (Create Screen)
-   * Features radio buttons to allow user to track anxiety,stress,overall mood on scales 1-10 and journal anything else on their mind if they choose.
+    * Display data on past runs
+    * Display a button to start a new run
+* Stream Screens
+    * Display user's personal runs
+    * Display feed of everyone's runs
+* Detail Screen
+    * Display run statistics and graphs of how mood/stress has changed
+* Creation Screen
+    * User can start run
+    * User fills out post-run information   
 * Settings Screen
-    * Allows user to toggle TTS, when announcements are made, (etc.)
+    * Allows user to toggle units, profile picture
 
 ### 3. Navigation
 
@@ -76,6 +87,7 @@ The CDC estimates that more than 60% of U.S. adults don’t get enough exercise 
 * MainActivity
   - HomeFragment (Welcome and Past Runs Summary)
   - StartRunFragment (Starting runs)
+  - FeedFragment (everyone's runs)
   - HistoryFragment (List of past runs)
   - ResourcesFragment (Mental health resources)
   - SettingsFragment (Distance units, profile picture)
@@ -92,7 +104,9 @@ The CDC estimates that more than 60% of U.S. adults don’t get enough exercise 
     * => MainActivity: HomeFragment (Submit Profile button) 
 * MainActivity: StartRunFragment
     * => PreRunMoodDialogFragment (Start Run button)
-    * => RunningFragment (after finishing dialogfragment) 
+    * => RunningFragment (after finishing dialogfragment)
+* MainActivity: FeedFragment
+    * => MoreInfoActivity (More Info button)
 * MainActivity: HistoryFragment
     * => MoreInfoActivity (More Info button)
 * MainActivity: SettingsFragment
@@ -130,11 +144,12 @@ The CDC estimates that more than 60% of U.S. adults don’t get enough exercise 
 | RunLngList  | double[]    | Array of longitude values defining path coordinates |
 
 ### Networking
-- Login Screen-requests to sign up, log in, check if logged in
-- Home Screen-displays all data for most recent run
-- Data Screen-displays all data for all runs; user can delete run
-- Running Screen-posts run to Parse when finished
-- Settings Screen-Log out
+- LoginActivity-requests to sign up, log in, check if logged in
+- MainActivity: HomeFragment-Queries most recent 10 runs
+- MainActivity: HistoryFragment-Queries all of user's runs
+- MainActivity: FeedFragment-Queries first 25 runs from amongst all users
+- MainActivity: PostRunFragment-Saves current run to backend
+- MainActivity: SettingsFragment-Log out current user, update user profile picture
 
 **Login Activity**
 - (GET) Login check network request (when user presses login button)
