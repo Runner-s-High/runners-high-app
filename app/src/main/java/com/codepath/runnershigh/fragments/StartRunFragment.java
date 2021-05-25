@@ -3,8 +3,11 @@ package com.codepath.runnershigh.fragments;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,33 +16,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextClock;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Button;
-
-import com.bumptech.glide.Glide;
 import com.codepath.runnershigh.R;
-import com.codepath.runnershigh.RunData;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
 import com.codepath.runnershigh.dialogFragments.PreRunMoodDialogFragment;
-
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Random;
 
 /*
 This fragment features a button to begin a run. Upon clicking, the RunningFragment is launched.

@@ -1,9 +1,11 @@
 package com.codepath.runnershigh;
 
+import android.app.Application;
+
+import com.codepath.runnershigh.models.Comment;
+import com.codepath.runnershigh.models.RunData;
 import com.parse.Parse;
 import com.parse.ParseObject;
-
-import android.app.Application;
 
 public class App extends Application {
     @Override
@@ -11,6 +13,7 @@ public class App extends Application {
         super.onCreate();
 
         ParseObject.registerSubclass(RunData.class);
+        ParseObject.registerSubclass(Comment.class);
 
         //Set up application connection to Parse
         Parse.initialize(new Parse.Configuration.Builder(this)

@@ -32,6 +32,7 @@ import com.codepath.runnershigh.fragments.ResourcesFragment;
 import com.codepath.runnershigh.fragments.RunningFragment;
 import com.codepath.runnershigh.fragments.SettingsFragment;
 import com.codepath.runnershigh.fragments.StartRunFragment;
+import com.codepath.runnershigh.models.RunData;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseFile;

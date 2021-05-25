@@ -1,4 +1,4 @@
-package com.codepath.runnershigh;
+package com.codepath.runnershigh.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;

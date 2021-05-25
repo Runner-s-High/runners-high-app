@@ -51,6 +51,9 @@ public class ResultsFragment extends Fragment {
                 case 1:
                     tab.setText("Graphs");
                     break;
+                case 2:
+                    tab.setText("Comments");
+                    break;
                 default:
                     tab.setText("X-AE-12");
             }

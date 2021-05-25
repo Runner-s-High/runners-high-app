@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.runnershigh.FeedAdapter;
 import com.codepath.runnershigh.R;
-import com.codepath.runnershigh.RunData;
+import com.codepath.runnershigh.models.RunData;
 import com.parse.ParseQuery;
 
 import org.jetbrains.annotations.NotNull;

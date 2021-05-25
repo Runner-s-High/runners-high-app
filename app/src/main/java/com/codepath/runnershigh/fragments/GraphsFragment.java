@@ -1,17 +1,17 @@
 package com.codepath.runnershigh.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
+import com.codepath.runnershigh.models.RunData;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -22,6 +22,8 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
 /*
@@ -31,6 +33,8 @@ mood graph and a stress graph filled with the pre- and post-survey parameters
 public class GraphsFragment extends Fragment {
     //Layout element references
     BarChart mybarchart, mystresschart;
+
+    RunData run;
 
     ArrayList<BarEntry> barEntryArrayList;
     ArrayList<String> RunLabels;
@@ -63,11 +67,13 @@ public class GraphsFragment extends Fragment {
         mybarchart = view.findViewById(R.id.mybargraph);
         mystresschart = view.findViewById(R.id.mystressgraph);
 
+        run = Parcels.unwrap(getArguments().getParcelable("run"));
+
         //Get values of pre/post mood and pre/post stress
-        int prescore = getArguments().getInt("premood");
-        int postscore = getArguments().getInt("postmood");
-        int prestress = getArguments().getInt("prestress");
-        int poststress = getArguments().getInt("poststress");
+        int prescore = run.getPreRunMood();
+        int postscore = run.getPostRunMood();
+        int prestress = run.getPreRunStress();
+        int poststress = run.getPostRunStress();
 
         //Handle all graph parameters for display
         setupMoodGraph(prescore, postscore);

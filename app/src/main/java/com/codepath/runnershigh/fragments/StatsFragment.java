@@ -16,11 +16,18 @@ import androidx.fragment.app.Fragment;
 
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
+import com.codepath.runnershigh.models.RunData;
+
+import org.parceler.Parcels;
+
+import java.util.Locale;
 
 //This fragment holds the stats from the run (e.g. time, distance, calories)
 public class StatsFragment extends Fragment {
     ImageView preMood, postMood;
     TextView tvTimeMI, tvDistanceMI, tvCaloriesMI, tvNoteMI, tvDistanceLabelMI;
+
+    RunData run;
 
     SharedPreferences prefs;
 
@@ -70,15 +77,17 @@ public class StatsFragment extends Fragment {
         tvNoteMI = view.findViewById(R.id.tvNoteMI);
         tvDistanceLabelMI = view.findViewById(R.id.tvDistanceLabelMI);
 
+        run = Parcels.unwrap(getArguments().getParcelable("run"));
+
         tvTimeMI.setText(getArguments().getString("time"));
-        tvDistanceMI.setText(String.format("%.2f", getArguments().getDouble("distance") * multiplier));
-        tvCaloriesMI.setText(String.format("%.1f", getArguments().getDouble("calories") * multiplier));
-        tvNoteMI.setText(getArguments().getString("note"));
-        tvDistanceLabelMI.setText(String.format("%s (%s)", getString(R.string.distance_label), units));
+        tvDistanceMI.setText(String.format(Locale.ENGLISH,"%.2f", run.getRunDistance() * multiplier));
+        tvCaloriesMI.setText(String.format(Locale.ENGLISH,"%.1f", run.getRunCalories()));
+        tvNoteMI.setText(run.getRunNote());
+        tvDistanceLabelMI.setText(String.format(Locale.ENGLISH,"%s (%s)", getString(R.string.distance_label), units));
 
         //Assign face colors
-        SetFace(getArguments().getInt("premood"), preMood);
-        SetFace(getArguments().getInt("postmood"), postMood);
+        SetFace(run.getPreRunMood(), preMood);
+        SetFace(run.getPostRunMood(), postMood);
     }
 
     //Assigns correct colors to faces in this fragment

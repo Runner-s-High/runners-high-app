@@ -6,13 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.codepath.runnershigh.fragments.CommentFragment;
 import com.codepath.runnershigh.fragments.GraphsFragment;
 import com.codepath.runnershigh.fragments.ResultsFragment;
 import com.codepath.runnershigh.fragments.StatsFragment;
 
 //Adapter for ViewPager used in ResultsFragment in MoreInfoActivity
 public class PagerAdapter extends FragmentStateAdapter {
-    private static final int NUM_TABS = 2;
+    private static final int NUM_TABS = 3;
 
     Bundle args;
 
@@ -34,6 +35,8 @@ public class PagerAdapter extends FragmentStateAdapter {
                 return StatsFragment.newInstance(args);
             case 1:
                 return GraphsFragment.newInstance(args);
+            case 2:
+                return CommentFragment.newInstance(args);
             default:
                 return new Fragment();
         }

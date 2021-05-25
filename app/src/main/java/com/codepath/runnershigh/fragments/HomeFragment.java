@@ -16,13 +16,14 @@ import androidx.fragment.app.Fragment;
 
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
-import com.codepath.runnershigh.RunData;
+import com.codepath.runnershigh.models.RunData;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /*
@@ -173,14 +174,13 @@ public class HomeFragment extends Fragment {
         double stressReduction=(PreStress-PostStress)/PreStress*100;
 
         if (amount==5) {
-            MoodIncrease.setText((int) moodIncrease + " %");
-            StressReduction.setText((int) stressReduction + " %");
+            MoodIncrease.setText(String.format(Locale.ENGLISH, "%d %%", (int)moodIncrease));
+            StressReduction.setText(String.format(Locale.ENGLISH, "%d %%", (int)stressReduction));
         }
 
         else{
-            MoodIncrease2.setText((int) moodIncrease + " %");
-            StressReduction2.setText((int) stressReduction + " %");
-
+            MoodIncrease2.setText(String.format(Locale.ENGLISH, "%d %%", (int)moodIncrease));
+            StressReduction2.setText((String.format(Locale.ENGLISH, "%d %%", (int)stressReduction)));
         }
 
     }
@@ -197,12 +197,12 @@ public class HomeFragment extends Fragment {
         int avg=(int)(calories/amount);
 
         if (amount==5) {
-            CaloriesBurned.setText(RoundedCalories + " Cal");
-            CaloriesAVG.setText(avg + " Cal");
+            CaloriesBurned.setText(String.format(Locale.ENGLISH, "%d Cal", RoundedCalories));
+            CaloriesAVG.setText(String.format(Locale.ENGLISH, "%d Cal", avg));
         }
         else {
-            CaloriesBurned2.setText(RoundedCalories + " Cal");
-            CaloriesAVG2.setText(avg + " Cal");
+            CaloriesBurned2.setText(String.format(Locale.ENGLISH, "%d Cal", RoundedCalories));
+            CaloriesAVG2.setText(String.format(Locale.ENGLISH, "%d Cal", avg));
         }
     }
 
@@ -264,12 +264,12 @@ public class HomeFragment extends Fragment {
 
 
         if (amount==5) {
-            TotalTime.setText(hours + " hrs " + minutes + " min " + seconds + " sec ");
-            tvLongestTime.setText(hours2 + " hrs " + minutes2 + " min " + seconds2 + " sec ");
+            TotalTime.setText(String.format(Locale.ENGLISH, "%d hrs %d min %d sec", hours, minutes, seconds));
+            tvLongestTime.setText(String.format(Locale.ENGLISH, "%d hrs %d min %d sec", hours2, minutes2, seconds2));
         }
         else {
-            TotalTime2.setText(hours + " hrs " + minutes + " min " + seconds + " sec ");
-            tvLongestTime2.setText(hours2 + " hrs " + minutes2 + " min " + seconds2 + " sec ");
+            TotalTime2.setText(String.format(Locale.ENGLISH, "%d hrs %d min %d sec", hours, minutes, seconds));
+            tvLongestTime2.setText(String.format(Locale.ENGLISH, "%d hrs %d min %d sec", hours2, minutes2, seconds2));
         }
     }
 
@@ -278,7 +278,7 @@ public class HomeFragment extends Fragment {
         double weeklydistance=0;
         double longestdistance=DistanceArray.get(0);
 
-        SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        SharedPreferences prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
         String units;
 
         for (int i=0;i<amount;i++){
@@ -297,12 +297,12 @@ public class HomeFragment extends Fragment {
             units = "miles";
 
         if (amount==5) {
-            TotalDistance.setText(String.format("%.2f %s", weeklydistance, units));
-            LongestRun.setText(String.format("%.2f %s", longestdistance, units));
+            TotalDistance.setText(String.format(Locale.ENGLISH, "%.2f %s", weeklydistance, units));
+            LongestRun.setText(String.format(Locale.ENGLISH, "%.2f %s", longestdistance, units));
         }
         else{
-            TotalDistance2.setText(String.format("%.2f %s", weeklydistance, units));
-            LongestRun2.setText(String.format("%.2f %s", longestdistance, units));
+            TotalDistance2.setText(String.format(Locale.ENGLISH, "%.2f %s", weeklydistance, units));
+            LongestRun2.setText(String.format(Locale.ENGLISH, "%.2f %s", longestdistance, units));
         }
     }
 

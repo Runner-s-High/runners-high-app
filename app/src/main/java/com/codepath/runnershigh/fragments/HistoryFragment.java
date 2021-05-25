@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.runnershigh.MyRunsAdapter;
 import com.codepath.runnershigh.R;
-import com.codepath.runnershigh.RunData;
+import com.codepath.runnershigh.models.RunData;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -43,7 +43,6 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         rvruns = view.findViewById(R.id.rvRunning);
 
         //Set up RecyclerView adapter
@@ -58,7 +57,7 @@ public class HistoryFragment extends Fragment {
 
     //retrieves past runs on back4app for the signed in user
     protected void queryPosts() {
-        ParseQuery<RunData> query=ParseQuery.getQuery(RunData.class);
+        ParseQuery<RunData> query = ParseQuery.getQuery(RunData.class);
         query.include(RunData.KEY_USER);
         query.whereEqualTo(RunData.KEY_USER, ParseUser.getCurrentUser());
         query.addDescendingOrder(RunData.KEY_CREATED_AT);      //orders posts by time

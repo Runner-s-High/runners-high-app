@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.codepath.runnershigh.fragments.ResultsFragment;
+import com.codepath.runnershigh.models.RunData;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -88,7 +89,8 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
             finish();
         });
 
-        Bundle args = setupArgs(new Bundle());
+        Bundle args = new Bundle();
+        args.putParcelable("run", getIntent().getParcelableExtra("pizza"));
         ResultsFragment resultsFragment = new ResultsFragment();
         resultsFragment.setArguments(args);
 
@@ -161,17 +163,18 @@ public class MoreInfoActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
-    //Assigns key-value args for Bundle to give to ResultsFragment
-    public Bundle setupArgs(Bundle args) {
-        args.putString("time", therun.getRunTime());
-        args.putDouble("distance", therun.getRunDistance());
-        args.putDouble("calories", therun.getRunCalories());
-        args.putString("note", therun.getRunNote());
-        args.putInt("premood", therun.getPreRunMood());
-        args.putInt("postmood", therun.getPostRunMood());
-        args.putInt("prestress", therun.getPreRunStress());
-        args.putInt("poststress", therun.getPostRunStress());
-
-        return args;
-    }
+//    //Assigns key-value args for Bundle to give to ResultsFragment
+//    public Bundle setupArgs(Bundle args) {
+//        args.putString("time", therun.getRunTime());
+//        args.putDouble("distance", therun.getRunDistance());
+//        args.putDouble("calories", therun.getRunCalories());
+//        args.putString("note", therun.getRunNote());
+//        args.putInt("premood", therun.getPreRunMood());
+//        args.putInt("postmood", therun.getPostRunMood());
+//        args.putInt("prestress", therun.getPreRunStress());
+//        args.putInt("poststress", therun.getPostRunStress());
+//        args.putString("objectId", therun.getObjectId());
+//
+//        return args;
+//    }
 }
