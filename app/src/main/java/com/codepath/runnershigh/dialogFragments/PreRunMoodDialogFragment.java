@@ -94,22 +94,18 @@ public class PreRunMoodDialogFragment extends DialogFragment {
     View.OnClickListener moodBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.IB1:
-                    preRunMoodRating=1;
-                    break;
-                case R.id.IB2:
-                    preRunMoodRating=2;
-                    break;
-                case R.id.IB3:
-                    preRunMoodRating=3;
-                    break;
-                case R.id.IB4:
-                    preRunMoodRating=4;
-                    break;
-                case R.id.IB5:
-                    preRunMoodRating=5;
-            }
+            int viewId = v.getId();
+            if(viewId == R.id.IB1)
+                preRunMoodRating=1;
+            else if(viewId == R.id.IB2)
+                preRunMoodRating=2;
+            else if(viewId == R.id.IB3)
+                preRunMoodRating=3;
+            else if(viewId == R.id.IB4)
+                preRunMoodRating=4;
+            else if(viewId == R.id.IB5)
+                preRunMoodRating=5;
+
             unselectMoodButtons();
             v.setSelected(true);
             moodSet = true;

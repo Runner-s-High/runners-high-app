@@ -11,10 +11,32 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddComment"
+        app:layout_constraintBottom_toTopOf="@+id/etComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/border"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvComments" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etComment"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="start|top"
+        android:hint="@string/comment_placeholder"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddComment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/border" />
 
     <Button
         android:id="@+id/btnAddComment"

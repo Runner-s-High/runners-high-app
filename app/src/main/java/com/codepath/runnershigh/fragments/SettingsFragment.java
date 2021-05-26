@@ -6,31 +6,22 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.OpenableColumns;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.codepath.runnershigh.MainActivity;
 import com.codepath.runnershigh.R;
-import com.parse.LogOutCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -69,7 +60,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -110,7 +101,7 @@ public class SettingsFragment extends Fragment {
            Glide.with(getApplicationContext()).load(MainActivity.UserImage.getUrl()).into(SettingsProfilePic);
 
         if (MainActivity.uri_after_pic_change!=null)
-            Glide.with(getContext()).load(MainActivity.uri_after_pic_change).into(SettingsProfilePic);
+            Glide.with(requireContext()).load(MainActivity.uri_after_pic_change).into(SettingsProfilePic);
 
         btnLogOut.setOnClickListener(v -> {
             Log.i(TAG, "User clicked btnLogOut");
@@ -125,18 +116,14 @@ public class SettingsFragment extends Fragment {
         });
 
         rgUnits.setOnCheckedChangeListener((group, checkedId) -> {
-            SharedPreferences prefs = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+            SharedPreferences prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
             SharedPreferences.Editor prefsEditor = prefs.edit();
 
             //Save appropriate unit setting for next time
-            switch(checkedId) {
-                case R.id.rbMiles:
-                    prefsEditor.putInt("units", MainActivity.DISTANCE_MILES);
-                    break;
-                case R.id.rbKilometers:
-                    prefsEditor.putInt("units", MainActivity.DISTANCE_KILOMETERS);
-                    break;
-            }
+            if(checkedId == R.id.rbMiles)
+                prefsEditor.putInt("units", MainActivity.DISTANCE_MILES);
+            else if(checkedId == R.id.rbKilometers)
+                prefsEditor.putInt("units", MainActivity.DISTANCE_KILOMETERS);
 
             prefsEditor.apply();
         });
@@ -150,14 +137,14 @@ public class SettingsFragment extends Fragment {
             imageuri=data.getData();
             InputStream inputstream=null;
 
-            Glide.with(getContext()).load(imageuri).into(SettingsProfilePic);
-            Glide.with(getContext()).load(imageuri).into(MenuBarProfilePic);
+            Glide.with(requireContext()).load(imageuri).into(SettingsProfilePic);
+            Glide.with(requireContext()).load(imageuri).into(MenuBarProfilePic);
             String filename=getFileName(imageuri);
             MainActivity.uri_after_pic_change=imageuri;             //persists newly chosen image while using app
 
             try {
-                inputstream = getContext().getContentResolver().openInputStream(imageuri);
-                byte buffer[] = new byte[inputstream.available()];
+                inputstream = requireContext().getContentResolver().openInputStream(imageuri);
+                byte[] buffer = new byte[inputstream.available()];
                 inputstream.read(buffer);
                 ProfilePicture = new ParseFile(filename, buffer);     //try making this static and see
                 inputstream.close();
@@ -188,7 +175,7 @@ public class SettingsFragment extends Fragment {
     public String getFileName(Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
+            Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null);
             try {
                 if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));

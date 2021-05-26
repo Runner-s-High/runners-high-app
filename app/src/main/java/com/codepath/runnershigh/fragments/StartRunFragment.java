@@ -41,16 +41,15 @@ public class StartRunFragment extends Fragment {
 
         btStart.setOnClickListener(v -> {
             if(ContextCompat.checkSelfPermission(
-                    getActivity().getApplicationContext(),
+                    requireActivity().getApplicationContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED){
                 ActivityCompat.requestPermissions(
-                        getActivity(),
+                        requireActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION},
                         REQUEST_CODE_LOCATION_PERMISSION);
             }else {
-
                 if (completedMoodSurvey) {
                     completedMoodSurvey = false;
                     startRunFragmentInterface.openRunningFragment();

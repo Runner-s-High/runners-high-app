@@ -109,4 +109,5 @@ We hope this app treats you well, and enjoy your runs!
     <string name="blank_value">0.00</string>
     <string name="feed">Feed</string>
     <string name="add_comment">ADD COMMENT</string>
+    <string name="comment_placeholder">Add to the conversation…</string>
 </resources>
