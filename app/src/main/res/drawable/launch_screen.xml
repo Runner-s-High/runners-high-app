@@ -3,7 +3,7 @@
     <item android:drawable="@color/primaryColor"/>
     <item>
         <bitmap
-            android:src="@drawable/logo"
+            android:src="@drawable/running_finish_line"
             android:gravity="center"/>
     </item>
 </layer-list>
