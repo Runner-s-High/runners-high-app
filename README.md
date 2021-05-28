@@ -60,6 +60,9 @@ The CDC estimates that more than 60% of U.S. adults don’t get enough exercise 
 ### Fourth Sprint Walkthrough GIF (April 5, 2021)
 <img src="https://github.com/Runner-s-High/runners-high-app/blob/main/walkthrough4.gif" width=250><br>
 
+### Demo Day Walkthrough GIF (May 29, 2021)
+<img src="https://github.com/Runner-s-High/runners-high-app/blob/main/walkthrough5.gif" width=250><br>
+
 ### 2. Screen Archetypes
 
 * Splash Screen
