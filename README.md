@@ -8,6 +8,7 @@ CodePath App Development Project
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 2. [Schema](#Schema)
+3. [Content Credits](#Content-Credits)
 
 ## Overview
 ### Description
@@ -17,6 +18,8 @@ Runner's High is a mood-tracking and run-tracking app that allows users to log t
 The CDC estimates that more than 60% of U.S. adults don’t get enough exercise and that 25% of U.S. adults don’t exercise at all. Our goal was to create a full fitness app that also had a psychological component in that users would rate their mood and level of stress before and after each run.Users would be able to see not only the physical benefits of exercising (calories burned), but also the psychological benefits of exercise first hand. The end goal is that more people would ultimately start exercising and continue exercising because of this app.
 “Has technology made us lazier?” They ask….not this time.
 
+### Demo Video
+Check out our demo video used at the CodePath: Android University preliminary Demo Day: https://drive.google.com/file/d/1uCwxX7XtFA_oYac8_AYeqJMHtJFKnuup/view?usp=sharing
 
 ### App Evaluation
 - **Category:** Health and Fitness.
@@ -346,3 +349,12 @@ try {
 }
 userString = postingUser.getUsername();
 ```
+
+## Content Credits
+### Images/Vectors
+
+"social-media.svg" Icons made by <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a><br>
+"running-at-finish-line.svg" Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a><br>
+"settings.svg" Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a><br>
+"thinking.svg" Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a><br>
+"run.svg" Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a><br>
